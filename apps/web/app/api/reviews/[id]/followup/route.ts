@@ -4,9 +4,8 @@
  * Submit a follow-up review (30, 90, or 180 days after visit)
  */
 
-import type { FollowUpSubmissionData, ResultsSustainedLevel } from '@clarus-vitae/types';
-
 import { addFollowUp, getReviewById } from '@clarus-vitae/database';
+import type { FollowUpSubmissionData, ResultsSustainedLevel } from '@clarus-vitae/types';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
