@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { cn } from '@clarus-vitae/utils';
+import Link from 'next/link';
 
 // ============================================
 // TYPES

@@ -1,21 +1,20 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
-
 import type {
   ContactMethod,
   InquiryFormErrors,
   SecureInquiryInput,
 } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
+import Link from 'next/link';
+import { useState, type FormEvent } from 'react';
 
-import { Input } from '../Form/Input';
-import { Textarea } from '../Form/Textarea';
-import { RadioGroup } from '../Form/RadioGroup';
-import { Checkbox } from '../Form/Checkbox';
 import { Button } from '../Button/Button';
 import { Alert } from '../Feedback/Alert';
+import { Checkbox } from '../Form/Checkbox';
+import { Input } from '../Form/Input';
+import { RadioGroup } from '../Form/RadioGroup';
+import { Textarea } from '../Form/Textarea';
 import { FocusAreaSelector } from './FocusAreaSelector';
 
 // ============================================

@@ -1,22 +1,21 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-import { useState, type FormEvent } from 'react';
-
 import type {
   BudgetRange,
   InquiryFormErrors,
   InquiryInput,
 } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
+import { useState, type FormEvent } from 'react';
 
-import { Input } from '../Form/Input';
-import { Textarea } from '../Form/Textarea';
-import { Select } from '../Form/Select';
 import { Button } from '../Button/Button';
 import { Alert } from '../Feedback/Alert';
+import { Input } from '../Form/Input';
+import { Select } from '../Form/Select';
+import { Textarea } from '../Form/Textarea';
 import { ConsentCheckboxes } from './ConsentCheckboxes';
-import { PrivacyNote } from './PrivacyNote';
 import { FocusAreaSelector } from './FocusAreaSelector';
+import { PrivacyNote } from './PrivacyNote';
 
 // ============================================
 // TYPES
@@ -67,7 +66,7 @@ const BUDGET_OPTIONS = [
 export function InquiryForm({
   property,
   program,
-  variant = 'inline',
+  variant: _variant = 'inline',
   onSuccess,
   onSecureInquiryClick,
   className,

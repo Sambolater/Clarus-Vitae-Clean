@@ -1,23 +1,22 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-import { useState, type FormEvent } from 'react';
-
 import type {
   BudgetRange,
   BatchInquiryInput,
   InquiryFormErrors,
 } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
+import { useState, type FormEvent } from 'react';
 
-import { Input } from '../Form/Input';
-import { Textarea } from '../Form/Textarea';
-import { Select } from '../Form/Select';
-import { Checkbox } from '../Form/Checkbox';
 import { Button } from '../Button/Button';
 import { Alert } from '../Feedback/Alert';
+import { Checkbox } from '../Form/Checkbox';
+import { Input } from '../Form/Input';
+import { Select } from '../Form/Select';
+import { Textarea } from '../Form/Textarea';
 import { ConsentCheckboxes } from './ConsentCheckboxes';
-import { PrivacyNote } from './PrivacyNote';
 import { FocusAreaSelector } from './FocusAreaSelector';
+import { PrivacyNote } from './PrivacyNote';
 
 // ============================================
 // TYPES

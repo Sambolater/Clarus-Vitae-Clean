@@ -1,8 +1,7 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-
 import { FOCUS_AREA_OPTIONS } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
 
 // ============================================
 // TYPES

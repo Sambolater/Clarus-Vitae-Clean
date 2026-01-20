@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-
 import type { InquiryFormErrors } from '@clarus-vitae/types';
+import Link from 'next/link';
 
 import { Checkbox } from '../Form/Checkbox';
 
