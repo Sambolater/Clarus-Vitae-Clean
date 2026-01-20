@@ -4,12 +4,19 @@
  * Populates the database with sample data for development and testing.
  * Includes:
  * - 5 sample properties (mix of all tiers)
- * - 10+ sample treatments
+ * - 30+ treatments
  * - 2 sample team members
- * - Sample diagnostics, equipment, and programs
+ * - 15+ diagnostics
+ * - 10+ equipment items
+ * - Sample programs
  */
 
 import { PrismaClient } from '@prisma/client';
+import {
+  seedAdditionalTreatments,
+  seedAdditionalDiagnostics,
+  seedAdditionalEquipment,
+} from './seed-treatments';
 
 const prisma = new PrismaClient();
 
@@ -1450,13 +1457,26 @@ async function main() {
     },
   });
 
+  // ============================================
+  // ADDITIONAL SEED DATA
+  // ============================================
+  console.log('📦 Adding extended seed data...');
+
+  const additionalTreatments = await seedAdditionalTreatments();
+  const additionalDiagnostics = await seedAdditionalDiagnostics();
+  const additionalEquipment = await seedAdditionalEquipment();
+
+  const totalTreatments = treatments.length + additionalTreatments.length;
+  const totalDiagnostics = diagnostics.length + additionalDiagnostics.length;
+  const totalEquipment = equipment.length + additionalEquipment.length;
+
   console.log('✅ Database seeded successfully!');
   console.log('');
   console.log('Summary:');
   console.log(`  - ${properties.length} properties (Tier 1: 2, Tier 2: 2, Tier 3: 1)`);
-  console.log(`  - ${treatments.length} treatments`);
-  console.log(`  - ${diagnostics.length} diagnostics`);
-  console.log(`  - ${equipment.length} equipment items`);
+  console.log(`  - ${totalTreatments} treatments`);
+  console.log(`  - ${totalDiagnostics} diagnostics`);
+  console.log(`  - ${totalEquipment} equipment items`);
   console.log('  - 2 team members');
   console.log('  - 3 programs');
   console.log('  - 5 Clarus Index scores');
