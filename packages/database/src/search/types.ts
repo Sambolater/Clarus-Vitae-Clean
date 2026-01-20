@@ -5,7 +5,47 @@
  * These types represent the searchable representation of database entities.
  */
 
-import { PropertyTier, WellnessApproach, FocusArea, TreatmentCategory, EvidenceLevel, ArticleCategory } from '@prisma/client';
+// Local type definitions to avoid Prisma client generation dependency
+// These must match the enums defined in prisma/schema.prisma
+type PropertyTier = 'TIER_1' | 'TIER_2' | 'TIER_3';
+type WellnessApproach = 'CLINICAL' | 'INTEGRATIVE' | 'HOLISTIC' | 'LIFESTYLE';
+type FocusArea =
+  | 'LONGEVITY'
+  | 'DETOX'
+  | 'WEIGHT_METABOLIC'
+  | 'STRESS_BURNOUT'
+  | 'FITNESS_PERFORMANCE'
+  | 'BEAUTY_AESTHETIC'
+  | 'HOLISTIC_SPIRITUAL'
+  | 'MEDICAL_ASSESSMENT'
+  | 'POST_ILLNESS'
+  | 'ADDICTION_BEHAVIORAL'
+  | 'COGNITIVE_BRAIN'
+  | 'SLEEP'
+  | 'WOMENS_HEALTH'
+  | 'MENS_HEALTH'
+  | 'GENERAL_REJUVENATION';
+type TreatmentCategory =
+  | 'DIAGNOSTICS'
+  | 'REGENERATIVE'
+  | 'CELLULAR'
+  | 'DETOXIFICATION'
+  | 'HYPERBARIC'
+  | 'CRYOTHERAPY'
+  | 'IV_THERAPIES'
+  | 'HORMONE'
+  | 'AESTHETIC'
+  | 'BODY_MANUAL'
+  | 'MIND_NEURO'
+  | 'TRADITIONAL';
+type EvidenceLevel = 'STRONG' | 'MODERATE' | 'EMERGING' | 'EXPERIMENTAL' | 'TRADITIONAL';
+type ArticleCategory =
+  | 'DESTINATION_GUIDE'
+  | 'BUYERS_GUIDE'
+  | 'TREATMENT_EXPLAINER'
+  | 'INDUSTRY_NEWS'
+  | 'PRACTITIONER_INTERVIEW'
+  | 'EXPERIENCE_ARTICLE';
 
 /**
  * Property document for Meilisearch indexing

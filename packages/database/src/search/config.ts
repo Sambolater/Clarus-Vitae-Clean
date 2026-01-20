@@ -5,7 +5,7 @@
  * for each search index used by Clarus Vitae.
  */
 
-import { Settings } from 'meilisearch';
+import type { Settings } from 'meilisearch';
 
 /**
  * Properties Index Configuration

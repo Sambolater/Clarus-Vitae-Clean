@@ -78,21 +78,25 @@ export async function searchAll(
 
   const totalProcessingTimeMs = Date.now() - startTime;
 
+  const propertiesResult = results.results[0];
+  const treatmentsResult = results.results[1];
+  const articlesResult = results.results[2];
+
   return {
     properties: {
-      hits: results.results[0].hits as PropertySearchDocument[],
-      totalHits: results.results[0].estimatedTotalHits || 0,
-      processingTimeMs: results.results[0].processingTimeMs || 0,
+      hits: (propertiesResult?.hits ?? []) as PropertySearchDocument[],
+      totalHits: propertiesResult?.estimatedTotalHits ?? 0,
+      processingTimeMs: propertiesResult?.processingTimeMs ?? 0,
     },
     treatments: {
-      hits: results.results[1].hits as TreatmentSearchDocument[],
-      totalHits: results.results[1].estimatedTotalHits || 0,
-      processingTimeMs: results.results[1].processingTimeMs || 0,
+      hits: (treatmentsResult?.hits ?? []) as TreatmentSearchDocument[],
+      totalHits: treatmentsResult?.estimatedTotalHits ?? 0,
+      processingTimeMs: treatmentsResult?.processingTimeMs ?? 0,
     },
     articles: {
-      hits: results.results[2].hits as ArticleSearchDocument[],
-      totalHits: results.results[2].estimatedTotalHits || 0,
-      processingTimeMs: results.results[2].processingTimeMs || 0,
+      hits: (articlesResult?.hits ?? []) as ArticleSearchDocument[],
+      totalHits: articlesResult?.estimatedTotalHits ?? 0,
+      processingTimeMs: articlesResult?.processingTimeMs ?? 0,
     },
     query,
     totalProcessingTimeMs,
