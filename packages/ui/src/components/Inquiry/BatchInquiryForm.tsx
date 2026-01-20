@@ -14,6 +14,7 @@ import { Checkbox } from '../Form/Checkbox';
 import { Input } from '../Form/Input';
 import { Select } from '../Form/Select';
 import { Textarea } from '../Form/Textarea';
+
 import { ConsentCheckboxes } from './ConsentCheckboxes';
 import { FocusAreaSelector } from './FocusAreaSelector';
 import { PrivacyNote } from './PrivacyNote';
