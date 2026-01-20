@@ -563,7 +563,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
           </div>
           <div className="flex gap-2">
             <a
-              href={`/inquire?property=${slug}`}
+              href={`/inquire/${slug}`}
               className="rounded-lg bg-clarus-navy px-4 py-2 text-sm font-medium text-white"
             >
               Inquire

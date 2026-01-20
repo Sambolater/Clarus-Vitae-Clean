@@ -148,6 +148,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@clarus-vitae/types':
+        specifier: workspace:*
+        version: link:../types
       '@clarus-vitae/utils':
         specifier: workspace:*
         version: link:../utils

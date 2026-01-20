@@ -1,27 +1,8 @@
 /**
  * User Types
  *
- * Types related to users and inquiries
+ * Types related to users and team members
  */
-
-export interface Inquiry {
-  id: string;
-  propertyId: string;
-  name?: string;
-  email: string;
-  phone?: string;
-  message: string;
-  preferredContact: 'email' | 'phone' | 'secure';
-  interests: string[];
-  budgetRange?: string;
-  travelDates?: {
-    earliest?: Date;
-    latest?: Date;
-    flexible: boolean;
-  };
-  isSecure: boolean;
-  createdAt: Date;
-}
 
 export interface AdvisoryTeamMember {
   id: string;

@@ -213,7 +213,7 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
-    const transformedReviews = reviews.map((review) => ({
+    const transformedReviews = reviews.map((review: typeof reviews[number]) => ({
       id: review.id,
       property: {
         id: review.property.id,

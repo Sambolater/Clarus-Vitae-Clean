@@ -189,7 +189,7 @@ export function PropertyHero({
               {/* CTAs */}
               <div className="flex gap-3">
                 <Link
-                  href={`/inquire?property=${slug}`}
+                  href={`/inquire/${slug}`}
                   className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
                 >
                   Request Information

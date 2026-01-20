@@ -45,7 +45,7 @@ export default async function ReviewsPage() {
   });
 
   // Transform reviews for client
-  const initialReviews = reviews.map((review) => ({
+  const initialReviews = reviews.map((review: typeof reviews[number]) => ({
     id: review.id,
     property: {
       id: review.property.id,

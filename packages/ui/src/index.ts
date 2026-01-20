@@ -219,3 +219,27 @@ export {
   type ComparisonEmptyStateProps,
   type PopularComparison,
 } from './components/Comparison';
+
+// ============================================================================
+// Inquiry Components
+// ============================================================================
+export {
+  InquiryForm,
+  type InquiryFormProps,
+  type InquiryFormProperty,
+  type InquiryFormProgram,
+  SecureInquiryForm,
+  type SecureInquiryFormProps,
+  type SecureInquiryFormProperty,
+  ConsentCheckboxes,
+  type ConsentCheckboxesProps,
+  PrivacyNote,
+  type PrivacyNoteProps,
+  FocusAreaSelector,
+  type FocusAreaSelectorProps,
+  InquiryConfirmation,
+  type InquiryConfirmationProps,
+  BatchInquiryForm,
+  type BatchInquiryFormProps,
+  type BatchInquiryProperty,
+} from './components/Inquiry';
