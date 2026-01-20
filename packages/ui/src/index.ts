@@ -146,3 +146,37 @@ export {
   type ComparisonItem,
   type ComparisonRow,
 } from './components/DataDisplay';
+
+// ============================================================================
+// Comparison Components
+// ============================================================================
+export {
+  AddToCompareButton,
+  type AddToCompareButtonProps,
+  type AddToCompareVariant,
+  type AddToCompareSize,
+  ComparisonBar,
+  type ComparisonBarProps,
+  type ComparisonBarItem,
+  ComparisonSection,
+  type ComparisonSectionProps,
+  ComparisonRow as ComparisonRowEnhanced,
+  type ComparisonRowProps,
+  ComparisonHeader,
+  type ComparisonHeaderProps,
+  type ComparisonHeaderProperty,
+  ComparisonActions,
+  type ComparisonActionsProps,
+  type ComparisonActionsProperty,
+  TreatmentComparisonMatrix,
+  type TreatmentComparisonMatrixProps,
+  type TreatmentInfo,
+  type PropertyTreatments,
+  MobileComparisonView,
+  type MobileComparisonViewProps,
+  type MobileComparisonProperty,
+  type MobileComparisonSection,
+  ComparisonEmptyState,
+  type ComparisonEmptyStateProps,
+  type PopularComparison,
+} from './components/Comparison';

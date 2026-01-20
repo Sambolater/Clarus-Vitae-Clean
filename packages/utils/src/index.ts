@@ -8,3 +8,4 @@ export * from './formatting';
 export * from './validation';
 export * from './cn';
 export * from './privacy';
+export * from './comparison';

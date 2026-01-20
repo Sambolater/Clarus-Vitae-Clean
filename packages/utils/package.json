@@ -12,8 +12,12 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
   "devDependencies": {
     "@clarus-vitae/config": "workspace:*",
+    "@types/react": "^18.0.0",
     "typescript": "^5.3.3"
   }
 }
