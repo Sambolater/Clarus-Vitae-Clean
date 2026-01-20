@@ -1,6 +1,7 @@
-import type { Metadata } from 'next';
 import { db } from '@clarus-vitae/database';
+import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
+
 import { ReviewWriteClient } from './_components/ReviewWriteClient';
 
 export const metadata: Metadata = {
@@ -104,14 +105,14 @@ export default async function ReviewWritePage({ searchParams }: ReviewWritePageP
                 <ul className="mt-2 list-disc list-inside space-y-1">
                   <li>Including identifying information about other guests</li>
                   <li>Sharing specific medical advice</li>
-                  <li>Reviewing properties you haven't visited</li>
+                  <li>Reviewing properties you haven&apos;t visited</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-clarus-navy">Verification</h3>
                 <p className="mt-2">
-                  Reviews marked "Verified Stay" have been confirmed through email verification,
+                  Reviews marked &ldquo;Verified Stay&rdquo; have been confirmed through email verification,
                   booking confirmation, or property confirmation.
                 </p>
               </div>

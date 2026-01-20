@@ -5,10 +5,10 @@
  * GET /api/reviews - Get recent reviews across all properties
  */
 
-import { createReview, getReviewAggregation } from '@clarus-vitae/database';
-import { db } from '@clarus-vitae/database';
-import { type NextRequest, NextResponse } from 'next/server';
 import type { ReviewSubmissionData } from '@clarus-vitae/types';
+
+import { createReview, db } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
 import { db } from '@clarus-vitae/database';
+import type { Metadata } from 'next';
+
 import { ReviewsHubClient } from './_components/ReviewsHubClient';
 
 export const metadata: Metadata = {
@@ -98,7 +99,7 @@ export default async function ReviewsPage() {
               Guest Reviews
             </h1>
             <p className="mt-4 text-lg text-white/80">
-              Outcome-focused reviews that ask "Did it work?" not just "Was it nice?"
+              Outcome-focused reviews that ask &ldquo;Did it work?&rdquo; not just &ldquo;Was it nice?&rdquo;
               Read verified experiences measuring health results, protocol quality,
               and long-term sustainability.
             </p>

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { ReviewSubmissionForm, type ReviewFormData } from '@clarus-vitae/ui';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface ReviewWriteClientProps {
   propertyId: string;
@@ -17,7 +17,7 @@ export function ReviewWriteClient({
   propertyTier,
   programs,
 }: ReviewWriteClientProps) {
-  const router = useRouter();
+  const _router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);

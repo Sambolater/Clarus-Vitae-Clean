@@ -1,8 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
 import {
-  ReviewCard,
   ReviewFilters,
   type ReviewFiltersState,
   StarRating,
@@ -10,6 +8,7 @@ import {
   TeamReviewBadge,
   OutcomeIndicator,
 } from '@clarus-vitae/ui';
+import { useState, useCallback } from 'react';
 
 interface ReviewData {
   id: string;
