@@ -194,10 +194,11 @@ export async function getFaqs(preview = false): Promise<Faq[]> {
 export async function getFaqsByCategory(preview = false): Promise<FaqsByCategory> {
   const faqs = await getFaqs(preview);
   return faqs.reduce((acc, faq) => {
-    if (!acc[faq.category]) {
-      acc[faq.category] = [];
+    const category = faq.category;
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[faq.category].push(faq);
+    acc[category]!.push(faq);
     return acc;
   }, {} as FaqsByCategory);
 }
@@ -270,7 +271,7 @@ export async function searchContent(
   preview = false
 ): Promise<SearchResult[]> {
   const client = getClient(preview);
-  return client.fetch(searchContentQuery, { query: `*${query}*`, limit });
+  return client.fetch<SearchResult[]>(searchContentQuery, { query: `*${query}*`, limit });
 }
 
 /**
