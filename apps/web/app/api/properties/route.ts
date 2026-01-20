@@ -5,7 +5,7 @@
  * All filters are applied via query parameters.
  */
 
-import { db, type PropertyTier, type WellnessApproach, type FocusArea, type Prisma } from '@clarus-vitae/database';
+import { db, type PropertyTier, type WellnessApproach, type FocusArea } from '@clarus-vitae/database';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -54,8 +54,8 @@ function parseQueryParams(request: NextRequest): PropertiesQueryParams {
   };
 }
 
-function buildWhereClause(params: PropertiesQueryParams): Prisma.PropertyWhereInput {
-  const where: Prisma.PropertyWhereInput = {
+function buildWhereClause(params: PropertiesQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -102,7 +102,7 @@ function buildWhereClause(params: PropertiesQueryParams): Prisma.PropertyWhereIn
   return where;
 }
 
-function buildOrderBy(sort: SortOption): Prisma.PropertyOrderByWithRelationInput {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'score_desc':
       return { overallScore: 'desc' };

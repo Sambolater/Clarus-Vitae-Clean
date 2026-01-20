@@ -1,4 +1,4 @@
-import { db } from '@clarus-vitae/database';
+import { db, type EquipmentCategory, type TreatmentCategory } from '@clarus-vitae/database';
 import { Container, Breadcrumbs, PropertyCard, TreatmentCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -103,7 +103,7 @@ export async function generateMetadata({ params }: EquipmentPageProps): Promise<
   }
 
   const { equipment } = data;
-  const _categoryLabel = equipmentCategoryLabels[equipment.category];
+  const _categoryLabel = equipmentCategoryLabels[equipment.category as EquipmentCategory];
   const propertiesCount = equipment.properties.filter((p: any) => p.property?.published).length;
   const brandModel = [equipment.brand, equipment.model].filter(Boolean).join(' ');
 
@@ -185,7 +185,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
       <section className="border-b border-stone bg-white py-12">
         <div className="mx-auto max-w-4xl px-6">
           <span className="inline-flex items-center rounded-full bg-stone px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate">
-            {equipmentCategoryLabels[equipment.category]}
+            {equipmentCategoryLabels[equipment.category as EquipmentCategory]}
           </span>
 
           <h1 className="mt-4 font-display text-4xl font-medium text-clarus-navy md:text-5xl">
@@ -278,7 +278,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
                 <Link key={treatment.id} href={`/treatments/${treatment.slug}`}>
                   <TreatmentCard
                     name={treatment.name}
-                    category={treatmentCategoryLabels[treatment.category] ?? 'Treatment'}
+                    category={treatmentCategoryLabels[treatment.category as TreatmentCategory] ?? 'Treatment'}
                     evidenceLevel={treatment.evidenceLevel}
                     description={treatment.description.substring(0, 100) + '...'}
                     propertiesCount={treatment.propertiesCount}
@@ -339,7 +339,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
               Related Equipment
             </h2>
             <p className="mt-2 text-slate">
-              Other {(equipmentCategoryLabels[equipment.category] ?? 'similar').toLowerCase()} equipment:
+              Other {(equipmentCategoryLabels[equipment.category as EquipmentCategory] ?? 'similar').toLowerCase()} equipment:
             </p>
 
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -350,7 +350,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
                   className="group rounded-lg border border-stone bg-white p-6 transition-shadow hover:shadow-card-hover"
                 >
                   <span className="text-xs font-medium uppercase tracking-wide text-slate">
-                    {equipmentCategoryLabels[re.category]}
+                    {equipmentCategoryLabels[re.category as EquipmentCategory]}
                   </span>
                   <h3 className="mt-1 font-medium text-clarus-navy group-hover:underline">
                     {re.name}

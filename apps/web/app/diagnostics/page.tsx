@@ -178,7 +178,7 @@ export default async function DiagnosticsPage({ searchParams }: DiagnosticsPageP
                   className="group rounded-lg border border-stone bg-white p-6 transition-shadow hover:shadow-card-hover"
                 >
                   <span className="text-xs font-medium uppercase tracking-wide text-slate">
-                    {diagnosticCategoryLabels[diagnostic.category]}
+                    {diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory]}
                   </span>
                   <h3 className="mt-2 font-display text-lg font-medium text-clarus-navy group-hover:underline">
                     {diagnostic.name}

@@ -1,4 +1,4 @@
-import { db } from '@clarus-vitae/database';
+import { db, type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import { Container, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: TreatmentPageProps): Promise<
   }
 
   const { treatment } = data;
-  const evidenceLabel = evidenceLevelLabels[treatment.evidenceLevel];
+  const evidenceLabel = evidenceLevelLabels[treatment.evidenceLevel as EvidenceLevel];
   const propertiesCount = treatment.properties.filter((p: any) => p.property?.published).length;
 
   return {
@@ -174,7 +174,7 @@ export default async function TreatmentPage({ params }: TreatmentPageProps) {
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Treatments', href: '/treatments' },
-    { label: treatmentCategoryLabels[treatment.category], href: `/treatments?category=${treatment.category}` },
+    { label: treatmentCategoryLabels[treatment.category as TreatmentCategory], href: `/treatments?category=${treatment.category}` },
     { label: treatment.name, href: `/treatments/${slug}` },
   ];
 

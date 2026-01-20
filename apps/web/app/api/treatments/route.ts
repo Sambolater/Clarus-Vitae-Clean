@@ -5,7 +5,7 @@
  * Supports filtering by category, evidence level, price range, and search.
  */
 
-import { db, type TreatmentCategory, type EvidenceLevel, type Prisma } from '@clarus-vitae/database';
+import { db, type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -43,8 +43,8 @@ function parseQueryParams(request: NextRequest): TreatmentsQueryParams {
   };
 }
 
-function buildWhereClause(params: TreatmentsQueryParams): Prisma.TreatmentWhereInput {
-  const where: Prisma.TreatmentWhereInput = {
+function buildWhereClause(params: TreatmentsQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -84,7 +84,7 @@ const evidenceLevelOrder: Record<EvidenceLevel, number> = {
   TRADITIONAL: 1,
 };
 
-function buildOrderBy(sort: SortOption): Prisma.TreatmentOrderByWithRelationInput | Prisma.TreatmentOrderByWithRelationInput[] {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
       return { name: 'asc' };

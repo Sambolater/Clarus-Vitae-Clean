@@ -1,4 +1,4 @@
-import { db } from '@clarus-vitae/database';
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
 import { Container, Breadcrumbs, PropertyCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -87,7 +87,7 @@ export async function generateMetadata({ params }: DiagnosticPageProps): Promise
   }
 
   const { diagnostic } = data;
-  const _categoryLabel = diagnosticCategoryLabels[diagnostic.category];
+  const _categoryLabel = diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory];
   const propertiesCount = diagnostic.properties.filter((p: any) => p.property?.published).length;
 
   return {
@@ -136,7 +136,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Diagnostics', href: '/diagnostics' },
-    { label: diagnosticCategoryLabels[diagnostic.category], href: `/diagnostics?category=${diagnostic.category}` },
+    { label: diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory], href: `/diagnostics?category=${diagnostic.category}` },
     { label: diagnostic.name, href: `/diagnostics/${slug}` },
   ];
 
@@ -153,7 +153,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
       <section className="border-b border-stone bg-white py-12">
         <div className="mx-auto max-w-4xl px-6">
           <span className="inline-flex items-center rounded-full bg-stone px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate">
-            {diagnosticCategoryLabels[diagnostic.category]}
+            {diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory]}
           </span>
 
           <h1 className="mt-4 font-display text-4xl font-medium text-clarus-navy md:text-5xl">
@@ -249,7 +249,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
               Related Diagnostics
             </h2>
             <p className="mt-2 text-slate">
-              Other {(diagnosticCategoryLabels[diagnostic.category] ?? 'similar').toLowerCase()} diagnostics you might consider:
+              Other {(diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory] ?? 'similar').toLowerCase()} diagnostics you might consider:
             </p>
 
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

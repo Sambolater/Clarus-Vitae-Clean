@@ -5,7 +5,7 @@
  * filtering by verified status and sorting options.
  */
 
-import { db, type Prisma } from '@clarus-vitae/database';
+import { db } from '@clarus-vitae/database';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -39,7 +39,7 @@ function parseQueryParams(request: NextRequest): ReviewsQueryParams {
   };
 }
 
-function buildOrderBy(sort: SortOption): Prisma.ReviewOrderByWithRelationInput {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'newest':
       return { createdAt: 'desc' };
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
 
     // Build where clause for reviews
-    const where: Prisma.ReviewWhereInput = {
+    const where: Record<string, unknown> = {
       propertyId: property.id,
       status: 'APPROVED',
     };

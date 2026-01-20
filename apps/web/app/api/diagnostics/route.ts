@@ -4,7 +4,7 @@
  * Retrieves a paginated list of diagnostics with optional filtering.
  */
 
-import { db, type DiagnosticCategory, type Prisma } from '@clarus-vitae/database';
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -34,8 +34,8 @@ function parseQueryParams(request: NextRequest): DiagnosticsQueryParams {
   };
 }
 
-function buildWhereClause(params: DiagnosticsQueryParams): Prisma.DiagnosticWhereInput {
-  const where: Prisma.DiagnosticWhereInput = {
+function buildWhereClause(params: DiagnosticsQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -53,7 +53,7 @@ function buildWhereClause(params: DiagnosticsQueryParams): Prisma.DiagnosticWher
   return where;
 }
 
-function buildOrderBy(sort: SortOption): Prisma.DiagnosticOrderByWithRelationInput | Prisma.DiagnosticOrderByWithRelationInput[] {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
       return { name: 'asc' };

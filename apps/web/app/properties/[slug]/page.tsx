@@ -1,4 +1,4 @@
-import { db } from '@clarus-vitae/database';
+import { db, type PropertyTier, type FocusArea } from '@clarus-vitae/database';
 import { Container, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -220,7 +220,7 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
   const scoreText = property.overallScore
     ? `Clarus Index score ${property.overallScore}/100.`
     : '';
-  const tierText = tierLabels[property.tier];
+  const tierText = tierLabels[property.tier as PropertyTier];
 
   return {
     title: `${property.name} Review & Analysis | Clarus Vitae`,
@@ -343,7 +343,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                       key={area}
                       className="rounded-md bg-stone px-3 py-1 text-sm text-slate"
                     >
-                      {focusAreaLabels[area]}
+                      {focusAreaLabels[area as FocusArea]}
                     </span>
                   ))}
                 </div>
