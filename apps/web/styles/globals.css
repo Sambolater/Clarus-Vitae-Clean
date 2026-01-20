@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors */
+    --clarus-navy: 26 43 74;
+    --clarus-white: 250 251 252;
+    --clarus-gold: 201 169 98;
+
+    /* Secondary Colors */
+    --slate: 100 116 139;
+    --stone: 232 230 227;
+    --warm-gray: 245 245 244;
+
+    /* Functional Colors */
+    --verification-green: 45 106 79;
+    --alert-amber: 180 83 9;
+    --error-red: 220 38 38;
+    --success-green: 22 163 74;
+
+    /* Spacing */
+    --space-unit: 8px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-clarus-navy;
+  }
+
+  /* Typography defaults */
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-medium tracking-tight;
+  }
+
+  h4,
+  h5,
+  h6 {
+    @apply font-body font-semibold;
+  }
+}
+
+@layer components {
+  /* Clarus Index Score Display */
+  .clarus-index-score {
+    @apply font-display text-clarus-gold;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clarus-navy focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex h-12 items-center justify-center rounded-md border border-clarus-navy bg-transparent px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-stone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clarus-navy focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-tertiary {
+    @apply inline-flex h-12 items-center justify-center rounded-md bg-stone px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-stone/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clarus-navy focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+}
+
+@layer utilities {
+  /* Custom line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
