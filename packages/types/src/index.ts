@@ -10,6 +10,7 @@ export * from './property';
 export * from './treatment';
 export * from './review';
 export * from './user';
+export * from './team';
 export * from './clarus-index';
 export * from './scoring';
 export * from './inquiry';

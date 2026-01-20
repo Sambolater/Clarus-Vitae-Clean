@@ -243,3 +243,31 @@ export {
   type BatchInquiryFormProps,
   type BatchInquiryProperty,
 } from './components/Inquiry';
+
+// ============================================================================
+// Team Components
+// ============================================================================
+export {
+  TeamHero,
+  type TeamHeroProps,
+  TrustStatement,
+  type TrustStatementProps,
+  TeamGrid,
+  type TeamGridProps,
+  TeamMemberHeader,
+  type TeamMemberHeaderProps,
+  TeamMemberBio,
+  type TeamMemberBioProps,
+  TeamMemberCredentials,
+  type TeamMemberCredentialsProps,
+  TeamMemberVisits,
+  type TeamMemberVisitsProps,
+  EditorialByline,
+  type EditorialBylineProps,
+  ContactAdvisor,
+  type ContactAdvisorProps,
+  ContactAdvisorCTA,
+  type ContactAdvisorCTAProps,
+  PropertyTeamSection,
+  type PropertyTeamSectionProps,
+} from './components/Team';
