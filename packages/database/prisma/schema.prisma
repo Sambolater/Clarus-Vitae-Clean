@@ -1,5 +1,6 @@
 // Clarus Vitae Database Schema
 // This is the Prisma schema file for the platform's PostgreSQL database.
+// Supports all MVP features and accommodates future features without breaking migrations.
 
 generator client {
   provider = "prisma-client-js"
@@ -12,86 +13,20 @@ datasource db {
 }
 
 // ============================================
-// PROPERTY MODELS
+// ENUMS
 // ============================================
 
-model Property {
-  id        String   @id @default(cuid())
-  slug      String   @unique
-  name      String
-  tier      PropertyTier
-  overview  String   @db.Text
-
-  // Location
-  country   String
-  region    String?
-  city      String?
-  latitude  Float?
-  longitude Float?
-
-  // Pricing
-  minPrice         Int?
-  maxPrice         Int?
-  currency         String   @default("USD")
-  minStayDays      Int?
-  maxStayDays      Int?
-
-  // Contact
-  website   String?
-  email     String?
-  phone     String?
-
-  // Clarus Index
-  clarusIndexScore Float?
-  verificationDate DateTime?
-
-  // Relations
-  images       PropertyImage[]
-  treatments   PropertyTreatment[]
-  reviews      Review[]
-  inquiries    Inquiry[]
-  indexScores  ClarusIndexScore[]
-  focusAreas   PropertyFocusArea[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([tier])
-  @@index([country])
-  @@index([clarusIndexScore])
-}
-
 enum PropertyTier {
-  TIER_1  // Medical Longevity & Clinical Wellness
-  TIER_2  // Integrated Wellness Retreats
-  TIER_3  // Luxury Destination Wellness
+  TIER_1 // Medical Longevity & Clinical Wellness ($20K-$150K)
+  TIER_2 // Integrated Wellness Retreats ($5K-$30K)
+  TIER_3 // Luxury Destination Wellness ($3K-$15K)
 }
 
-model PropertyImage {
-  id          String   @id @default(cuid())
-  propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  url         String
-  alt         String
-  width       Int
-  height      Int
-  aspectRatio String
-  isFeatured  Boolean  @default(false)
-  sortOrder   Int      @default(0)
-
-  createdAt DateTime @default(now())
-
-  @@index([propertyId])
-}
-
-model PropertyFocusArea {
-  id          String   @id @default(cuid())
-  propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  focusArea   FocusArea
-
-  @@unique([propertyId, focusArea])
-  @@index([focusArea])
+enum WellnessApproach {
+  CLINICAL
+  INTEGRATIVE
+  HOLISTIC
+  LIFESTYLE
 }
 
 enum FocusArea {
@@ -112,101 +47,136 @@ enum FocusArea {
   GENERAL_REJUVENATION
 }
 
-// ============================================
-// TREATMENT MODELS
-// ============================================
-
-model Treatment {
-  id             String           @id @default(cuid())
-  slug           String           @unique
-  name           String
-  category       TreatmentCategory
-  evidenceLevel  EvidenceLevel
-  description    String           @db.Text
-  overview       String           @db.Text
-  benefits       String[]
-  considerations String[]
-
-  // Pricing
-  minPrice  Int?
-  maxPrice  Int?
-  currency  String   @default("USD")
-  typicalDuration String?
-
-  // Relations
-  properties PropertyTreatment[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([category])
-  @@index([evidenceLevel])
+enum TreatmentCategory {
+  DIAGNOSTICS
+  REGENERATIVE
+  CELLULAR
+  DETOXIFICATION
+  HYPERBARIC
+  CRYOTHERAPY
+  IV_THERAPIES
+  HORMONE
+  AESTHETIC
+  BODY_MANUAL
+  MIND_NEURO
+  TRADITIONAL
 }
 
-enum TreatmentCategory {
-  LONGEVITY
-  DETOX
-  METABOLIC
-  STRESS
-  FITNESS
-  BEAUTY
-  HOLISTIC
-  DIAGNOSTIC
-  RECOVERY
-  ADDICTION
+enum DiagnosticCategory {
+  IMAGING
+  GENETIC
+  BIOMARKERS
+  MICROBIOME
+  CARDIOVASCULAR
   COGNITIVE
-  SLEEP
-  WOMENS_HEALTH
-  MENS_HEALTH
-  GENERAL
+  METABOLIC
+}
+
+enum EquipmentCategory {
+  MRI
+  CT
+  ULTRASOUND
+  HYPERBARIC
+  CRYOTHERAPY
+  IV_INFUSION
+  LASER
+  OTHER
 }
 
 enum EvidenceLevel {
-  STRONG
-  MODERATE
-  EMERGING
-  TRADITIONAL
-  INSUFFICIENT
+  STRONG      // Multiple RCTs, meta-analyses
+  MODERATE    // Some RCTs, consistent results
+  EMERGING    // Limited studies, promising
+  EXPERIMENTAL // Early research, theoretical
+  TRADITIONAL // Historical use, limited modern research
 }
 
-model PropertyTreatment {
-  id          String    @id @default(cuid())
-  propertyId  String
-  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  treatmentId String
-  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
-
-  // Property-specific treatment info
-  priceNote   String?
-  notes       String?
-
-  @@unique([propertyId, treatmentId])
-  @@index([treatmentId])
+enum PartnershipStatus {
+  NONE
+  CONTACTED
+  IN_DISCUSSION
+  LEAD_GEN
+  AFFILIATE
+  PREMIUM
 }
 
-// ============================================
-// CLARUS INDEX MODELS
-// ============================================
+enum DiscretionLevel {
+  ULTRA_HIGH // NDA standard, no social media
+  HIGH
+  STANDARD
+}
 
-model ClarusIndexScore {
-  id           String   @id @default(cuid())
-  propertyId   String
-  property     Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+enum GenderSeparation {
+  FULL
+  PARTIAL
+  NONE
+  ON_REQUEST
+}
 
-  overallScore Float
-  tier         IndexTier
+enum SoloFriendliness {
+  OPTIMIZED
+  GOOD
+  COUPLES_FOCUSED
+}
 
-  // Dimension scores (stored as JSON for flexibility across tiers)
-  dimensions   Json
+enum LGBTQWelcoming {
+  EXPLICITLY_WELCOMING
+  WELCOMING
+  CULTURALLY_CONSERVATIVE
+}
 
-  assessmentDate DateTime
-  assessedBy     String
-  methodology    String   @default("v1.0")
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
 
-  createdAt DateTime @default(now())
+enum GoalAchievement {
+  FULLY
+  PARTIALLY
+  NOT_ACHIEVED
+}
 
-  @@index([propertyId])
-  @@index([tier])
+enum PhysicianEndorsement {
+  YES
+  PROBABLY
+  UNSURE
+  NO
+}
+
+enum ContactMethod {
+  EMAIL
+  PHONE
+  SECURE_EMAIL
+  SIGNAL
+}
+
+enum BudgetRange {
+  UNDER_5K
+  FIVE_TO_10K
+  TEN_TO_25K
+  TWENTYFIVE_TO_50K
+  FIFTY_TO_100K
+  OVER_100K
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  SENT_TO_PROPERTY
+  CONVERTED
+  CLOSED
+}
+
+enum ArticleCategory {
+  DESTINATION_GUIDE
+  BUYERS_GUIDE
+  TREATMENT_EXPLAINER
+  INDUSTRY_NEWS
+  PRACTITIONER_INTERVIEW
+  EXPERIENCE_ARTICLE
 }
 
 enum IndexTier {
@@ -217,103 +187,532 @@ enum IndexTier {
 }
 
 // ============================================
+// PROPERTY MODELS
+// ============================================
+
+model Property {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String   @db.Text
+
+  // Location
+  city           String
+  country        String
+  region         String?
+  latitude       Float?
+  longitude      Float?
+  nearestAirport String?
+  transferTime   String? // e.g., "45 minutes by car"
+
+  // Classification
+  tier       PropertyTier
+  approach   WellnessApproach?
+  focusAreas FocusArea[]
+
+  // Pricing
+  priceMin Int
+  priceMax Int
+  currency String @default("USD")
+
+  // Details
+  website               String?
+  contactEmail          String?
+  contactPhone          String?
+  foundedYear           Int?
+  capacity              Int?     // rooms/guests
+  accommodationType     String?  // "Private Villas", "Suites", etc.
+  diningDescription     String?  @db.Text
+  facilitiesDescription String?  @db.Text
+  setting               String?  // "Beachfront", "Mountain", "Urban", etc.
+
+  // Clarus Index Scores (calculated, stored for performance)
+  overallScore           Float?
+  clinicalRigorScore     Float?  // Tier 1 primary
+  outcomeEvidenceScore   Float?  // Tier 1 & 2
+  programDepthScore      Float?  // Tier 1 & 2
+  experienceQualityScore Float?  // All tiers
+  valueAlignmentScore    Float?  // All tiers
+
+  // Dark Data (proprietary intelligence - properties don't publish)
+  physicianPatientRatio String?  // e.g., "1:2.5"
+  avgBookingLeadTime    String?  // e.g., "6-8 weeks"
+  returnGuestPercentage Int?     // 0-100
+  staffTenure           String?  // e.g., "Average 8 years"
+  actualCustomization   String?  @db.Text // Reality of personalization
+  postVisitFollowup     String?  @db.Text // What actually happens after
+  discretionLevel       DiscretionLevel?
+
+  // Cultural Fit Data Points
+  genderSeparatedFacilities GenderSeparation?
+  religiousDietaryOptions   String[] // "Halal certified", "Kosher", etc.
+  privacyArchitecture       String?  // "Private villas", "Semi-private"
+  prayerFacilities          String?  // "Multi-faith", "Quiet spaces"
+  languagesMedical          String[] // Languages for clinical consultations
+  languagesService          String[] // Languages for general service
+  soloTravelerFriendly      SoloFriendliness?
+  lgbtqWelcoming            LGBTQWelcoming?
+
+  // Partnership & Business
+  partnershipStatus   PartnershipStatus @default(NONE)
+  affiliateLink       String?
+  leadGenAgreement    Boolean           @default(false)
+  verifiedByProperty  Boolean           @default(false) // Property reviewed our listing
+  lastPropertyContact DateTime?
+
+  // Editorial & Status
+  published          Boolean  @default(false)
+  featured           Boolean  @default(false)
+  editorChoice       String?  // e.g., "Best for Executive Burnout"
+  verifiedExcellence Boolean  @default(false) // Our team completed full program
+  risingStar         Boolean  @default(false) // Newer property showing promise
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  programs       Program[]
+  treatments     PropertyTreatment[]
+  diagnostics    PropertyDiagnostic[]
+  equipment      PropertyEquipment[]
+  images         PropertyImage[]
+  reviews        Review[]
+  inquiries      Inquiry[]
+  indexScores    ClarusIndexScore[]
+  tierOneDetails TierOneDetails?
+
+  @@index([tier])
+  @@index([country])
+  @@index([published])
+  @@index([overallScore])
+  @@index([approach])
+}
+
+// Additional details for Tier 1 Medical Longevity properties
+model TierOneDetails {
+  id         String   @id @default(cuid())
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  medicalDirector       String?  // Name of medical director
+  medicalDirectorCreds  String?  // Credentials/qualifications
+  medicalTeamSize       Int?     // Number of physicians
+  certifications        String[] // e.g., "JCI Accredited"
+  hospitalAffiliations  String[] // Partner hospitals
+  researchPublications  String[] // Published research by the team
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  url         String
+  alt         String
+  width       Int
+  height      Int
+  aspectRatio String   // "16:9", "3:2", etc.
+  category    String?  // "hero", "treatment", "accommodation", etc.
+  isFeatured  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([isFeatured])
+}
+
+// ============================================
+// PROGRAM MODELS
+// ============================================
+
+model Program {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  name            String
+  description     String   @db.Text
+  durationDays    Int
+  price           Int
+  currency        String   @default("USD")
+
+  focusAreas      FocusArea[]
+  inclusions      String[] // What's included
+  exclusions      String[] // What's not included
+  typicalSchedule String?  @db.Text // Day-by-day outline
+
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([propertyId])
+  @@index([durationDays])
+}
+
+// ============================================
+// TREATMENT MODELS
+// ============================================
+
+model Treatment {
+  id       String   @id @default(cuid())
+  slug     String   @unique
+  name     String
+  aliases  String[] // Alternative names for search
+  category TreatmentCategory
+
+  description      String        @db.Text
+  howItWorks       String?       @db.Text // Mechanism of action
+  whatItAddresses  String[]      // Conditions/goals it targets
+  evidenceLevel    EvidenceLevel
+  evidenceSummary  String?       @db.Text // Summary of research
+
+  typicalProtocol String? @db.Text // Standard treatment protocol
+  priceRangeMin   Int?    // Typical minimum price
+  priceRangeMax   Int?    // Typical maximum price
+
+  potentialRisks    String?  @db.Text // Known risks
+  contraindications String[] // Who should not receive treatment
+
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  properties PropertyTreatment[]
+  equipment  TreatmentEquipment[]
+
+  @@index([category])
+  @@index([evidenceLevel])
+  @@index([published])
+}
+
+model Diagnostic {
+  id       String             @id @default(cuid())
+  slug     String             @unique
+  name     String
+  category DiagnosticCategory
+
+  description    String @db.Text
+  whatItMeasures String @db.Text // What biomarkers/metrics it captures
+
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  properties PropertyDiagnostic[]
+
+  @@index([category])
+  @@index([published])
+}
+
+model Equipment {
+  id       String            @id @default(cuid())
+  slug     String            @unique
+  name     String
+  brand    String?
+  model    String?
+  category EquipmentCategory
+
+  description  String   @db.Text
+  capabilities String[] // What it can do
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  treatments TreatmentEquipment[]
+  properties PropertyEquipment[]
+
+  @@index([category])
+}
+
+// ============================================
+// JUNCTION TABLES
+// ============================================
+
+model PropertyTreatment {
+  propertyId  String
+  treatmentId String
+  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+
+  notes           String? // Property-specific notes
+  priceAtProperty Int?    // Price at this specific property
+
+  createdAt DateTime @default(now())
+
+  @@id([propertyId, treatmentId])
+  @@index([treatmentId])
+}
+
+model PropertyDiagnostic {
+  propertyId   String
+  diagnosticId String
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  diagnostic   Diagnostic @relation(fields: [diagnosticId], references: [id], onDelete: Cascade)
+
+  notes String? // Property-specific notes
+
+  createdAt DateTime @default(now())
+
+  @@id([propertyId, diagnosticId])
+  @@index([diagnosticId])
+}
+
+model PropertyEquipment {
+  propertyId  String
+  equipmentId String
+  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  installationYear Int?    // When installed
+  notes            String? // Property-specific notes
+
+  createdAt DateTime @default(now())
+
+  @@id([propertyId, equipmentId])
+  @@index([equipmentId])
+}
+
+model TreatmentEquipment {
+  treatmentId String
+  equipmentId String
+  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([treatmentId, equipmentId])
+  @@index([equipmentId])
+}
+
+// ============================================
+// CLARUS INDEX MODELS
+// ============================================
+
+model ClarusIndexScore {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  overallScore Float
+  tier         IndexTier
+
+  // Individual dimension scores (vary by property tier)
+  // Stored as JSON for flexibility across tiers
+  dimensions Json
+
+  assessmentDate DateTime
+  assessedBy     String   // Team member who assessed
+  methodology    String   @default("v1.0") // Version of scoring methodology
+
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([tier])
+  @@index([overallScore])
+}
+
+// ============================================
 // REVIEW MODELS
 // ============================================
 
 model Review {
-  id           String     @id @default(cuid())
-  propertyId   String
-  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
-  type              ReviewType
-  authorName        String?
-  authorCredentials String?
+  // Reviewer Info (optional user link for future membership)
+  userId       String?
+  reviewerName String?      // Can be anonymous
+  isTeamReview Boolean      @default(false)
+  teamMemberId String?
+  teamMember   TeamMember?  @relation(fields: [teamMemberId], references: [id])
 
-  visitDate    DateTime
-  programType  String
-  stayDuration Int
+  // Visit Context
+  visitDate      DateTime
+  programType    String   // Name/type of program attended
+  stayLengthDays Int
+  statedGoals    String[] // What they hoped to achieve
 
-  // Outcome metrics
-  goalAchievement        Int?    // 1-5 scale
-  measurableImprovement  String?
-  protocolQuality        Int?    // 1-5 scale
-  followUpQuality        Int?    // 1-5 scale
-  sustainabilityDays     Int?
-  wouldRecommend         Boolean @default(true)
+  // Experience Ratings (1-5 scale)
+  overallRating    Int
+  serviceRating    Int?
+  facilitiesRating Int?
+  diningRating     Int?
+  valueRating      Int?
 
-  narrative     String   @db.Text
-  strengths     String[]
-  considerations String[]
-  bestFor       String[]
+  // Outcome Ratings (Tier 1 & 2 properties)
+  goalAchievement       GoalAchievement?     // Did they achieve their goals?
+  protocolQualityRating Int?                 // 1-5: How comprehensive was the protocol?
+  followupQualityRating Int?                 // 1-5: How useful was post-visit support?
+  physicianEndorsement  PhysicianEndorsement? // Would their doctor recommend?
 
-  verifiedAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  // Measurable Outcomes (optional self-report)
+  bioAgeChange      Int?    // Years change, negative = improvement
+  weightChange      Float?  // kg change
+  energyImprovement Int?    // 1-10 scale
+  sleepImprovement  Int?    // 1-10 scale
+  specificOutcomes  String? @db.Text // Detailed outcome description
+
+  // Written Review
+  reviewText String   @db.Text
+  pros       String[] // Strengths/positives
+  cons       String[] // Weaknesses/considerations
+
+  // Verification
+  verified           Boolean @default(false)
+  verificationMethod String? // "receipt", "booking_confirmation"
+
+  // Sustainability Follow-ups (outcome persistence)
+  followUp30Days  String? @db.Text // Results at 30 days
+  followUp90Days  String? @db.Text // Results at 90 days
+  followUp180Days String? @db.Text // Results at 180 days
+
+  // Moderation
+  status          ReviewStatus @default(PENDING)
+  moderationNotes String?
+
+  // Property Response
+  propertyResponse    String?   @db.Text
+  propertyRespondedAt DateTime?
+
+  helpfulCount Int @default(0) // Community votes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([propertyId])
-  @@index([type])
-}
-
-enum ReviewType {
-  VERIFIED_GUEST
-  EXPERT_ASSESSMENT
+  @@index([status])
+  @@index([isTeamReview])
+  @@index([overallRating])
 }
 
 // ============================================
-// INQUIRY MODELS
+// INQUIRY MODELS (Lead Capture)
 // ============================================
 
 model Inquiry {
-  id          String   @id @default(cuid())
-  propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  id         String    @id @default(cuid())
+  propertyId String?   // Optional - could be general inquiry
+  property   Property? @relation(fields: [propertyId], references: [id])
 
-  name             String?
-  email            String
-  phone            String?
-  message          String   @db.Text
-  preferredContact ContactMethod
-  interests        String[]
-  budgetRange      String?
+  // Contact Info (encrypted in application layer for privacy)
+  name             String? // Optional for anonymous inquiries
+  email            String  // Encrypted
+  phone            String? // Encrypted
+  preferredContact ContactMethod @default(EMAIL)
 
-  // Travel dates
-  earliestDate DateTime?
-  latestDate   DateTime?
-  datesFlexible Boolean  @default(true)
+  // Inquiry Details
+  interestedProperties String[]     // Property IDs if multiple
+  dates                String?      // Preferred dates
+  datesFlexible        Boolean      @default(true)
+  durationInterest     String?      // e.g., "7-10 days"
+  primaryGoals         String[]     // What they want to achieve
+  budgetRange          BudgetRange?
+  additionalNotes      String?      @db.Text
 
-  isSecure  Boolean  @default(false)
+  // Privacy Preferences
+  anonymousInquiry     Boolean @default(false)
+  secureChannelRequest Boolean @default(false) // Wants encrypted communication
+
+  // Attribution (for analytics)
+  sourcePage  String? // Page where inquiry originated
+  sourceUrl   String? // Full URL
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+
+  // Processing
+  status             InquiryStatus @default(NEW)
+  assignedTo         String?       // Team member handling
+  propertyNotified   Boolean       @default(false)
+  propertyNotifiedAt DateTime?
+
+  // Consent (GDPR compliance)
+  contactConsent        Boolean @default(false)
+  privacyPolicyAccepted Boolean @default(false)
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  @@index([status])
   @@index([propertyId])
   @@index([createdAt])
 }
 
-enum ContactMethod {
-  EMAIL
-  PHONE
-  SECURE
-}
-
 // ============================================
-// ADVISORY TEAM MODELS
+// TEAM MEMBER MODELS
 // ============================================
 
-model AdvisoryTeamMember {
-  id              String   @id @default(cuid())
-  slug            String   @unique
-  name            String
-  title           String
-  credentials     String[]
+model TeamMember {
+  id   String @id @default(cuid())
+  slug String @unique
+  name String
+  title String
+
   bio             String   @db.Text
-  specializations String[]
-  propertiesVisited Int    @default(0)
+  credentials     String[] // Degrees, certifications
+  specializations String[] // Areas of expertise
+  languages       String[] // Languages spoken
 
-  photoUrl String?
-  photoAlt String?
+  propertiesVisited String[] // Property IDs they've visited
+  programsCompleted Int      @default(0)
 
-  contactEmail String?
-  isActive     Boolean @default(true)
+  photoUrl    String?
+  linkedinUrl String?
+
+  published Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Relations
+  reviews  Review[]
+  articles Article[]
+
+  @@index([published])
+}
+
+// ============================================
+// CONTENT MODELS (Editorial)
+// ============================================
+
+model Article {
+  id    String @id @default(cuid())
+  slug  String @unique
+  title String
+
+  excerpt String? @db.Text // Short summary
+  content String  @db.Text // Markdown or HTML content
+
+  authorId String?
+  author   TeamMember? @relation(fields: [authorId], references: [id])
+
+  category ArticleCategory
+  tags     String[]
+
+  featuredImage String?
+
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+
+  // SEO
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([published])
+  @@index([publishedAt])
 }
