@@ -146,7 +146,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
   ]);
 
   // Transform the response
-  let transformedTreatments: TreatmentListItem[] = treatments.map((treatment) => ({
+  let transformedTreatments: TreatmentListItem[] = treatments.map((treatment: any) => ({
     id: treatment.id,
     slug: treatment.slug,
     name: treatment.name,
@@ -163,7 +163,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
   // Sort by evidence level if needed
   if (sort === 'evidence_desc') {
     transformedTreatments = transformedTreatments.sort(
-      (a, b) => evidenceLevelOrder[b.evidenceLevel] - evidenceLevelOrder[a.evidenceLevel]
+      (a, b) => (evidenceLevelOrder[b.evidenceLevel] ?? 0) - (evidenceLevelOrder[a.evidenceLevel] ?? 0)
     );
   }
 

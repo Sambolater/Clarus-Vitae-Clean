@@ -50,7 +50,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
           <Suspense
             fallback={
               <div className="flex items-center justify-center py-20">
-                <LoadingSpinner size="large" />
+                <LoadingSpinner size="lg" />
               </div>
             }
           >

@@ -42,12 +42,12 @@ export default function PrivacyPolicyPage() {
             Clarus Vitae is built on a fundamental principle: your privacy matters. We
             understand that you may be researching sensitive health topics—addiction
             recovery, weight management, mental health, aging concerns, or performance
-            optimization you prefer to keep private. That's why privacy isn't just a
-            feature; it's the foundation of our platform.
+            optimization you prefer to keep private. That&apos;s why privacy isn&apos;t just a
+            feature; it&apos;s the foundation of our platform.
           </p>
           <p className="text-slate">
-            We've designed our platform so you can research with complete confidence.
-            You don't need to create an account. You don't need to accept cookies. You
+            We&apos;ve designed our platform so you can research with complete confidence.
+            You don&apos;t need to create an account. You don&apos;t need to accept cookies. You
             can browse our entire site in Research Mode—completely private, with no
             tracking whatsoever.
           </p>
@@ -93,7 +93,7 @@ export default function PrivacyPolicyPage() {
               <li>Name and email (required)</li>
               <li>Phone number (optional)</li>
               <li>Your message to the property</li>
-              <li>Which property you're interested in</li>
+              <li>Which property you&apos;re interested in</li>
             </ul>
             <p className="mt-4 text-sm text-slate">
               All personal information is encrypted with AES-256 encryption before
@@ -119,7 +119,7 @@ export default function PrivacyPolicyPage() {
         {/* What We DON'T Do */}
         <section className="mt-12">
           <h2 className="font-display text-2xl font-medium text-clarus-navy">
-            What We DON'T Do
+            What We DON&apos;T Do
           </h2>
           <div className="mt-6 grid gap-3 md:grid-cols-2">
             {[
@@ -207,7 +207,7 @@ export default function PrivacyPolicyPage() {
           </h2>
           <p className="mt-4 text-slate">
             You have complete control over your data. These rights apply globally,
-            regardless of where you live—we don't limit them to EU residents.
+            regardless of where you live—we don&apos;t limit them to EU residents.
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-clarus-navy/20 bg-clarus-navy/5 p-4">
@@ -264,7 +264,7 @@ export default function PrivacyPolicyPage() {
             Inquiries & Properties
           </h2>
           <p className="mt-4 text-slate">
-            When you inquire about a property, here's exactly what happens:
+            When you inquire about a property, here&apos;s exactly what happens:
           </p>
           <div className="mt-6 space-y-4">
             <div className="flex gap-4">
@@ -300,7 +300,7 @@ export default function PrivacyPolicyPage() {
               </div>
               <div>
                 <h3 className="font-medium text-clarus-navy">
-                  What We DON'T Share
+                  What We DON&apos;T Share
                 </h3>
                 <p className="mt-1 text-sm text-slate">
                   Your browsing history, other properties viewed, comparison lists,
@@ -352,7 +352,7 @@ export default function PrivacyPolicyPage() {
             Questions About Privacy?
           </h2>
           <p className="mt-2 text-slate">
-            We're committed to transparency. If you have any questions about our
+            We&apos;re committed to transparency. If you have any questions about our
             privacy practices, please contact us:
           </p>
           <p className="mt-4">
@@ -369,7 +369,7 @@ export default function PrivacyPolicyPage() {
         <footer className="mt-12 border-t border-stone pt-8">
           <p className="text-sm text-slate">
             This privacy policy was last updated in January 2026. We will notify
-            users of any material changes to this policy via email (if you've
+            users of any material changes to this policy via email (if you&apos;ve
             provided one) or through a prominent notice on our website.
           </p>
         </footer>

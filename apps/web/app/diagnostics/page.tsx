@@ -1,5 +1,5 @@
 import { db, type DiagnosticCategory } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+import { Container, Breadcrumbs, EmptyState } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -64,7 +64,7 @@ async function getDiagnostics(searchParams: SearchParams) {
   const totalPages = Math.ceil(totalCount / limit);
 
   return {
-    diagnostics: diagnostics.map((d) => ({
+    diagnostics: diagnostics.map((d: any) => ({
       ...d,
       propertiesCount: d._count.properties,
     })),
@@ -171,7 +171,7 @@ export default async function DiagnosticsPage({ searchParams }: DiagnosticsPageP
             />
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {diagnostics.map((diagnostic) => (
+              {diagnostics.map((diagnostic: any) => (
                 <Link
                   key={diagnostic.id}
                   href={`/diagnostics/${diagnostic.slug}`}

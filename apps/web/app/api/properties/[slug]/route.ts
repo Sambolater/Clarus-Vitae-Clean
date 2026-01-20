@@ -234,7 +234,7 @@ export async function GET(request: NextRequest, { params }: Params) {
         : null,
 
       // Images
-      images: property.images.map((img) => ({
+      images: property.images.map((img: any) => ({
         id: img.id,
         url: img.url,
         alt: img.alt,
@@ -246,7 +246,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       })),
 
       // Programs
-      programs: property.programs.map((program) => ({
+      programs: property.programs.map((program: any) => ({
         id: program.id,
         name: program.name,
         description: program.description,
@@ -260,7 +260,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       })),
 
       // Treatments
-      treatments: property.treatments.map((pt) => ({
+      treatments: property.treatments.map((pt: any) => ({
         id: pt.treatment.id,
         slug: pt.treatment.slug,
         name: pt.treatment.name,
@@ -272,7 +272,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       })),
 
       // Diagnostics
-      diagnostics: property.diagnostics.map((pd) => ({
+      diagnostics: property.diagnostics.map((pd: any) => ({
         id: pd.diagnostic.id,
         slug: pd.diagnostic.slug,
         name: pd.diagnostic.name,
@@ -282,7 +282,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       })),
 
       // Equipment
-      equipment: property.equipment.map((pe) => ({
+      equipment: property.equipment.map((pe: any) => ({
         id: pe.equipment.id,
         slug: pe.equipment.slug,
         name: pe.equipment.name,
@@ -297,7 +297,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       reviewStats,
 
       // Similar Properties
-      similarProperties: similarProperties.map((p) => ({
+      similarProperties: similarProperties.map((p: any) => ({
         id: p.id,
         slug: p.slug,
         name: p.name,

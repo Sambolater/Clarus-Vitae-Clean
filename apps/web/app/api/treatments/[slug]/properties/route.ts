@@ -135,7 +135,7 @@ export async function GET(
     ]);
 
     // Transform the response
-    const transformedProperties = propertyTreatments.map((pt) => ({
+    const transformedProperties = propertyTreatments.map((pt: any) => ({
       id: pt.property.id,
       slug: pt.property.slug,
       name: pt.property.name,

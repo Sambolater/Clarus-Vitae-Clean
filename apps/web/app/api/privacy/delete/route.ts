@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
+    const _normalizedEmail = email.toLowerCase().trim();
 
     // Generate deletion request ID
     const requestId = `del_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;

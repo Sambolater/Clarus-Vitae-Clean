@@ -57,7 +57,7 @@ export async function generateStaticParams() {
     distinct: ['country'],
   });
 
-  return countries.map((p) => ({
+  return countries.map((p: any) => ({
     country: toCountrySlug(p.country),
   }));
 }

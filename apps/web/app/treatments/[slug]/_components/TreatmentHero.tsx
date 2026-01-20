@@ -31,7 +31,7 @@ export function TreatmentHero({
   priceRangeMax,
   aliases,
 }: TreatmentHeroProps) {
-  const evidence = evidenceLevelConfig[evidenceLevel];
+  const evidence = evidenceLevelConfig[evidenceLevel]!;
 
   return (
     <section className="border-b border-stone bg-white py-12">

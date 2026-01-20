@@ -61,7 +61,7 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
               property.pricing.max,
               property.pricing.currency
             )}
-            focusAreas={property.focusAreas.slice(0, 3).map((area) => focusAreaLabels[area])}
+            focusAreas={property.focusAreas.slice(0, 3).map((area) => focusAreaLabels[area] ?? area).filter(Boolean) as string[]}
             href={`/properties/${property.slug}`}
           />
         </Link>

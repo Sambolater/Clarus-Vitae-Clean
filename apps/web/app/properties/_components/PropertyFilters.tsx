@@ -6,7 +6,6 @@ import {
   Checkbox,
   Select,
   RangeSlider,
-  Button,
 } from '@clarus-vitae/ui';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
@@ -136,7 +135,7 @@ export function PropertyFilters() {
             <Checkbox
               key={tier}
               id={`tier-${tier}`}
-              label={tierLabels[tier]}
+              label={tierLabels[tier] ?? tier}
               checked={currentFilters.tiers.includes(tier)}
               onChange={() => toggleTier(tier)}
             />
@@ -172,7 +171,7 @@ export function PropertyFilters() {
             <Checkbox
               key={approach}
               id={`approach-${approach}`}
-              label={approachLabels[approach]}
+              label={approachLabels[approach] ?? approach}
               checked={currentFilters.approaches.includes(approach)}
               onChange={() => toggleApproach(approach)}
             />
@@ -190,7 +189,7 @@ export function PropertyFilters() {
             <Checkbox
               key={area}
               id={`focus-${area}`}
-              label={focusAreaLabels[area]}
+              label={focusAreaLabels[area] ?? area}
               checked={currentFilters.focusAreas.includes(area)}
               onChange={() => toggleFocusArea(area)}
             />

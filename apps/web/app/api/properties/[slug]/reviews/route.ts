@@ -113,7 +113,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     ]);
 
     // Transform reviews for response
-    const transformedReviews = reviews.map((review) => ({
+    const transformedReviews = reviews.map((review: any) => ({
       id: review.id,
 
       // Reviewer info

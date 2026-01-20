@@ -95,7 +95,7 @@ export function PropertyResultCard({ result }: { result: PropertyResult }) {
             </p>
           </div>
           {result.score && (
-            <ClarusIndexBadge score={result.score} size="small" />
+            <ClarusIndexBadge score={result.score} size="sm" />
           )}
         </div>
 

@@ -44,7 +44,7 @@ export function hasAnalyticsConsent(): boolean {
 
     if (!consentCookie) return false;
 
-    const value = consentCookie.split('=')[1];
+    const value = consentCookie.split('=')[1] ?? '';
     const consent = JSON.parse(decodeURIComponent(value));
     return consent.analytics === true;
   } catch {

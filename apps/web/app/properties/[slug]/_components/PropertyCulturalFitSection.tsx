@@ -92,7 +92,7 @@ export function PropertyCulturalFitSection({ culturalFit }: PropertyCulturalFitS
                 </svg>
               }
               label="Gender-Separated Facilities"
-              value={genderSeparationLabels[culturalFit.genderSeparatedFacilities]}
+              value={genderSeparationLabels[culturalFit.genderSeparatedFacilities] ?? null}
             />
           )}
 
@@ -170,7 +170,7 @@ export function PropertyCulturalFitSection({ culturalFit }: PropertyCulturalFitS
                 </svg>
               }
               label="Solo Traveler Suitability"
-              value={soloFriendlinessLabels[culturalFit.soloTravelerFriendly]}
+              value={soloFriendlinessLabels[culturalFit.soloTravelerFriendly] ?? null}
             />
           )}
 
@@ -183,7 +183,7 @@ export function PropertyCulturalFitSection({ culturalFit }: PropertyCulturalFitS
                 </svg>
               }
               label="LGBTQ+ Environment"
-              value={lgbtqLabels[culturalFit.lgbtqWelcoming]}
+              value={lgbtqLabels[culturalFit.lgbtqWelcoming] ?? null}
             />
           )}
         </div>

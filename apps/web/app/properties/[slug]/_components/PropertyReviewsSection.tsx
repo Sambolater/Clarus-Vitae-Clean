@@ -1,7 +1,8 @@
 'use client';
 
 import { type PropertyTier } from '@clarus-vitae/database';
-import { Button, StarRating, OutcomeIndicator, VerifiedBadge, LoadingSpinner } from '@clarus-vitae/ui';
+import { StarRating } from '@clarus-vitae/ui';
+import Link from 'next/link';
 import { useState } from 'react';
 
 interface ReviewStats {
@@ -58,9 +59,12 @@ export function PropertyReviewsSection({
             <p className="mt-2 text-sm text-slate">
               Be the first to share your experience at this property.
             </p>
-            <Button variant="primary" className="mt-4" href={`/reviews/write?property=${propertySlug}`}>
+            <Link
+              href={`/reviews/write?property=${propertySlug}`}
+              className="mt-4 inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
+            >
               Write a Review
-            </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -74,9 +78,12 @@ export function PropertyReviewsSection({
       <div className="mx-auto max-w-4xl">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-2xl font-medium text-clarus-navy">Reviews</h2>
-          <Button variant="secondary" size="sm" href={`/reviews/write?property=${propertySlug}`}>
+          <Link
+            href={`/reviews/write?property=${propertySlug}`}
+            className="inline-flex h-9 items-center justify-center rounded-md border border-clarus-navy bg-transparent px-4 text-sm font-medium text-clarus-navy transition-colors hover:bg-stone"
+          >
             Write a Review
-          </Button>
+          </Link>
         </div>
 
         {/* Review Summary */}

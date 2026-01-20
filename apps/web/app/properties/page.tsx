@@ -176,7 +176,7 @@ async function getProperties(searchParams: SearchParams): Promise<PropertiesResp
   ]);
 
   // Transform the response
-  const transformedProperties: PropertyListItem[] = properties.map((property) => ({
+  const transformedProperties: PropertyListItem[] = properties.map((property: any) => ({
     id: property.id,
     slug: property.slug,
     name: property.name,

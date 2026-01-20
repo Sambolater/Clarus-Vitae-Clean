@@ -6,6 +6,7 @@
 
 import { searchAll } from '@clarus-vitae/database';
 import { EmptyState, Alert } from '@clarus-vitae/ui';
+import Link from 'next/link';
 
 import { SearchResultsList } from './SearchResultsList';
 
@@ -34,10 +35,14 @@ export async function SearchResultsContent({ searchParams }: SearchResultsConten
         <EmptyState
           title="No results found"
           description={`We couldn't find any results for "${query}". Try a different search term or browse our properties and treatments.`}
-          action={{
-            label: 'Browse Properties',
-            href: '/properties',
-          }}
+          action={
+            <Link
+              href="/properties"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
+            >
+              Browse Properties
+            </Link>
+          }
           className="py-20"
         />
       );

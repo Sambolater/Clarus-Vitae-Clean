@@ -1,8 +1,9 @@
 'use client';
 
 import { type PropertyTier } from '@clarus-vitae/database';
-import { Button, TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
+import { TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { formatPriceRange, tierLabels } from '@/lib/properties';
@@ -187,12 +188,18 @@ export function PropertyHero({
 
               {/* CTAs */}
               <div className="flex gap-3">
-                <Button variant="primary" href={`/inquire?property=${slug}`}>
+                <Link
+                  href={`/inquire?property=${slug}`}
+                  className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
+                >
                   Request Information
-                </Button>
-                <Button variant="secondary" href={`/compare?add=${slug}`}>
+                </Link>
+                <Link
+                  href={`/compare?add=${slug}`}
+                  className="inline-flex h-12 items-center justify-center rounded-md border border-clarus-navy bg-transparent px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-stone"
+                >
                   Add to Compare
-                </Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -87,8 +87,8 @@ export async function generateMetadata({ params }: DiagnosticPageProps): Promise
   }
 
   const { diagnostic } = data;
-  const categoryLabel = diagnosticCategoryLabels[diagnostic.category];
-  const propertiesCount = diagnostic.properties.filter((p) => p.property?.published).length;
+  const _categoryLabel = diagnosticCategoryLabels[diagnostic.category];
+  const propertiesCount = diagnostic.properties.filter((p: any) => p.property?.published).length;
 
   return {
     title: `${diagnostic.name}: What It Measures & Where To Get It | Clarus Vitae`,
@@ -112,8 +112,8 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
   const { diagnostic, relatedDiagnostics } = data;
 
   const publishedProperties = diagnostic.properties
-    .filter((pd) => pd.property?.published)
-    .map((pd) => ({
+    .filter((pd: any) => pd.property?.published)
+    .map((pd: any) => ({
       id: pd.property.id,
       slug: pd.property.slug,
       name: pd.property.name,
@@ -212,7 +212,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
 
           {publishedProperties.length > 0 ? (
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {publishedProperties.slice(0, 6).map((property) => (
+              {publishedProperties.slice(0, 6).map((property: any) => (
                 <Link key={property.id} href={`/properties/${property.slug}`}>
                   <PropertyCard
                     name={property.name}
@@ -249,11 +249,11 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
               Related Diagnostics
             </h2>
             <p className="mt-2 text-slate">
-              Other {diagnosticCategoryLabels[diagnostic.category].toLowerCase()} diagnostics you might consider:
+              Other {(diagnosticCategoryLabels[diagnostic.category] ?? 'similar').toLowerCase()} diagnostics you might consider:
             </p>
 
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {relatedDiagnostics.map((rd) => (
+              {relatedDiagnostics.map((rd: any) => (
                 <Link
                   key={rd.id}
                   href={`/diagnostics/${rd.slug}`}

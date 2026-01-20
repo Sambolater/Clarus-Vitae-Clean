@@ -2,7 +2,7 @@ import { type PropertyTier } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 
-import { tierLabels, tierDescriptions } from '@/lib/properties';
+// tierLabels and tierDescriptions are defined in tierMetadata below
 
 interface TierPageProps {
   params: Promise<{ tier: string }>;
@@ -41,12 +41,13 @@ export async function generateMetadata({ params }: TierPageProps): Promise<Metad
     return { title: 'Not Found | Clarus Vitae' };
   }
 
+  const metadata = tierMetadata[tier]!;
   return {
-    title: tierMetadata[tier].title,
-    description: tierMetadata[tier].description,
+    title: metadata.title,
+    description: metadata.description,
     openGraph: {
-      title: tierMetadata[tier].title,
-      description: tierMetadata[tier].description,
+      title: metadata.title,
+      description: metadata.description,
       type: 'website',
     },
   };

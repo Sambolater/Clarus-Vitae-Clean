@@ -105,7 +105,7 @@ export function PropertyDarkDataSection({ darkData }: PropertyDarkDataSectionPro
           {darkData.discretionLevel && (
             <DataPoint
               label="Discretion Level"
-              value={discretionLabels[darkData.discretionLevel]}
+              value={discretionLabels[darkData.discretionLevel] ?? null}
               description="Privacy and confidentiality protocols in place"
             />
           )}

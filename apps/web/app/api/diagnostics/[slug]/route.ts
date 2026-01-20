@@ -93,8 +93,8 @@ export async function GET(
       description: diagnostic.description,
       whatItMeasures: diagnostic.whatItMeasures,
       properties: diagnostic.properties
-        .filter((pd) => pd.property?.published)
-        .map((pd) => ({
+        .filter((pd: any) => pd.property?.published)
+        .map((pd: any) => ({
           id: pd.property.id,
           slug: pd.property.slug,
           name: pd.property.name,
@@ -113,7 +113,7 @@ export async function GET(
           notes: pd.notes,
           featuredImage: pd.property.images[0] || null,
         })),
-      relatedDiagnostics: relatedDiagnostics.map((rd) => ({
+      relatedDiagnostics: relatedDiagnostics.map((rd: any) => ({
         id: rd.id,
         slug: rd.slug,
         name: rd.name,
@@ -121,7 +121,7 @@ export async function GET(
         description: rd.description.substring(0, 100) + '...',
         propertiesCount: rd._count.properties,
       })),
-      propertiesCount: diagnostic.properties.filter((pd) => pd.property?.published).length,
+      propertiesCount: diagnostic.properties.filter((pd: any) => pd.property?.published).length,
     };
 
     return NextResponse.json(transformedDiagnostic);

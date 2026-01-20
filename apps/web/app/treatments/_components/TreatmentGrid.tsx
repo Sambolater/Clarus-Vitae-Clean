@@ -55,7 +55,7 @@ export function TreatmentGrid({ treatments, isLoading = false }: TreatmentGridPr
         <Link key={treatment.id} href={`/treatments/${treatment.slug}`}>
           <TreatmentCard
             name={treatment.name}
-            category={treatmentCategoryLabels[treatment.category]}
+            category={treatmentCategoryLabels[treatment.category] ?? 'Treatment'}
             evidenceLevel={treatment.evidenceLevel}
             description={treatment.description}
             propertiesCount={treatment.propertiesCount}

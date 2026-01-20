@@ -338,7 +338,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
               <div className="mt-6">
                 <h3 className="text-sm font-medium text-clarus-navy">Focus Areas</h3>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {property.focusAreas.map((area) => (
+                  {property.focusAreas.map((area: any) => (
                     <span
                       key={area}
                       className="rounded-md bg-stone px-3 py-1 text-sm text-slate"
@@ -386,7 +386,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         {(property.tier === 'TIER_1' || property.tier === 'TIER_2') && (
           <div className="border-t border-stone">
             <PropertyTreatmentsSection
-              treatments={property.treatments.map((pt) => ({
+              treatments={property.treatments.map((pt: any) => ({
                 id: pt.treatment.id,
                 slug: pt.treatment.slug,
                 name: pt.treatment.name,
@@ -396,7 +396,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 priceAtProperty: pt.priceAtProperty,
                 notes: pt.notes,
               }))}
-              diagnostics={property.diagnostics.map((pd) => ({
+              diagnostics={property.diagnostics.map((pd: any) => ({
                 id: pd.diagnostic.id,
                 slug: pd.diagnostic.slug,
                 name: pd.diagnostic.name,
@@ -404,7 +404,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 description: pd.diagnostic.description,
                 notes: pd.notes,
               }))}
-              equipment={property.equipment.map((pe) => ({
+              equipment={property.equipment.map((pe: any) => ({
                 id: pe.equipment.id,
                 slug: pe.equipment.slug,
                 name: pe.equipment.name,
@@ -534,7 +534,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
       {/* Similar Properties (full-width background) */}
       <SimilarPropertiesSection
-        properties={similarProperties.map((p) => ({
+        properties={similarProperties.map((p: any) => ({
           id: p.id,
           slug: p.slug,
           name: p.name,

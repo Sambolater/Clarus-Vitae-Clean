@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Transform and potentially re-sort if evidence level sort
-    let transformedTreatments = treatments.map((treatment) => ({
+    let transformedTreatments = treatments.map((treatment: any) => ({
       id: treatment.id,
       slug: treatment.slug,
       name: treatment.name,
@@ -152,7 +152,8 @@ export async function GET(request: NextRequest) {
     // Re-sort for evidence level (since Prisma can't sort by enum value directly)
     if (params.sort === 'evidence_desc') {
       transformedTreatments = transformedTreatments.sort(
-        (a, b) => evidenceLevelOrder[b.evidenceLevel] - evidenceLevelOrder[a.evidenceLevel]
+        (a: { evidenceLevel: EvidenceLevel }, b: { evidenceLevel: EvidenceLevel }) =>
+          (evidenceLevelOrder[b.evidenceLevel] ?? 0) - (evidenceLevelOrder[a.evidenceLevel] ?? 0)
       );
     }
 

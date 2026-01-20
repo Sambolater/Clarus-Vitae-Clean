@@ -111,7 +111,7 @@ export function TreatmentFilters() {
             <Checkbox
               key={category}
               id={`category-${category}`}
-              label={treatmentCategoryLabels[category]}
+              label={treatmentCategoryLabels[category] ?? category}
               checked={currentFilters.categories.includes(category)}
               onChange={() => toggleCategory(category)}
             />
@@ -129,7 +129,7 @@ export function TreatmentFilters() {
             <Checkbox
               key={level}
               id={`evidence-${level}`}
-              label={evidenceLevelLabels[level]}
+              label={evidenceLevelLabels[level] ?? level}
               checked={currentFilters.evidenceLevels.includes(level)}
               onChange={() => toggleEvidenceLevel(level)}
             />

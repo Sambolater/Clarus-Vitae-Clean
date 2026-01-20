@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
-    const transformedDiagnostics = diagnostics.map((diagnostic) => ({
+    const transformedDiagnostics = diagnostics.map((diagnostic: any) => ({
       id: diagnostic.id,
       slug: diagnostic.slug,
       name: diagnostic.name,
