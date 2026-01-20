@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef, useState, useCallback } from 'react';
 
