@@ -161,61 +161,62 @@ function stripTrackingParams(url: URL): URL {
  * Middleware function
  */
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl;
+  try {
+    const url = request.nextUrl;
 
-  // Strip tracking parameters and redirect
-  if (hasTrackingParams(url)) {
-    const cleanUrl = stripTrackingParams(url);
-    return NextResponse.redirect(cleanUrl, { status: 301 });
+    // Strip tracking parameters and redirect
+    if (hasTrackingParams(url)) {
+      const cleanUrl = stripTrackingParams(url);
+      return NextResponse.redirect(cleanUrl, { status: 301 });
+    }
+
+    // Create response
+    const response = NextResponse.next();
+
+    // Set security headers
+    const headers = response.headers;
+
+    // Content Security Policy
+    headers.set('Content-Security-Policy', buildCSP());
+
+    // Referrer Policy - limit information leakage
+    headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+    // Permissions Policy - disable tracking APIs
+    headers.set('Permissions-Policy', buildPermissionsPolicy());
+
+    // X-Frame-Options - prevent clickjacking
+    headers.set('X-Frame-Options', 'DENY');
+
+    // X-Content-Type-Options - prevent MIME sniffing
+    headers.set('X-Content-Type-Options', 'nosniff');
+
+    // X-XSS-Protection - enable XSS filter
+    headers.set('X-XSS-Protection', '1; mode=block');
+
+    // Strict-Transport-Security - enforce HTTPS
+    headers.set(
+      'Strict-Transport-Security',
+      'max-age=31536000; includeSubDomains; preload'
+    );
+
+    // X-DNS-Prefetch-Control - prevent DNS prefetching
+    headers.set('X-DNS-Prefetch-Control', 'off');
+
+    // X-Permitted-Cross-Domain-Policies - prevent Adobe Flash/PDF access
+    headers.set('X-Permitted-Cross-Domain-Policies', 'none');
+
+    // Cross-Origin-Opener-Policy - isolate browsing context
+    headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+
+    // Cross-Origin-Resource-Policy - prevent resource embedding
+    headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+
+    return response;
+  } catch {
+    // If middleware fails, continue without blocking the request
+    return NextResponse.next();
   }
-
-  // Create response
-  const response = NextResponse.next();
-
-  // Set security headers
-  const headers = response.headers;
-
-  // Content Security Policy
-  headers.set('Content-Security-Policy', buildCSP());
-
-  // Referrer Policy - limit information leakage
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-  // Permissions Policy - disable tracking APIs
-  headers.set('Permissions-Policy', buildPermissionsPolicy());
-
-  // X-Frame-Options - prevent clickjacking
-  headers.set('X-Frame-Options', 'DENY');
-
-  // X-Content-Type-Options - prevent MIME sniffing
-  headers.set('X-Content-Type-Options', 'nosniff');
-
-  // X-XSS-Protection - enable XSS filter
-  headers.set('X-XSS-Protection', '1; mode=block');
-
-  // Strict-Transport-Security - enforce HTTPS
-  headers.set(
-    'Strict-Transport-Security',
-    'max-age=31536000; includeSubDomains; preload'
-  );
-
-  // X-DNS-Prefetch-Control - prevent DNS prefetching
-  headers.set('X-DNS-Prefetch-Control', 'off');
-
-  // X-Permitted-Cross-Domain-Policies - prevent Adobe Flash/PDF access
-  headers.set('X-Permitted-Cross-Domain-Policies', 'none');
-
-  // Cross-Origin-Opener-Policy - isolate browsing context
-  headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-
-  // Cross-Origin-Resource-Policy - prevent resource embedding
-  headers.set('Cross-Origin-Resource-Policy', 'same-origin');
-
-  // Cross-Origin-Embedder-Policy - require CORS/CORP
-  // Note: Disabled for now as it may break external images
-  // headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
-
-  return response;
 }
 
 /**
@@ -226,12 +227,10 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico (favicon file)
-     * - public folder assets
-     * - API health check
+     * - _next (static files and images)
+     * - static assets
+     * - API routes
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$|api/health).*)',
+    '/((?!_next|api|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
