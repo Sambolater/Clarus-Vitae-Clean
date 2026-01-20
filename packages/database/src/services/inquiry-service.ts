@@ -9,7 +9,6 @@
 import type {
   BudgetRange,
   ContactMethod,
-  Inquiry,
   InquiryInput,
   InquiryStatus,
   InquiryStatusChange,
@@ -266,7 +265,7 @@ export async function updateInquiryStatus(
 
     // Update status and add to history (stored in additionalNotes as JSON for now)
     // In a full implementation, we'd have a separate status history table
-    const statusChange: InquiryStatusChange = {
+    const _statusChange: InquiryStatusChange = {
       id: crypto.randomUUID(),
       inquiryId,
       fromStatus: inquiry.status as InquiryStatus,
