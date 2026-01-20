@@ -1,10 +1,9 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-import { type HTMLAttributes, forwardRef } from 'react';
-
 import type { PropertyVisit } from '@clarus-vitae/types';
 import { getVisitTypeLabel } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
+import { type HTMLAttributes, forwardRef } from 'react';
 
 export interface TeamMemberVisitsProps extends HTMLAttributes<HTMLElement> {
   visits: PropertyVisit[];

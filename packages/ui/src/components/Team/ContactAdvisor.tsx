@@ -1,15 +1,14 @@
 'use client';
 
+import type { TeamMemberSummary } from '@clarus-vitae/types';
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef, useState } from 'react';
 
-import type { TeamMemberSummary } from '@clarus-vitae/types';
-
-export interface ContactAdvisorProps extends HTMLAttributes<HTMLDivElement> {
+export interface ContactAdvisorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
   member?: TeamMemberSummary;
   context?: string;
   propertyName?: string;
-  onSubmit?: (data: ContactFormData) => void | Promise<void>;
+  onFormSubmit?: (data: ContactFormData) => void | Promise<void>;
   variant?: 'sidebar' | 'modal' | 'inline';
 }
 
@@ -36,7 +35,7 @@ export const ContactAdvisor = forwardRef<HTMLDivElement, ContactAdvisorProps>(
       member,
       context,
       propertyName,
-      onSubmit,
+      onFormSubmit,
       variant = 'sidebar',
       className,
       ...props
@@ -55,11 +54,11 @@ export const ContactAdvisor = forwardRef<HTMLDivElement, ContactAdvisorProps>(
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!onSubmit) return;
+      if (!onFormSubmit) return;
 
       setIsSubmitting(true);
       try {
-        await onSubmit(formData);
+        await onFormSubmit(formData);
         setIsSubmitted(true);
       } finally {
         setIsSubmitting(false);

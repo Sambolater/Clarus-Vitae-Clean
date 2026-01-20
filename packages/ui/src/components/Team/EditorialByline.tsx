@@ -1,9 +1,8 @@
 'use client';
 
+import type { TeamMemberSummary } from '@clarus-vitae/types';
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
-
-import type { TeamMemberSummary } from '@clarus-vitae/types';
 
 export interface EditorialBylineProps extends HTMLAttributes<HTMLDivElement> {
   author: TeamMemberSummary;

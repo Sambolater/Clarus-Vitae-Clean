@@ -1,10 +1,9 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
-import { type HTMLAttributes, forwardRef } from 'react';
-
 import type { TeamMember } from '@clarus-vitae/types';
 import { getTeamRoleLabel } from '@clarus-vitae/types';
+import { cn } from '@clarus-vitae/utils';
+import { type HTMLAttributes, forwardRef } from 'react';
 
 export interface TeamMemberHeaderProps extends HTMLAttributes<HTMLElement> {
   member: TeamMember;

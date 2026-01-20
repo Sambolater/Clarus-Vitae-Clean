@@ -1,9 +1,8 @@
 'use client';
 
+import type { CollectiveStats } from '@clarus-vitae/types';
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
-
-import type { CollectiveStats } from '@clarus-vitae/types';
 
 export interface TeamHeroProps extends HTMLAttributes<HTMLElement> {
   stats: CollectiveStats;
