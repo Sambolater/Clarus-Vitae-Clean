@@ -29,7 +29,7 @@ interface PortableTextRendererProps {
 /**
  * Create default Portable Text components
  */
-function createDefaultComponents(urlFor?: UrlForFunction): PortableTextReactComponents {
+function createDefaultComponents(urlFor?: UrlForFunction): Partial<PortableTextReactComponents> {
   return {
     types: {
       image: ({ value }: { value: { alt?: string; caption?: string } }) => {

@@ -1,15 +1,16 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { Container } from '@clarus-vitae/ui';
+import { prisma } from '@clarus-vitae/database';
 import {
   getArticleBySlug,
   getArticleSlugs,
   urlFor,
 } from '@clarus-vitae/database/sanity';
-import { prisma } from '@clarus-vitae/database';
-import { ArticleHeader } from '../_components/ArticleHeader';
+import { Container } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
 import { ArticleContent } from '../_components/ArticleContent';
+import { ArticleHeader } from '../_components/ArticleHeader';
 import { RelatedArticles } from '../_components/RelatedArticles';
 import { RelatedProperties } from '../_components/RelatedProperties';
 
@@ -170,14 +171,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           readingTime={article.readingTime}
           author={author}
           heroImage={article.heroImage}
-          urlFor={urlFor}
         />
 
         {/* Article Content */}
         <section className="py-12 md:py-16">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <ArticleContent content={article.content} urlFor={urlFor} />
+              <ArticleContent content={article.content} />
             </div>
           </Container>
         </section>
@@ -195,7 +195,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {article.relatedArticles && article.relatedArticles.length > 0 && (
           <section className="border-t border-stone py-12 md:py-16">
             <Container>
-              <RelatedArticles articles={article.relatedArticles} urlFor={urlFor} />
+              <RelatedArticles articles={article.relatedArticles} />
             </Container>
           </section>
         )}

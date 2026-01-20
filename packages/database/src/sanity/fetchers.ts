@@ -266,12 +266,14 @@ export async function getGlossaryTermSlugs(): Promise<string[]> {
  * Search across all content types
  */
 export async function searchContent(
-  query: string,
+  searchQuery: string,
   limit = 10,
   preview = false
 ): Promise<SearchResult[]> {
   const client = getClient(preview);
-  return client.fetch<SearchResult[]>(searchContentQuery, { query: `*${query}*`, limit });
+  // Cast params to avoid Sanity strict typing conflict with 'query' param name
+  const params = { query: `*${searchQuery}*`, limit } as Record<string, unknown>;
+  return client.fetch(searchContentQuery, params) as Promise<SearchResult[]>;
 }
 
 /**
