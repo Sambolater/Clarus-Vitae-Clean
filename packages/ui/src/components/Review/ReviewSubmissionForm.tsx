@@ -241,7 +241,7 @@ function ScaleRatingInput({
  * 5. Contact Info & Verification
  */
 export const ReviewSubmissionForm = forwardRef<HTMLFormElement, ReviewSubmissionFormProps>(
-  ({ propertyId, propertyName, propertyTier, programs = [], onSubmit, isSubmitting = false, className, ...props }, ref) => {
+  ({ propertyId: _propertyId, propertyName, propertyTier, programs = [], onSubmit, isSubmitting = false, className, ...props }, ref) => {
     const [currentStep, setCurrentStep] = useState(1);
     const totalSteps = 5;
     const stepLabels = ['Visit', 'Ratings', 'Review', 'Outcomes', 'Submit'];
