@@ -5,7 +5,6 @@
  * Handles review submission, verification, follow-ups, and aggregation.
  */
 
-import { db } from '../client';
 import type {
   ReviewSubmissionData,
   FollowUpSubmissionData,
@@ -13,6 +12,8 @@ import type {
   ReviewFilters,
   MeasurableOutcomes,
 } from '@clarus-vitae/types';
+
+import { db } from '../client';
 
 // ============================================
 // REVIEW SUBMISSION
@@ -36,14 +37,15 @@ export async function createReview(
     // Generate display name based on preference
     let reviewerName: string;
     switch (data.displayNamePreference) {
-      case 'initials':
+      case 'initials': {
         // Extract initials from email or use "Anonymous"
-        const emailName = data.email.split('@')[0];
+        const emailName = data.email.split('@')[0] || 'anonymous';
         reviewerName = emailName
           .split(/[._-]/)
           .map((part) => part.charAt(0).toUpperCase())
           .join('') + '.';
         break;
+      }
       case 'verified_guest':
         reviewerName = 'Verified Guest';
         break;
@@ -257,11 +259,13 @@ export async function getReviewsForFollowUp(period: '30' | '90' | '180'): Promis
   const endDate = new Date(targetDate);
   endDate.setDate(endDate.getDate() + 3);
 
-  const fieldMap: Record<string, string> = {
-    '30': 'followUp30Days',
-    '90': 'followUp90Days',
-    '180': 'followUp180Days',
-  };
+  // Build the follow-up field condition based on period
+  const followUpCondition =
+    period === '30'
+      ? { followUp30Days: null }
+      : period === '90'
+        ? { followUp90Days: null }
+        : { followUp180Days: null };
 
   const reviews = await db.review.findMany({
     where: {
@@ -270,7 +274,7 @@ export async function getReviewsForFollowUp(period: '30' | '90' | '180'): Promis
         gte: startDate,
         lte: endDate,
       },
-      [fieldMap[period]]: null,
+      ...followUpCondition,
     },
     select: {
       id: true,
