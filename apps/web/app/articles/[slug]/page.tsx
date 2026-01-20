@@ -1,3 +1,9 @@
+/**
+ * Article Detail Page
+ *
+ * Displays full article content with author info and related properties.
+ */
+
 import { prisma } from '@clarus-vitae/database';
 import {
   getArticleBySlug,
