@@ -5,7 +5,7 @@
  * Blocks admin, API, and preview routes while allowing public content.
  */
 
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://clarusvitae.com';
 

@@ -5,8 +5,8 @@
  * Implements consistent SEO patterns across the platform.
  */
 
-import { Metadata } from 'next';
 import type { PropertyTier } from '@clarus-vitae/database';
+import type { Metadata } from 'next';
 
 // Site configuration
 export const siteConfig = {

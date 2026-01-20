@@ -7,8 +7,8 @@
 
 'use client';
 
-import dynamic from 'next/dynamic';
 import { LoadingSpinner, Skeleton } from '@clarus-vitae/ui';
+import dynamic from 'next/dynamic';
 
 /**
  * Loading skeleton for cards

@@ -5,8 +5,8 @@
  * Includes all published properties, treatments, articles, and static pages.
  */
 
-import { MetadataRoute } from 'next';
 import { db } from '@clarus-vitae/database';
+import type { MetadataRoute } from 'next';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://clarusvitae.com';
 
@@ -80,7 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    propertyPages = properties.map((property) => ({
+    propertyPages = properties.map((property: { slug: string; updatedAt: Date }) => ({
       url: `${BASE_URL}/properties/${property.slug}`,
       lastModified: property.updatedAt,
       changeFrequency: 'weekly' as const,
@@ -101,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    treatmentPages = treatments.map((treatment) => ({
+    treatmentPages = treatments.map((treatment: { slug: string; updatedAt: Date }) => ({
       url: `${BASE_URL}/treatments/${treatment.slug}`,
       lastModified: treatment.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -122,7 +122,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    diagnosticPages = diagnostics.map((diagnostic) => ({
+    diagnosticPages = diagnostics.map((diagnostic: { slug: string; updatedAt: Date }) => ({
       url: `${BASE_URL}/diagnostics/${diagnostic.slug}`,
       lastModified: diagnostic.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -142,7 +142,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    equipmentPages = equipment.map((item) => ({
+    equipmentPages = equipment.map((item: { slug: string; updatedAt: Date }) => ({
       url: `${BASE_URL}/equipment/${item.slug}`,
       lastModified: item.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -164,7 +164,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    articlePages = articles.map((article) => ({
+    articlePages = articles.map((article: { slug: string; updatedAt: Date; publishedAt: Date | null }) => ({
       url: `${BASE_URL}/articles/${article.slug}`,
       lastModified: article.updatedAt || article.publishedAt || new Date(),
       changeFrequency: 'monthly' as const,
@@ -185,7 +185,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    teamPages = teamMembers.map((member) => ({
+    teamPages = teamMembers.map((member: { slug: string; updatedAt: Date }) => ({
       url: `${BASE_URL}/team/${member.slug}`,
       lastModified: member.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -204,7 +204,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       distinct: ['country'],
     });
 
-    destinationPages = countries.map((item) => ({
+    destinationPages = countries.map((item: { country: string }) => ({
       url: `${BASE_URL}/properties/destination/${encodeURIComponent(item.country.toLowerCase().replace(/\s+/g, '-'))}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,

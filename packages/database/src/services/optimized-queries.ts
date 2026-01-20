@@ -475,7 +475,7 @@ export async function getDestinationsWithCounts() {
     orderBy: { _count: { id: 'desc' } },
   });
 
-  return countries.map((c) => ({
+  return countries.map((c: { country: string; _count: { id: number } }) => ({
     name: c.country,
     slug: c.country.toLowerCase().replace(/\s+/g, '-'),
     propertyCount: c._count.id,

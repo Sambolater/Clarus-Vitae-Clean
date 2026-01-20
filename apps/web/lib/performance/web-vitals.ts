@@ -121,6 +121,7 @@ export async function initWebVitals() {
   if (typeof window === 'undefined') return;
 
   try {
+    // eslint-disable-next-line import/no-unresolved -- Dynamic import with installed package
     const { onCLS, onFCP, onINP, onLCP, onTTFB } = await import('web-vitals');
 
     // Register all metric observers
