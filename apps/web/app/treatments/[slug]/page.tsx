@@ -113,7 +113,6 @@ export async function generateMetadata({ params }: TreatmentPageProps): Promise<
   }
 
   const { treatment } = data;
-  const categoryLabel = treatmentCategoryLabels[treatment.category];
   const evidenceLabel = evidenceLevelLabels[treatment.evidenceLevel];
   const propertiesCount = treatment.properties.filter((p) => p.property?.published).length;
 

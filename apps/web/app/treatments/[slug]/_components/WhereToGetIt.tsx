@@ -4,7 +4,7 @@ import { type PropertyTier } from '@clarus-vitae/database';
 import { PropertyCard } from '@clarus-vitae/ui';
 import Link from 'next/link';
 
-import { tierLabels, formatPriceRange } from '@/lib/properties';
+import { formatPriceRange } from '@/lib/properties';
 
 interface Property {
   id: string;

@@ -68,6 +68,7 @@ export function GlobalSearch({
           onClear={clearSearch}
           isLoading={isLoading}
           placeholder={placeholder}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autoFocus}
           aria-label="Search"
           aria-expanded={isOpen}

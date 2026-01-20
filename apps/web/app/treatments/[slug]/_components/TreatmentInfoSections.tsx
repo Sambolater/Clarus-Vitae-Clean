@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@clarus-vitae/utils';
 
 interface TreatmentInfoSectionsProps {
   howItWorks: string | null;
