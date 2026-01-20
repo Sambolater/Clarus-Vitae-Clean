@@ -5,3 +5,4 @@
  */
 
 export * from './scoring-service';
+export * from './review-service';

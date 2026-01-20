@@ -120,6 +120,45 @@ export { StarRating, type StarRatingProps } from './components/Review';
 export { RatingBar, type RatingBarProps } from './components/Review';
 export { OutcomeIndicator, type OutcomeIndicatorProps, type OutcomeLevel } from './components/Review';
 export { VerifiedBadge, type VerifiedBadgeProps, type VerificationType } from './components/Review';
+export {
+  OutcomeRatingsDisplay,
+  type OutcomeRatingsDisplayProps,
+  type OutcomeRatings,
+} from './components/Review';
+export {
+  MeasurableOutcomesDisplay,
+  type MeasurableOutcomesDisplayProps,
+  type MeasurableOutcomes,
+  type BiomarkerChange,
+} from './components/Review';
+export {
+  TeamReviewBadge,
+  type TeamReviewBadgeProps,
+  type TeamMemberInfo,
+} from './components/Review';
+export {
+  ReviewSummary,
+  type ReviewSummaryProps,
+  type ReviewAggregation,
+} from './components/Review';
+export {
+  ReviewFilters,
+  type ReviewFiltersProps,
+  type ReviewFiltersState,
+} from './components/Review';
+export {
+  FollowUpForm,
+  type FollowUpFormProps,
+  type FollowUpFormData,
+  type ResultsSustainedLevel,
+} from './components/Review';
+export {
+  ReviewSubmissionForm,
+  type ReviewSubmissionFormProps,
+  type ReviewFormData,
+  type ReviewPropertyTier,
+  type ReviewProgram,
+} from './components/Review';
 
 // ============================================================================
 // Data Display Components
