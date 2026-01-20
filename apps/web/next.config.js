@@ -39,7 +39,8 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['@clarus-vitae/ui'],
-    optimizeCss: true,
+    // Note: optimizeCss requires 'critters' package - disabled for CI compatibility
+    // optimizeCss: true,
   },
 
   // Headers for security and caching
