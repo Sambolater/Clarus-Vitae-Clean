@@ -2,6 +2,9 @@ import { db } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
+// Force dynamic rendering - skip static generation
+export const dynamic = 'force-dynamic';
+
 interface DestinationPageProps {
   params: Promise<{ country: string }>;
 }
@@ -50,16 +53,26 @@ export async function generateMetadata({ params }: DestinationPageProps): Promis
 }
 
 export async function generateStaticParams() {
-  // Get unique countries from published properties
-  const countries = await db.property.findMany({
-    where: { published: true },
-    select: { country: true },
-    distinct: ['country'],
-  });
+  // Skip static generation if DATABASE_URL is not available (build time)
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
 
-  return countries.map((p: any) => ({
-    country: toCountrySlug(p.country),
-  }));
+  try {
+    // Get unique countries from published properties
+    const countries = await db.property.findMany({
+      where: { published: true },
+      select: { country: true },
+      distinct: ['country'],
+    });
+
+    return countries.map((p: any) => ({
+      country: toCountrySlug(p.country),
+    }));
+  } catch {
+    // Return empty array if database is not accessible
+    return [];
+  }
 }
 
 export default async function DestinationPage({ params }: DestinationPageProps) {
