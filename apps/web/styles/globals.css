@@ -4,6 +4,12 @@
 
 @layer base {
   :root {
+    /* Font Stacks - System fonts for offline builds, can be overridden by next/font */
+    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      'Helvetica Neue', Arial, sans-serif;
+    --font-cormorant: 'Cormorant Garamond', Georgia, Cambria, 'Times New Roman',
+      Times, serif;
+
     /* Primary Colors */
     --clarus-navy: 26 43 74;
     --clarus-white: 250 251 252;

@@ -3,6 +3,8 @@ import { Container, LoadingSpinner, Breadcrumbs, Input } from '@clarus-vitae/ui'
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 import {
   type TreatmentListItem,
   type TreatmentsResponse,

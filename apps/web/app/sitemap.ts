@@ -5,10 +5,19 @@
  * Includes all published properties, treatments, articles, and static pages.
  */
 
-import { db } from '@clarus-vitae/database';
 import type { MetadataRoute } from 'next';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://clarusvitae.com';
+
+// Lazy import db to avoid build-time failures when Prisma isn't generated
+async function getDb() {
+  try {
+    const { db } = await import('@clarus-vitae/database');
+    return db;
+  } catch {
+    return null;
+  }
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages with their priorities and change frequencies
@@ -69,9 +78,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const db = await getDb();
+
   // Fetch published properties
   let propertyPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const properties = await db.property.findMany({
       where: { published: true },
       select: {
@@ -93,6 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch published treatments
   let treatmentPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const treatments = await db.treatment.findMany({
       where: { published: true },
       select: {
@@ -114,6 +127,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch diagnostics
   let diagnosticPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const diagnostics = await db.diagnostic.findMany({
       where: { published: true },
       select: {
@@ -135,6 +149,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch equipment (no published filter - all equipment is public)
   let equipmentPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const equipment = await db.equipment.findMany({
       select: {
         slug: true,
@@ -155,6 +170,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch articles
   let articlePages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const articles = await db.article.findMany({
       where: { published: true },
       select: {
@@ -177,6 +193,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch team members
   let teamPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const teamMembers = await db.teamMember.findMany({
       where: { published: true },
       select: {
@@ -198,6 +215,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch unique countries for destination pages
   let destinationPages: MetadataRoute.Sitemap = [];
   try {
+    if (!db) throw new Error('Database not available');
     const countries = await db.property.findMany({
       where: { published: true },
       select: { country: true },

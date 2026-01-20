@@ -3,6 +3,8 @@ import { Container, Breadcrumbs, EmptyState } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 import { diagnosticCategoryLabels } from '@/lib/treatments';
 
 export const metadata: Metadata = {

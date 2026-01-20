@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Cormorant_Garamond } from 'next/font/google';
 import '@/styles/globals.css';
 
 import { ComparisonBarWrapper } from '@/components/ComparisonBarWrapper';
@@ -8,24 +7,10 @@ import { WebVitals } from '@/components/WebVitals';
 /**
  * Font Configuration
  *
- * Self-hosted via next/font for privacy (no external requests to Google).
- * Uses Inter for body/UI and Cormorant Garamond for headings.
+ * Using system font stacks for reliability and privacy.
+ * CSS custom properties are defined in globals.css.
+ * This ensures builds succeed without network access.
  */
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  // Preload critical font weights
-  preload: true,
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cormorant',
-  preload: true,
-});
 
 export const metadata: Metadata = {
   title: {
@@ -79,7 +64,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="en">
       <body className="min-h-screen bg-clarus-white pb-20 font-body text-clarus-navy antialiased lg:pb-0">
         {children}
         <ComparisonBarWrapper />
