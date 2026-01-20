@@ -287,3 +287,17 @@ export {
   TreatmentImage,
   type TreatmentImageProps,
 } from './components/Image';
+
+// ============================================================================
+// Content Components (Portable Text & Editorial)
+// ============================================================================
+export {
+  PortableTextRenderer,
+  Callout,
+  type CalloutType,
+  VideoEmbed,
+  PropertyCardEmbed,
+  TreatmentCardEmbed,
+  ComparisonTableEmbed,
+  DataTable,
+} from './components/Content';
