@@ -1,0 +1,11 @@
+export { TeamHero, type TeamHeroProps } from './TeamHero';
+export { TrustStatement, type TrustStatementProps } from './TrustStatement';
+export { TeamGrid, type TeamGridProps } from './TeamGrid';
+export { TeamMemberHeader, type TeamMemberHeaderProps } from './TeamMemberHeader';
+export { TeamMemberBio, type TeamMemberBioProps } from './TeamMemberBio';
+export { TeamMemberCredentials, type TeamMemberCredentialsProps } from './TeamMemberCredentials';
+export { TeamMemberVisits, type TeamMemberVisitsProps } from './TeamMemberVisits';
+export { EditorialByline, type EditorialBylineProps } from './EditorialByline';
+export { ContactAdvisor, type ContactAdvisorProps } from './ContactAdvisor';
+export { ContactAdvisorCTA, type ContactAdvisorCTAProps } from './ContactAdvisorCTA';
+export { PropertyTeamSection, type PropertyTeamSectionProps } from './PropertyTeamSection';
