@@ -1,8 +1,8 @@
 'use client';
 
 import { cn } from '@clarus-vitae/utils';
-import { forwardRef, type HTMLAttributes } from 'react';
 import Link from 'next/link';
+import { forwardRef, type HTMLAttributes } from 'react';
 
 export interface PopularComparison {
   title: string;

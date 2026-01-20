@@ -2,7 +2,6 @@
 
 import { PropertyCard, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
 import { useComparison } from '@clarus-vitae/utils';
-import Link from 'next/link';
 
 import { type PropertyListItem, formatPriceRange, focusAreaLabels } from '@/lib/properties';
 
@@ -12,7 +11,7 @@ interface PropertyGridProps {
 }
 
 export function PropertyGrid({ properties, isLoading = false }: PropertyGridProps) {
-  const { addToComparison, removeFromComparison, isInComparison, isFull } = useComparison();
+  const { addToComparison, removeFromComparison, isInComparison } = useComparison();
 
   const handleCompare = (property: PropertyListItem) => {
     if (isInComparison(property.id)) {

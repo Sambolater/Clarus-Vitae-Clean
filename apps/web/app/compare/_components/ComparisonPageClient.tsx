@@ -195,7 +195,7 @@ function ComparisonRow({
 
 export function ComparisonPageClient({
   initialProperties,
-  requestedSlugs,
+  requestedSlugs: _requestedSlugs,
 }: ComparisonPageClientProps) {
   const router = useRouter();
   const { removeFromComparison } = useComparison();
@@ -538,6 +538,7 @@ export function ComparisonPageClient({
                 values={properties.map((p) =>
                   p.website ? (
                     <a
+                      key={p.id}
                       href={p.website}
                       target="_blank"
                       rel="noopener noreferrer"

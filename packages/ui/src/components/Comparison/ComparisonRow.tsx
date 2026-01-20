@@ -167,4 +167,4 @@ export const ComparisonRow = forwardRef<HTMLDivElement, ComparisonRowProps>(
   }
 ) as <T>(props: ComparisonRowProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }) => React.ReactElement;
 
-(ComparisonRow as any).displayName = 'ComparisonRow';
+(ComparisonRow as unknown as { displayName: string }).displayName = 'ComparisonRow';

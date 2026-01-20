@@ -133,7 +133,7 @@ function generateComparisonHTML(properties: any[]): string {
 
   const propertyColumns = properties.map((p) => {
     const reviewCount = p.reviews.length;
-    const avgRating = reviewCount > 0
+    const _avgRating = reviewCount > 0
       ? (p.reviews.reduce((sum: number, r: any) => sum + r.overallRating, 0) / reviewCount).toFixed(1)
       : 'N/A';
 

@@ -46,7 +46,7 @@ const iconSizes: Record<AddToCompareSize, string> = {
 export const AddToCompareButton = forwardRef<HTMLButtonElement, AddToCompareButtonProps>(
   (
     {
-      propertyId,
+      propertyId: _propertyId,
       propertyName,
       isInComparison = false,
       isComparisonFull = false,
