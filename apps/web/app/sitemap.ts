@@ -73,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let propertyPages: MetadataRoute.Sitemap = [];
   try {
     const properties = await db.property.findMany({
-      where: { status: 'PUBLISHED' },
+      where: { published: true },
       select: {
         slug: true,
         updatedAt: true,
@@ -94,7 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let treatmentPages: MetadataRoute.Sitemap = [];
   try {
     const treatments = await db.treatment.findMany({
-      where: { status: 'PUBLISHED' },
+      where: { published: true },
       select: {
         slug: true,
         updatedAt: true,
@@ -115,7 +115,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let diagnosticPages: MetadataRoute.Sitemap = [];
   try {
     const diagnostics = await db.diagnostic.findMany({
-      where: { status: 'PUBLISHED' },
+      where: { published: true },
       select: {
         slug: true,
         updatedAt: true,
@@ -132,11 +132,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Database not available
   }
 
-  // Fetch equipment
+  // Fetch equipment (no published filter - all equipment is public)
   let equipmentPages: MetadataRoute.Sitemap = [];
   try {
     const equipment = await db.equipment.findMany({
-      where: { status: 'PUBLISHED' },
       select: {
         slug: true,
         updatedAt: true,
@@ -157,7 +156,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articlePages: MetadataRoute.Sitemap = [];
   try {
     const articles = await db.article.findMany({
-      where: { status: 'PUBLISHED' },
+      where: { published: true },
       select: {
         slug: true,
         updatedAt: true,
@@ -179,7 +178,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let teamPages: MetadataRoute.Sitemap = [];
   try {
     const teamMembers = await db.teamMember.findMany({
-      where: { isActive: true },
+      where: { published: true },
       select: {
         slug: true,
         updatedAt: true,
@@ -200,7 +199,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let destinationPages: MetadataRoute.Sitemap = [];
   try {
     const countries = await db.property.findMany({
-      where: { status: 'PUBLISHED' },
+      where: { published: true },
       select: { country: true },
       distinct: ['country'],
     });
@@ -215,22 +214,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Database not available
   }
 
-  // Fetch focus areas for focus pages
-  let focusPages: MetadataRoute.Sitemap = [];
-  try {
-    const focusAreas = await db.focusArea.findMany({
-      select: { slug: true },
-    });
+  // Focus area pages (using the FocusArea enum values)
+  const focusAreaSlugs = [
+    'longevity',
+    'detox',
+    'weight-metabolic',
+    'stress-burnout',
+    'fitness-performance',
+    'beauty-aesthetic',
+    'holistic-spiritual',
+    'medical-assessment',
+    'post-illness',
+    'addiction-behavioral',
+    'cognitive-brain',
+    'sleep',
+    'womens-health',
+    'mens-health',
+    'general-rejuvenation',
+  ];
 
-    focusPages = focusAreas.map((focus) => ({
-      url: `${BASE_URL}/properties/focus/${focus.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }));
-  } catch {
-    // Database not available
-  }
+  const focusPages: MetadataRoute.Sitemap = focusAreaSlugs.map((slug) => ({
+    url: `${BASE_URL}/properties/focus/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
 
   // Tier pages
   const tierPages: MetadataRoute.Sitemap = [

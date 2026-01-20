@@ -13,14 +13,14 @@ import { db } from '../client';
 export async function getPropertiesForListing(options?: {
   tier?: string;
   country?: string;
-  focusAreaSlug?: string;
+  focusArea?: string;
   limit?: number;
   offset?: number;
 }) {
-  const { tier, country, focusAreaSlug, limit = 50, offset = 0 } = options || {};
+  const { tier, country, focusArea, limit = 50, offset = 0 } = options || {};
 
   const where: Record<string, unknown> = {
-    status: 'PUBLISHED',
+    published: true,
   };
 
   if (tier) {
@@ -31,13 +31,9 @@ export async function getPropertiesForListing(options?: {
     where.country = country;
   }
 
-  if (focusAreaSlug) {
+  if (focusArea) {
     where.focusAreas = {
-      some: {
-        focusArea: {
-          slug: focusAreaSlug,
-        },
-      },
+      has: focusArea,
     };
   }
 
@@ -53,26 +49,21 @@ export async function getPropertiesForListing(options?: {
       priceMin: true,
       priceMax: true,
       currency: true,
-      isEditorsChoice: true,
-      isVerifiedExcellence: true,
-      isRisingStar: true,
-      clarusIndex: {
-        select: {
-          overallScore: true,
-          tier: true,
-        },
-      },
+      editorChoice: true,
+      verifiedExcellence: true,
+      risingStar: true,
+      overallScore: true,
       images: {
-        where: { isPrimary: true },
+        where: { isFeatured: true },
         select: {
           url: true,
-          altText: true,
+          alt: true,
         },
         take: 1,
       },
     },
     orderBy: [
-      { clarusIndex: { overallScore: 'desc' } },
+      { overallScore: 'desc' },
       { name: 'asc' },
     ],
     skip: offset,
@@ -86,12 +77,12 @@ export async function getPropertiesForListing(options?: {
 export async function getPropertyCount(options?: {
   tier?: string;
   country?: string;
-  focusAreaSlug?: string;
+  focusArea?: string;
 }) {
-  const { tier, country, focusAreaSlug } = options || {};
+  const { tier, country, focusArea } = options || {};
 
   const where: Record<string, unknown> = {
-    status: 'PUBLISHED',
+    published: true,
   };
 
   if (tier) {
@@ -102,13 +93,9 @@ export async function getPropertyCount(options?: {
     where.country = country;
   }
 
-  if (focusAreaSlug) {
+  if (focusArea) {
     where.focusAreas = {
-      some: {
-        focusArea: {
-          slug: focusAreaSlug,
-        },
-      },
+      has: focusArea,
     };
   }
 
@@ -122,18 +109,15 @@ export async function getPropertyBySlug(slug: string) {
   return db.property.findUnique({
     where: { slug },
     include: {
-      clarusIndex: true,
-      darkData: true,
-      culturalData: true,
-      focusAreas: {
-        include: {
-          focusArea: true,
-        },
+      indexScores: {
+        orderBy: { assessmentDate: 'desc' },
+        take: 1,
       },
+      tierOneDetails: true,
       treatments: {
         where: {
           treatment: {
-            status: 'PUBLISHED',
+            published: true,
           },
         },
         include: {
@@ -151,7 +135,7 @@ export async function getPropertyBySlug(slug: string) {
       diagnostics: {
         where: {
           diagnostic: {
-            status: 'PUBLISHED',
+            published: true,
           },
         },
         include: {
@@ -166,11 +150,6 @@ export async function getPropertyBySlug(slug: string) {
         },
       },
       equipment: {
-        where: {
-          equipment: {
-            status: 'PUBLISHED',
-          },
-        },
         include: {
           equipment: {
             select: {
@@ -184,11 +163,11 @@ export async function getPropertyBySlug(slug: string) {
         },
       },
       programs: {
-        where: { isActive: true },
-        orderBy: { displayOrder: 'asc' },
+        where: { published: true },
+        orderBy: { price: 'asc' },
       },
       images: {
-        orderBy: [{ isPrimary: 'desc' }, { displayOrder: 'asc' }],
+        orderBy: [{ isFeatured: 'desc' }, { sortOrder: 'asc' }],
       },
       reviews: {
         where: { status: 'APPROVED' },
@@ -201,15 +180,9 @@ export async function getPropertyBySlug(slug: string) {
               slug: true,
               name: true,
               title: true,
-              headshotUrl: true,
+              photoUrl: true,
             },
           },
-        },
-      },
-      partnership: {
-        select: {
-          status: true,
-          commissionPercentage: true,
         },
       },
     },
@@ -228,7 +201,7 @@ export async function getTreatmentsForListing(options?: {
   const { category, evidenceLevel, limit = 50, offset = 0 } = options || {};
 
   const where: Record<string, unknown> = {
-    status: 'PUBLISHED',
+    published: true,
   };
 
   if (category) {
@@ -248,7 +221,6 @@ export async function getTreatmentsForListing(options?: {
       category: true,
       evidenceLevel: true,
       description: true,
-      imageUrl: true,
       _count: {
         select: {
           properties: true,
@@ -273,7 +245,7 @@ export async function getTreatmentBySlug(slug: string) {
       properties: {
         where: {
           property: {
-            status: 'PUBLISHED',
+            published: true,
           },
         },
         include: {
@@ -285,17 +257,12 @@ export async function getTreatmentBySlug(slug: string) {
               tier: true,
               country: true,
               city: true,
-              clarusIndex: {
-                select: {
-                  overallScore: true,
-                  tier: true,
-                },
-              },
+              overallScore: true,
               images: {
-                where: { isPrimary: true },
+                where: { isFeatured: true },
                 select: {
                   url: true,
-                  altText: true,
+                  alt: true,
                 },
                 take: 1,
               },
@@ -312,18 +279,18 @@ export async function getTreatmentBySlug(slug: string) {
  */
 export async function getTeamMembersForListing() {
   return db.teamMember.findMany({
-    where: { isActive: true },
+    where: { published: true },
     select: {
       id: true,
       slug: true,
       name: true,
       title: true,
-      headshotUrl: true,
+      photoUrl: true,
       specializations: true,
       propertiesVisited: true,
-      yearsExperience: true,
+      programsCompleted: true,
     },
-    orderBy: { displayOrder: 'asc' },
+    orderBy: { name: 'asc' },
   });
 }
 
@@ -351,7 +318,7 @@ export async function getTeamMemberBySlug(slug: string) {
         },
       },
       articles: {
-        where: { status: 'PUBLISHED' },
+        where: { published: true },
         orderBy: { publishedAt: 'desc' },
         take: 10,
         select: {
@@ -379,7 +346,7 @@ export async function getArticlesForListing(options?: {
   const { category, authorSlug, limit = 20, offset = 0 } = options || {};
 
   const where: Record<string, unknown> = {
-    status: 'PUBLISHED',
+    published: true,
   };
 
   if (category) {
@@ -401,13 +368,13 @@ export async function getArticlesForListing(options?: {
       excerpt: true,
       category: true,
       publishedAt: true,
-      heroImageUrl: true,
+      featuredImage: true,
       author: {
         select: {
           id: true,
           slug: true,
           name: true,
-          headshotUrl: true,
+          photoUrl: true,
         },
       },
     },
@@ -425,45 +392,15 @@ export async function getArticleBySlug(slug: string) {
     where: { slug },
     include: {
       author: true,
-      properties: {
-        include: {
-          property: {
-            select: {
-              id: true,
-              slug: true,
-              name: true,
-              tier: true,
-              country: true,
-              clarusIndex: {
-                select: {
-                  overallScore: true,
-                  tier: true,
-                },
-              },
-            },
-          },
-        },
-      },
-      treatments: {
-        include: {
-          treatment: {
-            select: {
-              id: true,
-              slug: true,
-              name: true,
-              category: true,
-            },
-          },
-        },
-      },
     },
   });
 }
 
 /**
  * Get reviews for a property with pagination
+ * Note: Named differently to avoid conflict with review-service.ts
  */
-export async function getPropertyReviews(
+export async function getReviewsForProperty(
   propertyId: string,
   options?: {
     limit?: number;
@@ -477,7 +414,7 @@ export async function getPropertyReviews(
 
   switch (sortBy) {
     case 'rating':
-      orderBy.push({ ratingOverall: 'desc' });
+      orderBy.push({ overallRating: 'desc' });
       break;
     case 'helpful':
       orderBy.push({ helpfulCount: 'desc' });
@@ -494,28 +431,32 @@ export async function getPropertyReviews(
     },
     select: {
       id: true,
-      reviewTitle: true,
       reviewText: true,
-      ratingOverall: true,
-      ratingGoalAchievement: true,
-      ratingProtocolQuality: true,
-      ratingFollowUpQuality: true,
+      overallRating: true,
+      serviceRating: true,
+      facilitiesRating: true,
+      valueRating: true,
       goalAchievement: true,
       visitDate: true,
-      stayDuration: true,
-      isVerifiedStay: true,
+      stayLengthDays: true,
+      verified: true,
       isTeamReview: true,
       helpfulCount: true,
+      pros: true,
+      cons: true,
       teamMember: {
         select: {
           id: true,
           slug: true,
           name: true,
           title: true,
-          headshotUrl: true,
+          photoUrl: true,
         },
       },
-      measurableOutcomes: true,
+      bioAgeChange: true,
+      weightChange: true,
+      energyImprovement: true,
+      sleepImprovement: true,
     },
     orderBy,
     skip: offset,
@@ -529,7 +470,7 @@ export async function getPropertyReviews(
 export async function getDestinationsWithCounts() {
   const countries = await db.property.groupBy({
     by: ['country'],
-    where: { status: 'PUBLISHED' },
+    where: { published: true },
     _count: { id: true },
     orderBy: { _count: { id: 'desc' } },
   });
@@ -542,39 +483,13 @@ export async function getDestinationsWithCounts() {
 }
 
 /**
- * Get focus areas with property counts
- */
-export async function getFocusAreasWithCounts() {
-  return db.focusArea.findMany({
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-      description: true,
-      _count: {
-        select: {
-          properties: {
-            where: {
-              property: {
-                status: 'PUBLISHED',
-              },
-            },
-          },
-        },
-      },
-    },
-    orderBy: { name: 'asc' },
-  });
-}
-
-/**
  * Get properties for comparison (minimal fields)
  */
 export async function getPropertiesForComparison(slugs: string[]) {
   return db.property.findMany({
     where: {
       slug: { in: slugs },
-      status: 'PUBLISHED',
+      published: true,
     },
     select: {
       id: true,
@@ -587,25 +502,17 @@ export async function getPropertiesForComparison(slugs: string[]) {
       priceMax: true,
       currency: true,
       website: true,
-      clarusIndex: true,
-      darkData: {
-        select: {
-          physicianRatio: true,
-          averageBookingLeadDays: true,
-          returnGuestPercentage: true,
-          staffTenureYears: true,
-        },
-      },
-      focusAreas: {
-        include: {
-          focusArea: {
-            select: {
-              name: true,
-              slug: true,
-            },
-          },
-        },
-      },
+      overallScore: true,
+      clinicalRigorScore: true,
+      outcomeEvidenceScore: true,
+      programDepthScore: true,
+      experienceQualityScore: true,
+      valueAlignmentScore: true,
+      physicianPatientRatio: true,
+      avgBookingLeadTime: true,
+      returnGuestPercentage: true,
+      staffTenure: true,
+      focusAreas: true,
       treatments: {
         include: {
           treatment: {
@@ -617,19 +524,19 @@ export async function getPropertiesForComparison(slugs: string[]) {
         },
       },
       programs: {
-        where: { isActive: true },
+        where: { published: true },
         select: {
           name: true,
           durationDays: true,
-          priceFrom: true,
+          price: true,
         },
         take: 5,
       },
       images: {
-        where: { isPrimary: true },
+        where: { isFeatured: true },
         select: {
           url: true,
-          altText: true,
+          alt: true,
         },
         take: 1,
       },
