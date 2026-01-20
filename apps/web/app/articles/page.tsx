@@ -1,9 +1,10 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { Container } from '@clarus-vitae/ui';
 import { getArticles, getArticlesByCategory, type ArticleCategory } from '@clarus-vitae/database/sanity';
-import { ArticleGrid } from './_components/ArticleGrid';
+import { Container } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
 import { ArticleCategoryNav } from './_components/ArticleCategoryNav';
+import { ArticleGrid } from './_components/ArticleGrid';
 
 export const metadata: Metadata = {
   title: 'Articles | Clarus Vitae',

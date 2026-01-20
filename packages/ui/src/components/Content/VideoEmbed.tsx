@@ -14,14 +14,14 @@ function parseVideoUrl(url: string): { platform: 'youtube' | 'vimeo' | null; id:
   // YouTube patterns
   const youtubeRegex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
   const youtubeMatch = url.match(youtubeRegex);
-  if (youtubeMatch) {
+  if (youtubeMatch && youtubeMatch[1]) {
     return { platform: 'youtube', id: youtubeMatch[1] };
   }
 
   // Vimeo patterns
   const vimeoRegex = /(?:vimeo\.com\/)(\d+)/;
   const vimeoMatch = url.match(vimeoRegex);
-  if (vimeoMatch) {
+  if (vimeoMatch && vimeoMatch[1]) {
     return { platform: 'vimeo', id: vimeoMatch[1] };
   }
 

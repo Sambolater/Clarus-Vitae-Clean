@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { ClarusIndexBadge, TierBadge } from '@clarus-vitae/ui';
 import type { PropertyTier } from '@clarus-vitae/types';
+import { ClarusIndexBadge, TierBadge } from '@clarus-vitae/ui';
+import Link from 'next/link';
+import React from 'react';
 
 interface PropertyData {
   id: string;

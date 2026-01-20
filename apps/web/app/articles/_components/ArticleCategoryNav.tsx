@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
 import type { ArticleCategory } from '@clarus-vitae/database/sanity';
+import Link from 'next/link';
+import React from 'react';
 
 interface ArticleCategoryNavProps {
   currentCategory?: ArticleCategory;

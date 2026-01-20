@@ -1,18 +1,19 @@
 'use client';
 
-import React from 'react';
 import {
   PortableText,
   type PortableTextReactComponents,
   type PortableTextBlock,
 } from '@portabletext/react';
 import Link from 'next/link';
+import React from 'react';
+
+import { Callout, type CalloutType } from './Callout';
+import { ComparisonTableEmbed } from './ComparisonTableEmbed';
+import { DataTable } from './DataTable';
 import { PropertyCardEmbed } from './PropertyCardEmbed';
 import { TreatmentCardEmbed } from './TreatmentCardEmbed';
-import { ComparisonTableEmbed } from './ComparisonTableEmbed';
-import { Callout, type CalloutType } from './Callout';
 import { VideoEmbed } from './VideoEmbed';
-import { DataTable } from './DataTable';
 
 // Type for the urlFor function
 type UrlForFunction = (source: unknown) => { width: (w: number) => { url: () => string } };
@@ -28,7 +29,7 @@ interface PortableTextRendererProps {
 /**
  * Create default Portable Text components
  */
-function createDefaultComponents(urlFor?: UrlForFunction): PortableTextReactComponents {
+function createDefaultComponents(urlFor?: UrlForFunction): Partial<PortableTextReactComponents> {
   return {
     types: {
       image: ({ value }: { value: { alt?: string; caption?: string } }) => {

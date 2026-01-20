@@ -1,15 +1,14 @@
 'use client';
 
-import React from 'react';
 import { PortableTextRenderer } from '@clarus-vitae/ui';
-import type { PortableTextBlock } from '@portabletext/types';
+import React from 'react';
 
 interface ArticleContentProps {
-  content: PortableTextBlock[];
-  urlFor: (source: unknown) => { width: (w: number) => { url: () => string } };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: any[];
 }
 
-export function ArticleContent({ content, urlFor }: ArticleContentProps) {
+export function ArticleContent({ content }: ArticleContentProps) {
   if (!content || content.length === 0) {
     return (
       <div className="py-8 text-center text-gray-500">
@@ -20,7 +19,7 @@ export function ArticleContent({ content, urlFor }: ArticleContentProps) {
 
   return (
     <div className="article-content">
-      <PortableTextRenderer content={content} urlFor={urlFor} />
+      <PortableTextRenderer content={content} />
     </div>
   );
 }

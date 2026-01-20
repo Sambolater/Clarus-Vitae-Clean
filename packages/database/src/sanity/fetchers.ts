@@ -194,10 +194,11 @@ export async function getFaqs(preview = false): Promise<Faq[]> {
 export async function getFaqsByCategory(preview = false): Promise<FaqsByCategory> {
   const faqs = await getFaqs(preview);
   return faqs.reduce((acc, faq) => {
-    if (!acc[faq.category]) {
-      acc[faq.category] = [];
+    const category = faq.category;
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[faq.category].push(faq);
+    acc[category]!.push(faq);
     return acc;
   }, {} as FaqsByCategory);
 }
@@ -265,12 +266,14 @@ export async function getGlossaryTermSlugs(): Promise<string[]> {
  * Search across all content types
  */
 export async function searchContent(
-  query: string,
+  searchQuery: string,
   limit = 10,
   preview = false
 ): Promise<SearchResult[]> {
   const client = getClient(preview);
-  return client.fetch(searchContentQuery, { query: `*${query}*`, limit });
+  // Cast params to avoid Sanity strict typing conflict with 'query' param name
+  const params = { query: `*${searchQuery}*`, limit } as Record<string, unknown>;
+  return client.fetch(searchContentQuery, params) as Promise<SearchResult[]>;
 }
 
 /**

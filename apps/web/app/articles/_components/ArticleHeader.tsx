@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
 import { Container } from '@clarus-vitae/ui';
-import type { SanityImage } from '@clarus-vitae/database/sanity';
+import Link from 'next/link';
+import React from 'react';
 
 interface Author {
   id: string;
@@ -12,6 +11,11 @@ interface Author {
   title: string | null;
   imageUrl: string | null;
   credentials: string[];
+}
+
+interface HeroImage {
+  alt?: string;
+  caption?: string;
 }
 
 interface ArticleHeaderProps {
@@ -23,8 +27,7 @@ interface ArticleHeaderProps {
   updatedAt?: string;
   readingTime?: number;
   author: Author | null;
-  heroImage?: SanityImage;
-  urlFor: (source: unknown) => { width: (w: number) => { height: (h: number) => { url: () => string } } };
+  heroImage?: HeroImage;
 }
 
 function formatDate(dateString: string): string {
@@ -45,7 +48,6 @@ export function ArticleHeader({
   readingTime,
   author,
   heroImage,
-  urlFor,
 }: ArticleHeaderProps) {
   return (
     <header>

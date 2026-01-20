@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
+import type { ArticleListItem } from '@clarus-vitae/database/sanity';
 import Link from 'next/link';
-import type { ArticleListItem, SanityImage } from '@clarus-vitae/database/sanity';
+import React from 'react';
 
 interface RelatedArticlesProps {
   articles: ArticleListItem[];
-  urlFor: (source: unknown) => { width: (w: number) => { height: (h: number) => { url: () => string } } };
 }
 
 const categoryLabels: Record<string, string> = {
@@ -26,7 +25,7 @@ function formatDate(dateString: string): string {
   });
 }
 
-export function RelatedArticles({ articles, urlFor }: RelatedArticlesProps) {
+export function RelatedArticles({ articles }: RelatedArticlesProps) {
   if (!articles || articles.length === 0) {
     return null;
   }
