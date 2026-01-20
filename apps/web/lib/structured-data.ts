@@ -216,3 +216,183 @@ export function generatePropertyListStructuredData(
     })),
   };
 }
+
+/**
+ * Generate MedicalProcedure schema for treatment pages
+ */
+interface TreatmentStructuredDataInput {
+  name: string;
+  slug: string;
+  description: string;
+  category?: string | null;
+  howItWorks?: string | null;
+  evidenceLevel?: string | null;
+  risks?: string[] | null;
+  contraindications?: string[] | null;
+}
+
+export function generateTreatmentStructuredData(treatment: TreatmentStructuredDataInput): object {
+  const structuredData: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: treatment.name,
+    description: treatment.description,
+    url: `https://clarusvitae.com/treatments/${treatment.slug}`,
+  };
+
+  if (treatment.howItWorks) {
+    structuredData.howPerformed = treatment.howItWorks;
+  }
+
+  if (treatment.category) {
+    structuredData.procedureType = treatment.category;
+  }
+
+  if (treatment.risks && treatment.risks.length > 0) {
+    structuredData.risks = treatment.risks.join('; ');
+  }
+
+  if (treatment.contraindications && treatment.contraindications.length > 0) {
+    structuredData.contraindication = treatment.contraindications.join('; ');
+  }
+
+  return structuredData;
+}
+
+/**
+ * Generate Article schema for editorial content
+ */
+interface ArticleStructuredDataInput {
+  title: string;
+  slug: string;
+  excerpt: string;
+  heroImage?: string | null;
+  publishedAt: Date | string;
+  updatedAt?: Date | string | null;
+  authorName: string;
+  authorSlug: string;
+  authorTitle?: string | null;
+}
+
+export function generateArticleStructuredData(article: ArticleStructuredDataInput): object {
+  const publishedDate = article.publishedAt instanceof Date
+    ? article.publishedAt.toISOString()
+    : article.publishedAt;
+
+  const modifiedDate = article.updatedAt
+    ? (article.updatedAt instanceof Date ? article.updatedAt.toISOString() : article.updatedAt)
+    : publishedDate;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.excerpt,
+    image: article.heroImage || undefined,
+    datePublished: publishedDate,
+    dateModified: modifiedDate,
+    url: `https://clarusvitae.com/articles/${article.slug}`,
+    author: {
+      '@type': 'Person',
+      name: article.authorName,
+      url: `https://clarusvitae.com/team/${article.authorSlug}`,
+      jobTitle: article.authorTitle || undefined,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Clarus Vitae',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://clarusvitae.com/logo.svg',
+      },
+    },
+  };
+}
+
+/**
+ * Generate FAQPage schema for FAQ sections
+ */
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export function generateFAQStructuredData(faqs: FAQItem[]): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
+ * Generate Person schema for team member profiles
+ */
+interface TeamMemberStructuredDataInput {
+  name: string;
+  slug: string;
+  title: string;
+  bio?: string | null;
+  headshotUrl?: string | null;
+  credentials?: string[] | null;
+  specializations?: string[] | null;
+  linkedIn?: string | null;
+}
+
+export function generateTeamMemberStructuredData(member: TeamMemberStructuredDataInput): object {
+  const structuredData: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: member.name,
+    jobTitle: member.title,
+    url: `https://clarusvitae.com/team/${member.slug}`,
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Clarus Vitae',
+      url: 'https://clarusvitae.com',
+    },
+  };
+
+  if (member.bio) {
+    structuredData.description = member.bio;
+  }
+
+  if (member.headshotUrl) {
+    structuredData.image = member.headshotUrl;
+  }
+
+  if (member.credentials && member.credentials.length > 0) {
+    structuredData.hasCredential = member.credentials.map((credential) => ({
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: credential,
+    }));
+  }
+
+  if (member.specializations && member.specializations.length > 0) {
+    structuredData.knowsAbout = member.specializations;
+  }
+
+  const sameAs: string[] = [];
+  if (member.linkedIn) {
+    sameAs.push(member.linkedIn);
+  }
+  if (sameAs.length > 0) {
+    structuredData.sameAs = sameAs;
+  }
+
+  return structuredData;
+}
+
+/**
+ * Generate multiple structured data objects for a page
+ */
+export function combineStructuredData(...items: object[]): object[] {
+  return items.filter(Boolean);
+}

@@ -273,6 +273,22 @@ export {
 } from './components/Team';
 
 // ============================================================================
+// Image Components (Performance Optimized)
+// ============================================================================
+export {
+  OptimizedImage,
+  type OptimizedImageProps,
+  PropertyHeroImage,
+  type PropertyHeroImageProps,
+  PropertyCardImage,
+  type PropertyCardImageProps,
+  TeamMemberImage,
+  type TeamMemberImageProps,
+  TreatmentImage,
+  type TreatmentImageProps,
+} from './components/Image';
+
+// ============================================================================
 // Content Components (Portable Text & Editorial)
 // ============================================================================
 export {

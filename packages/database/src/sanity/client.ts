@@ -15,6 +15,9 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 const apiVersion = '2024-01-01';
 
+// Track if Sanity is properly configured
+export const isSanityConfigured = Boolean(projectId);
+
 // Validate environment variables
 if (!projectId) {
   console.warn(
@@ -23,11 +26,27 @@ if (!projectId) {
 }
 
 /**
+ * Create a Sanity client only if configured, otherwise return a mock client
+ * that won't throw errors during build
+ */
+function createSafeClient(options: Parameters<typeof createClient>[0]): SanityClient {
+  if (!projectId) {
+    // Return a mock client that returns empty results
+    // This prevents build failures when Sanity env vars aren't set
+    return {
+      fetch: async () => null,
+      config: () => options,
+    } as unknown as SanityClient;
+  }
+  return createClient(options);
+}
+
+/**
  * Public Sanity client for read operations
  * Uses CDN for production for better performance
  */
-export const sanityClient: SanityClient = createClient({
-  projectId: projectId || '',
+export const sanityClient: SanityClient = createSafeClient({
+  projectId: projectId || 'placeholder',
   dataset,
   apiVersion,
   useCdn: process.env.NODE_ENV === 'production',
@@ -37,8 +56,8 @@ export const sanityClient: SanityClient = createClient({
  * Authenticated Sanity client for write operations
  * Only use server-side, never expose token to client
  */
-export const sanityWriteClient: SanityClient = createClient({
-  projectId: projectId || '',
+export const sanityWriteClient: SanityClient = createSafeClient({
+  projectId: projectId || 'placeholder',
   dataset,
   apiVersion,
   useCdn: false,
@@ -49,8 +68,8 @@ export const sanityWriteClient: SanityClient = createClient({
  * Preview client for draft content
  * Used in preview mode to fetch unpublished content
  */
-export const sanityPreviewClient: SanityClient = createClient({
-  projectId: projectId || '',
+export const sanityPreviewClient: SanityClient = createSafeClient({
+  projectId: projectId || 'placeholder',
   dataset,
   apiVersion,
   useCdn: false,
@@ -58,8 +77,10 @@ export const sanityPreviewClient: SanityClient = createClient({
   perspective: 'previewDrafts',
 });
 
-// Image URL builder
-const builder = imageUrlBuilder(sanityClient);
+// Image URL builder - only create if configured
+const builder = isSanityConfigured
+  ? imageUrlBuilder(sanityClient)
+  : null;
 
 /**
  * Generate optimized image URLs from Sanity image references
@@ -68,6 +89,20 @@ const builder = imageUrlBuilder(sanityClient);
  * urlFor(article.heroImage).width(800).height(600).url()
  */
 export function urlFor(source: SanityImageSource) {
+  if (!builder) {
+    // Return a mock image builder that returns empty string for URL
+    // This allows builds to complete when Sanity is not configured
+    const mockBuilder = {
+      width: () => mockBuilder,
+      height: () => mockBuilder,
+      format: () => mockBuilder,
+      quality: () => mockBuilder,
+      auto: () => mockBuilder,
+      fit: () => mockBuilder,
+      url: () => '',
+    };
+    return mockBuilder;
+  }
   return builder.image(source);
 }
 
