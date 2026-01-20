@@ -1,6 +1,6 @@
+import { db } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { db } from '@clarus-vitae/database';
 
 interface DestinationPageProps {
   params: Promise<{ country: string }>;

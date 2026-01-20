@@ -7,9 +7,8 @@
 
 'use client';
 
-import Link from 'next/link';
-import { cn } from '@clarus-vitae/utils';
 import { TierBadge, EvidenceLevel, ClarusIndexBadge } from '@clarus-vitae/ui';
+import Link from 'next/link';
 
 // Property result type
 export interface PropertyResult {

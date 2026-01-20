@@ -1,10 +1,11 @@
+import { db } from '@clarus-vitae/database';
+import { Container, Breadcrumbs, PropertyCard, TreatmentCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { db } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, PropertyCard, TreatmentCard } from '@clarus-vitae/ui';
-import { equipmentCategoryLabels, treatmentCategoryLabels, medicalDisclaimer } from '@/lib/treatments';
+
 import { formatPriceRange } from '@/lib/properties';
+import { equipmentCategoryLabels, treatmentCategoryLabels, medicalDisclaimer } from '@/lib/treatments';
 
 interface EquipmentPageProps {
   params: Promise<{ slug: string }>;

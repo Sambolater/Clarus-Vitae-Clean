@@ -13,8 +13,8 @@
  * implementation stores recent searches only in localStorage.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { getSearchSuggestions } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 

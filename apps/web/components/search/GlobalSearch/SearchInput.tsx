@@ -7,8 +7,8 @@
 
 'use client';
 
-import { forwardRef, type InputHTMLAttributes } from 'react';
 import { cn } from '@clarus-vitae/utils';
+import { forwardRef, type InputHTMLAttributes } from 'react';
 
 interface SearchInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   onClear?: () => void;

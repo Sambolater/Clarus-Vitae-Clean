@@ -13,13 +13,13 @@
  * endpoints which support more filtering options.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import {
   searchAll,
   searchProperties,
   searchTreatments,
   searchArticles,
 } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 

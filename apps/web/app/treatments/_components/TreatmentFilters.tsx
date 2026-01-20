@@ -1,13 +1,14 @@
 'use client';
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import {
   FilterSidebar,
   Checkbox,
   RangeSlider,
 } from '@clarus-vitae/ui';
-import { TreatmentCategory, EvidenceLevel } from '@clarus-vitae/database';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
+
 import {
   treatmentCategoryLabels,
   evidenceLevelLabels,

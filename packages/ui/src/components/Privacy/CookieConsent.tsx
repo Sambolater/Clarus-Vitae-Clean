@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@clarus-vitae/utils';
-import { type HTMLAttributes, forwardRef, useState, useEffect } from 'react';
+import { type HTMLAttributes, forwardRef, useState } from 'react';
 
 export interface ConsentOptions {
   essential: boolean;      // Always true, required for site function
@@ -31,7 +31,7 @@ export const CookieConsent = forwardRef<HTMLDivElement, CookieConsentProps>(
     {
       onAcceptPrivate,
       onCustomize,
-      onDismiss,
+      onDismiss: _onDismiss,
       privacyPolicyUrl = '/privacy',
       show = true,
       className,

@@ -1,6 +1,7 @@
+import { type PropertyTier } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
-import { PropertyTier } from '@clarus-vitae/database';
+
 import { tierLabels, tierDescriptions } from '@/lib/properties';
 
 interface TierPageProps {

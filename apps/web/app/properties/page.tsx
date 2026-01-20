@@ -1,12 +1,14 @@
+import { db, type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database';
+import { Container, LoadingSpinner, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { db, PropertyTier, FocusArea, WellnessApproach } from '@clarus-vitae/database';
-import { Container, LoadingSpinner, Breadcrumbs } from '@clarus-vitae/ui';
+
+import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
+
+import { MobileFilterDrawer } from './_components/MobileFilterDrawer';
 import { PropertyFilters } from './_components/PropertyFilters';
 import { PropertyGrid } from './_components/PropertyGrid';
 import { SortControl, Pagination } from './_components/PropertySortAndPagination';
-import { MobileFilterDrawer } from './_components/MobileFilterDrawer';
-import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
 
 export const metadata: Metadata = {
   title: 'Best Wellness Retreats & Longevity Clinics | Clarus Vitae',

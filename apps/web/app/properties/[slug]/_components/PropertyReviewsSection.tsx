@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { type PropertyTier } from '@clarus-vitae/database';
 import { Button, StarRating, OutcomeIndicator, VerifiedBadge, LoadingSpinner } from '@clarus-vitae/ui';
-import { PropertyTier } from '@clarus-vitae/database';
+import { useState } from 'react';
 
 interface ReviewStats {
   totalReviews: number;

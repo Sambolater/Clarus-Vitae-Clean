@@ -7,8 +7,8 @@
 
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 export interface SearchSuggestion {
   id: string;

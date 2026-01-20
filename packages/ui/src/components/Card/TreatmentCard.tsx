@@ -1,5 +1,6 @@
 import { cn } from '@clarus-vitae/utils';
 import { forwardRef } from 'react';
+
 import { type EvidenceLevelType } from '../Badge/EvidenceLevel';
 
 export interface TreatmentCardProps {

@@ -1,7 +1,8 @@
 'use client';
 
+import { type EvidenceLevel, type TreatmentCategory } from '@clarus-vitae/database';
 import { cn } from '@clarus-vitae/utils';
-import { EvidenceLevel, TreatmentCategory } from '@clarus-vitae/database';
+
 import {
   evidenceLevelConfig,
   evidenceLevelDescriptions,

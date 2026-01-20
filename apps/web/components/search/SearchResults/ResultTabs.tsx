@@ -8,6 +8,7 @@
 'use client';
 
 import { cn } from '@clarus-vitae/utils';
+
 import type { SearchType } from '../hooks/useSearchParams';
 
 interface ResultTabsProps {

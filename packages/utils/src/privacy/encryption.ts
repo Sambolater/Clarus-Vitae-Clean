@@ -150,7 +150,14 @@ export async function decryptPII(
       throw new EncryptionError('Invalid encrypted format', 'INVALID_FORMAT');
     }
 
-    const [saltB64, ivB64, authTagB64, encryptedB64] = parts;
+    const saltB64 = parts[0];
+    const ivB64 = parts[1];
+    const authTagB64 = parts[2];
+    const encryptedB64 = parts[3];
+
+    if (!saltB64 || !ivB64 || !authTagB64 || !encryptedB64) {
+      throw new EncryptionError('Invalid encrypted format', 'INVALID_FORMAT');
+    }
 
     const salt = Buffer.from(saltB64, 'base64');
     const iv = Buffer.from(ivB64, 'base64');
@@ -299,7 +306,9 @@ export function maskEmail(email: string): string {
     return maskData(email);
   }
 
-  const [local, domain] = email.split('@');
+  const parts = email.split('@');
+  const local = parts[0] ?? '';
+  const domain = parts[1] ?? '';
   const maskedLocal =
     local.length > 2 ? local.slice(0, 2) + '*'.repeat(Math.min(local.length - 2, 6)) : local;
 

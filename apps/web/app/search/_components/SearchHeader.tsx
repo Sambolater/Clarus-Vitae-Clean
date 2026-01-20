@@ -6,8 +6,9 @@
 
 'use client';
 
-import { GlobalSearch } from '@/components/search';
 import { Heading } from '@clarus-vitae/ui';
+
+import { GlobalSearch } from '@/components/search';
 
 interface SearchHeaderProps {
   initialQuery: string;

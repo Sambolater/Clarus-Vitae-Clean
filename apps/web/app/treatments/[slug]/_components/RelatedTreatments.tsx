@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { TreatmentCategory, EvidenceLevel } from '@clarus-vitae/database';
+import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import { TreatmentCard } from '@clarus-vitae/ui';
+import Link from 'next/link';
+
 import { treatmentCategoryLabels } from '@/lib/treatments';
 
 interface RelatedTreatment {

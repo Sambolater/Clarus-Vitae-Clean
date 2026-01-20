@@ -8,6 +8,7 @@
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
+
 import {
   ResultTabs,
   PropertyResultCard,

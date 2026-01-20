@@ -1,7 +1,16 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { db } from '@clarus-vitae/database';
 import { Container, Breadcrumbs } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
+
+import { JsonLd } from '@/components/JsonLd';
+import { tierLabels, focusAreaLabels } from '@/lib/properties';
+import {
+  generatePropertyStructuredData,
+  generateBreadcrumbStructuredData,
+} from '@/lib/structured-data';
+
 import {
   PropertyHero,
   PropertyScoreSection,
@@ -12,12 +21,6 @@ import {
   PropertyReviewsSection,
   SimilarPropertiesSection,
 } from './_components';
-import { tierLabels, focusAreaLabels } from '@/lib/properties';
-import { JsonLd } from '@/components/JsonLd';
-import {
-  generatePropertyStructuredData,
-  generateBreadcrumbStructuredData,
-} from '@/lib/structured-data';
 
 interface PropertyPageProps {
   params: Promise<{ slug: string }>;

@@ -4,8 +4,9 @@
  * Server-side rendered search results with tabs and filtering.
  */
 
-import { EmptyState, Alert } from '@clarus-vitae/ui';
 import { searchAll } from '@clarus-vitae/database';
+import { EmptyState, Alert } from '@clarus-vitae/ui';
+
 import { SearchResultsList } from './SearchResultsList';
 
 interface SearchResultsContentProps {

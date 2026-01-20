@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import { type PropertyTier } from '@clarus-vitae/database';
 import { ClarusIndexBadge, TierBadge, Button } from '@clarus-vitae/ui';
-import { PropertyTier } from '@clarus-vitae/database';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import { formatPriceRange } from '@/lib/properties';
 
 interface SimilarProperty {

@@ -2,7 +2,7 @@
  * Property-related utility functions and types
  */
 
-import { PropertyTier, FocusArea, WellnessApproach } from '@clarus-vitae/database';
+import { type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database';
 
 // Tier labels for display
 export const tierLabels: Record<PropertyTier, string> = {

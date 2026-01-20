@@ -5,8 +5,8 @@
  * Supports filtering by category, evidence level, price range, and search.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, TreatmentCategory, EvidenceLevel, Prisma } from '@clarus-vitae/database';
+import { db, type TreatmentCategory, type EvidenceLevel, type Prisma } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour

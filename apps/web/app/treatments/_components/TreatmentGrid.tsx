@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { TreatmentCard, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+import Link from 'next/link';
+
 import {
-  TreatmentListItem,
+  type TreatmentListItem,
   formatTreatmentPriceRange,
   treatmentCategoryLabels,
 } from '@/lib/treatments';

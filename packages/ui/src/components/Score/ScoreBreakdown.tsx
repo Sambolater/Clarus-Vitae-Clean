@@ -146,7 +146,7 @@ export const ScoreBreakdown = forwardRef<HTMLDivElement, ScoreBreakdownProps>(
     {
       overallScore,
       dimensions,
-      tier,
+      tier: _tier,
       size = 'md',
       showOverall = true,
       showWeights = false,

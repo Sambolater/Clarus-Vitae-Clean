@@ -1,5 +1,6 @@
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
+
 import { type IndexDimension, type DimensionScore } from './ScoreBreakdown';
 
 export interface ComparisonProperty {

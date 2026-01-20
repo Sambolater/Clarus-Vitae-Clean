@@ -1,7 +1,8 @@
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
+import { Container, Breadcrumbs, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { db, DiagnosticCategory } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+
 import { diagnosticCategoryLabels } from '@/lib/treatments';
 
 export const metadata: Metadata = {

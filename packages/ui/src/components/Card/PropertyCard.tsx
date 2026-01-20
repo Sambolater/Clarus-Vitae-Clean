@@ -1,5 +1,6 @@
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
+
 import { type PropertyTier } from '../Badge/TierBadge';
 
 export interface PropertyCardProps extends HTMLAttributes<HTMLDivElement> {

@@ -5,8 +5,8 @@
  * Supports filtering by country, tier, and price range.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, PropertyTier, Prisma } from '@clarus-vitae/database';
+import { db, type PropertyTier, type Prisma } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour

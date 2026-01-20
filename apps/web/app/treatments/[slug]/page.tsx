@@ -1,7 +1,14 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { db } from '@clarus-vitae/database';
 import { Container, Breadcrumbs } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
+import {
+  treatmentCategoryLabels,
+  evidenceLevelLabels,
+  medicalDisclaimer,
+} from '@/lib/treatments';
+
 import {
   TreatmentHero,
   TreatmentInfoSections,
@@ -9,11 +16,6 @@ import {
   EquipmentSection,
   RelatedTreatments,
 } from './_components';
-import {
-  treatmentCategoryLabels,
-  evidenceLevelLabels,
-  medicalDisclaimer,
-} from '@/lib/treatments';
 
 interface TreatmentPageProps {
   params: Promise<{ slug: string }>;

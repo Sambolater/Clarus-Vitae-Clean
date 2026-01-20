@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { Drawer, Button } from '@clarus-vitae/ui';
+import { useState } from 'react';
+
 import { PropertyFilters } from './PropertyFilters';
 
 interface MobileFilterDrawerProps {

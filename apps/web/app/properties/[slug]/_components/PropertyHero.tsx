@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { type PropertyTier } from '@clarus-vitae/database';
 import { Button, TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
+import Image from 'next/image';
+import { useState } from 'react';
+
 import { formatPriceRange, tierLabels } from '@/lib/properties';
-import { PropertyTier } from '@clarus-vitae/database';
+
 
 interface PropertyImage {
   id: string;

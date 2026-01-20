@@ -5,8 +5,8 @@
  * All filters are applied via query parameters.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, PropertyTier, WellnessApproach, FocusArea, Prisma } from '@clarus-vitae/database';
+import { db, type PropertyTier, type WellnessApproach, type FocusArea, type Prisma } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour

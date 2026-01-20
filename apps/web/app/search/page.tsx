@@ -5,11 +5,12 @@
  * Supports filtering and pagination.
  */
 
-import { Suspense } from 'react';
-import { Metadata } from 'next';
 import { Container, Breadcrumbs, LoadingSpinner, EmptyState } from '@clarus-vitae/ui';
-import { SearchResultsContent } from './_components/SearchResultsContent';
+import { type Metadata } from 'next';
+import { Suspense } from 'react';
+
 import { SearchHeader } from './_components/SearchHeader';
+import { SearchResultsContent } from './_components/SearchResultsContent';
 
 interface SearchPageProps {
   searchParams: { [key: string]: string | string[] | undefined };

@@ -6,6 +6,7 @@
  */
 
 import { db } from '../client';
+
 import { searchClient, SEARCH_INDEXES } from './client';
 import { propertiesIndexSettings, treatmentsIndexSettings, articlesIndexSettings } from './config';
 import type { PropertySearchDocument, TreatmentSearchDocument, ArticleSearchDocument } from './types';

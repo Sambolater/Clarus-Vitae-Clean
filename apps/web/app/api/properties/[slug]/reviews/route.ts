@@ -5,8 +5,8 @@
  * filtering by verified status and sorting options.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, Prisma } from '@clarus-vitae/database';
+import { db, type Prisma } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 

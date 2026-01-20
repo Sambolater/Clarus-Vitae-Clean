@@ -10,9 +10,11 @@
 
 'use client';
 
-import { useRef, useCallback } from 'react';
 import { cn } from '@clarus-vitae/utils';
+import { useRef, useCallback } from 'react';
+
 import { useSearch } from '../hooks/useSearch';
+
 import { SearchInput } from './SearchInput';
 import { SearchSuggestions } from './SearchSuggestions';
 

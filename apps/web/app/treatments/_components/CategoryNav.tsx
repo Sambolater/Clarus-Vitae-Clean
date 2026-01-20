@@ -1,9 +1,10 @@
 'use client';
 
+import { type TreatmentCategory } from '@clarus-vitae/database';
+import { cn } from '@clarus-vitae/utils';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { cn } from '@clarus-vitae/utils';
-import { TreatmentCategory } from '@clarus-vitae/database';
+
 import { treatmentCategoryLabels } from '@/lib/treatments';
 
 interface CategoryNavProps {

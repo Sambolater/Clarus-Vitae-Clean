@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { type FocusArea } from '@clarus-vitae/database';
 import { Button, TierBadge } from '@clarus-vitae/ui';
-import { FocusArea } from '@clarus-vitae/database';
+import { useState } from 'react';
+
 import { focusAreaLabels } from '@/lib/properties';
 
 interface Program {

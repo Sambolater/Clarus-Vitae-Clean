@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database';
 import {
   FilterSidebar,
   Checkbox,
@@ -9,7 +8,9 @@ import {
   RangeSlider,
   Button,
 } from '@clarus-vitae/ui';
-import { PropertyTier, FocusArea, WellnessApproach } from '@clarus-vitae/database';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
+
 import {
   tierLabels,
   focusAreaLabels,

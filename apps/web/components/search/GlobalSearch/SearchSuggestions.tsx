@@ -7,8 +7,9 @@
 
 'use client';
 
-import { useRef, useEffect, useCallback, useState } from 'react';
 import { cn } from '@clarus-vitae/utils';
+import { useRef, useEffect, useState, useMemo } from 'react';
+
 import type { SearchSuggestion, GroupedSuggestions } from '../hooks/useSearch';
 
 interface SearchSuggestionsProps {
@@ -32,11 +33,14 @@ export function SearchSuggestions({
   const [activeIndex, setActiveIndex] = useState(-1);
 
   // Flatten suggestions for keyboard navigation
-  const allSuggestions: SearchSuggestion[] = [
-    ...suggestions.properties,
-    ...suggestions.treatments,
-    ...suggestions.articles,
-  ];
+  const allSuggestions: SearchSuggestion[] = useMemo(
+    () => [
+      ...suggestions.properties,
+      ...suggestions.treatments,
+      ...suggestions.articles,
+    ],
+    [suggestions.properties, suggestions.treatments, suggestions.articles]
+  );
 
   const totalCount = allSuggestions.length;
 
@@ -69,7 +73,10 @@ export function SearchSuggestions({
           if (activeIndex === -1 || activeIndex === totalCount) {
             onViewAllResults();
           } else if (activeIndex >= 0 && activeIndex < totalCount) {
-            onSelect(allSuggestions[activeIndex]);
+            const suggestion = allSuggestions[activeIndex];
+            if (suggestion) {
+              onSelect(suggestion);
+            }
           }
           break;
         case 'Escape':
