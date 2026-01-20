@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npx prisma generate --schema=packages/database/prisma/schema.prisma && turbo run build",
+  "buildCommand": "pnpm --filter @clarus-vitae/database db:generate && turbo run build",
   "installCommand": "pnpm install",
   "framework": "nextjs"
 }
