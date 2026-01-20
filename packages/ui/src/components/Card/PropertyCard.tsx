@@ -16,6 +16,7 @@ export interface PropertyCardProps extends HTMLAttributes<HTMLDivElement> {
   onCompare?: () => void;
   onSave?: () => void;
   isSaved?: boolean;
+  isInComparison?: boolean;
 }
 
 const tierLabels: Record<PropertyTier, string> = {
@@ -62,6 +63,7 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
       onCompare,
       onSave,
       isSaved = false,
+      isInComparison = false,
       className,
       ...props
     },
@@ -134,12 +136,23 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
                   e.preventDefault();
                   onCompare();
                 }}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate transition-colors hover:bg-white hover:text-clarus-navy"
-                aria-label="Add to comparison"
+                className={cn(
+                  'flex h-8 w-8 items-center justify-center rounded-full transition-colors',
+                  isInComparison
+                    ? 'bg-clarus-navy text-white'
+                    : 'bg-white/90 text-slate hover:bg-white hover:text-clarus-navy'
+                )}
+                aria-label={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+                {isInComparison ? (
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                )}
               </button>
             )}
           </div>

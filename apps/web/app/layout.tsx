@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
+import { ComparisonBarWrapper } from '@/components/ComparisonBarWrapper';
+
 /**
  * Font Configuration
  *
@@ -70,8 +72,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-clarus-white font-body text-clarus-navy antialiased">
+      <body className="min-h-screen bg-clarus-white pb-20 font-body text-clarus-navy antialiased lg:pb-0">
         {children}
+        <ComparisonBarWrapper />
       </body>
     </html>
   );

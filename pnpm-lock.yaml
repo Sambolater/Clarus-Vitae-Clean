@@ -46,7 +46,7 @@ importers:
         version: link:../../packages/utils
       next:
         specifier: 14.2.21
-        version: 14.2.21(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 14.2.21(@babel/core@7.28.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -194,6 +194,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.17
         version: 10.4.23(postcss@8.5.6)
+      next:
+        specifier: ^14.0.0
+        version: 14.2.21(@babel/core@7.28.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       postcss:
         specifier: ^8.4.35
         version: 8.5.6
@@ -211,10 +214,17 @@ importers:
         version: 5.4.21(@types/node@20.19.30)
 
   packages/utils:
+    dependencies:
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
     devDependencies:
       '@clarus-vitae/config':
         specifier: workspace:*
         version: link:../config
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.3.27
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
@@ -5724,7 +5734,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@14.2.21(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@14.2.21(@babel/core@7.28.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 14.2.21
       '@swc/helpers': 0.5.5
@@ -5734,7 +5744,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.28.6)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.21
       '@next/swc-darwin-x64': 14.2.21
@@ -6270,10 +6280,12 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-jsx@5.1.1(react@18.3.1):
+  styled-jsx@5.1.1(@babel/core@7.28.6)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
       react: 18.3.1
+    optionalDependencies:
+      '@babel/core': 7.28.6
 
   sucrase@3.35.1:
     dependencies:

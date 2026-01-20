@@ -1,6 +1,7 @@
 'use client';
 
 import { PropertyCard, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+import { useComparison } from '@clarus-vitae/utils';
 import Link from 'next/link';
 
 import { type PropertyListItem, formatPriceRange, focusAreaLabels } from '@/lib/properties';
@@ -11,6 +12,16 @@ interface PropertyGridProps {
 }
 
 export function PropertyGrid({ properties, isLoading = false }: PropertyGridProps) {
+  const { addToComparison, removeFromComparison, isInComparison, isFull } = useComparison();
+
+  const handleCompare = (property: PropertyListItem) => {
+    if (isInComparison(property.id)) {
+      removeFromComparison(property.id);
+    } else {
+      addToComparison(property.id, property.slug, property.name);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -47,9 +58,11 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {properties.map((property) => (
-        <Link key={property.id} href={`/properties/${property.slug}`}>
+      {properties.map((property) => {
+        const inComparison = isInComparison(property.id);
+        return (
           <PropertyCard
+            key={property.id}
             name={property.name}
             location={property.location.city}
             country={property.location.country}
@@ -63,9 +76,11 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
             )}
             focusAreas={property.focusAreas.slice(0, 3).map((area) => focusAreaLabels[area] ?? area).filter(Boolean) as string[]}
             href={`/properties/${property.slug}`}
+            onCompare={() => handleCompare(property)}
+            isInComparison={inComparison}
           />
-        </Link>
-      ))}
+        );
+      })}
     </div>
   );
 }
