@@ -7,9 +7,9 @@
 
 'use client';
 
-import Image, { ImageProps } from 'next/image';
+import { cn } from '@clarus-vitae/utils';
+import Image, { type ImageProps } from 'next/image';
 import { useState } from 'react';
-import { cn } from '../../utils/cn';
 
 // Tiny 1x1 transparent placeholder for blur effect
 const BLUR_DATA_URL =
