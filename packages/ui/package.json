@@ -41,6 +41,7 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "@clarus-vitae/types": "workspace:*",
     "@clarus-vitae/utils": "workspace:*"
   }
 }

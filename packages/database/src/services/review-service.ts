@@ -308,25 +308,26 @@ export async function getReviewAggregation(
     return null;
   }
 
+  type ReviewItem = typeof reviews[number];
   const totalReviews = reviews.length;
-  const verifiedCount = reviews.filter((r) => r.verified).length;
-  const teamReviewCount = reviews.filter((r) => r.isTeamReview).length;
+  const verifiedCount = reviews.filter((r: ReviewItem) => r.verified).length;
+  const teamReviewCount = reviews.filter((r: ReviewItem) => r.isTeamReview).length;
 
   // Calculate overall average
-  const overallSum = reviews.reduce((sum, r) => sum + r.overallRating, 0);
+  const overallSum = reviews.reduce((sum: number, r: ReviewItem) => sum + r.overallRating, 0);
   const overallAverage = Number((overallSum / totalReviews).toFixed(1));
 
   // Calculate experience averages
-  const facilitiesRatings = reviews.filter((r) => r.facilitiesRating !== null);
-  const serviceRatings = reviews.filter((r) => r.serviceRating !== null);
-  const diningRatings = reviews.filter((r) => r.diningRating !== null);
-  const valueRatings = reviews.filter((r) => r.valueRating !== null);
+  const facilitiesRatings = reviews.filter((r: ReviewItem) => r.facilitiesRating !== null);
+  const serviceRatings = reviews.filter((r: ReviewItem) => r.serviceRating !== null);
+  const diningRatings = reviews.filter((r: ReviewItem) => r.diningRating !== null);
+  const valueRatings = reviews.filter((r: ReviewItem) => r.valueRating !== null);
 
   const facilitiesAvg =
     facilitiesRatings.length > 0
       ? Number(
           (
-            facilitiesRatings.reduce((sum, r) => sum + (r.facilitiesRating || 0), 0) /
+            facilitiesRatings.reduce((sum: number, r: ReviewItem) => sum + (r.facilitiesRating || 0), 0) /
             facilitiesRatings.length
           ).toFixed(1)
         )
@@ -336,7 +337,7 @@ export async function getReviewAggregation(
     serviceRatings.length > 0
       ? Number(
           (
-            serviceRatings.reduce((sum, r) => sum + (r.serviceRating || 0), 0) /
+            serviceRatings.reduce((sum: number, r: ReviewItem) => sum + (r.serviceRating || 0), 0) /
             serviceRatings.length
           ).toFixed(1)
         )
@@ -346,7 +347,7 @@ export async function getReviewAggregation(
     diningRatings.length > 0
       ? Number(
           (
-            diningRatings.reduce((sum, r) => sum + (r.diningRating || 0), 0) /
+            diningRatings.reduce((sum: number, r: ReviewItem) => sum + (r.diningRating || 0), 0) /
             diningRatings.length
           ).toFixed(1)
         )
@@ -356,21 +357,21 @@ export async function getReviewAggregation(
     valueRatings.length > 0
       ? Number(
           (
-            valueRatings.reduce((sum, r) => sum + (r.valueRating || 0), 0) /
+            valueRatings.reduce((sum: number, r: ReviewItem) => sum + (r.valueRating || 0), 0) /
             valueRatings.length
           ).toFixed(1)
         )
       : undefined;
 
   // Calculate outcome averages
-  const protocolRatings = reviews.filter((r) => r.protocolQualityRating !== null);
-  const followupRatings = reviews.filter((r) => r.followupQualityRating !== null);
+  const protocolRatings = reviews.filter((r: ReviewItem) => r.protocolQualityRating !== null);
+  const followupRatings = reviews.filter((r: ReviewItem) => r.followupQualityRating !== null);
 
   const protocolQualityAvg =
     protocolRatings.length > 0
       ? Number(
           (
-            protocolRatings.reduce((sum, r) => sum + (r.protocolQualityRating || 0), 0) /
+            protocolRatings.reduce((sum: number, r: ReviewItem) => sum + (r.protocolQualityRating || 0), 0) /
             protocolRatings.length
           ).toFixed(1)
         )
@@ -380,7 +381,7 @@ export async function getReviewAggregation(
     followupRatings.length > 0
       ? Number(
           (
-            followupRatings.reduce((sum, r) => sum + (r.followupQualityRating || 0), 0) /
+            followupRatings.reduce((sum: number, r: ReviewItem) => sum + (r.followupQualityRating || 0), 0) /
             followupRatings.length
           ).toFixed(1)
         )
@@ -388,18 +389,18 @@ export async function getReviewAggregation(
 
   // Goal achievement distribution
   const goalAchievementDistribution = {
-    fully: reviews.filter((r) => r.goalAchievement === 'FULLY').length,
-    partially: reviews.filter((r) => r.goalAchievement === 'PARTIALLY').length,
-    notAchieved: reviews.filter((r) => r.goalAchievement === 'NOT_ACHIEVED').length,
+    fully: reviews.filter((r: ReviewItem) => r.goalAchievement === 'FULLY').length,
+    partially: reviews.filter((r: ReviewItem) => r.goalAchievement === 'PARTIALLY').length,
+    notAchieved: reviews.filter((r: ReviewItem) => r.goalAchievement === 'NOT_ACHIEVED').length,
   };
 
   // Calculate goal achievement average (FULLY=5, PARTIALLY=3, NOT_ACHIEVED=1)
-  const goalAchievementReviews = reviews.filter((r) => r.goalAchievement !== null);
+  const goalAchievementReviews = reviews.filter((r: ReviewItem) => r.goalAchievement !== null);
   const goalAchievementAvg =
     goalAchievementReviews.length > 0
       ? Number(
           (
-            goalAchievementReviews.reduce((sum, r) => {
+            goalAchievementReviews.reduce((sum: number, r: ReviewItem) => {
               if (r.goalAchievement === 'FULLY') return sum + 5;
               if (r.goalAchievement === 'PARTIALLY') return sum + 3;
               return sum + 1;
@@ -409,12 +410,12 @@ export async function getReviewAggregation(
       : undefined;
 
   // Physician endorsement average
-  const physicianReviews = reviews.filter((r) => r.physicianEndorsement !== null);
+  const physicianReviews = reviews.filter((r: ReviewItem) => r.physicianEndorsement !== null);
   const physicianEndorsementAvg =
     physicianReviews.length > 0
       ? Number(
           (
-            physicianReviews.reduce((sum, r) => {
+            physicianReviews.reduce((sum: number, r: ReviewItem) => {
               if (r.physicianEndorsement === 'YES') return sum + 5;
               if (r.physicianEndorsement === 'PROBABLY') return sum + 4;
               if (r.physicianEndorsement === 'UNSURE') return sum + 2;
@@ -425,9 +426,9 @@ export async function getReviewAggregation(
       : undefined;
 
   // Follow-up data
-  const thirtyDayFollowUps = reviews.filter((r) => r.followUp30Days !== null);
-  const ninetyDayFollowUps = reviews.filter((r) => r.followUp90Days !== null);
-  const oneEightyDayFollowUps = reviews.filter((r) => r.followUp180Days !== null);
+  const thirtyDayFollowUps = reviews.filter((r: ReviewItem) => r.followUp30Days !== null);
+  const ninetyDayFollowUps = reviews.filter((r: ReviewItem) => r.followUp90Days !== null);
+  const oneEightyDayFollowUps = reviews.filter((r: ReviewItem) => r.followUp180Days !== null);
 
   const followUpData = {
     thirtyDayCount: thirtyDayFollowUps.length,

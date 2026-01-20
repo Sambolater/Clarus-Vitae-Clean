@@ -1,8 +1,8 @@
 import { cn } from '@clarus-vitae/utils';
-import { type InputHTMLAttributes, forwardRef } from 'react';
+import { type InputHTMLAttributes, type ReactNode, forwardRef } from 'react';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  label: string;
+  label: ReactNode;
   description?: string;
   error?: string;
 }
@@ -17,7 +17,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
  */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ label, description, error, className, id, ...props }, ref) => {
-    const checkboxId = id || label.toLowerCase().replace(/\s+/g, '-');
+    const checkboxId = id || (typeof label === 'string' ? label.toLowerCase().replace(/\s+/g, '-') : `checkbox-${Math.random().toString(36).slice(2, 9)}`);
 
     return (
       <div className={cn('flex items-start', className)}>
