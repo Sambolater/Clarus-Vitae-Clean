@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm db:generate && pnpm build",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npx prisma generate --schema=packages/database/prisma/schema.prisma && turbo run build",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "outputDirectory": "apps/web/.next"
+  "framework": "nextjs"
 }
