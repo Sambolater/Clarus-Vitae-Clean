@@ -14,12 +14,28 @@ export interface ScoreComparisonProps extends HTMLAttributes<HTMLDivElement> {
   highlightBest?: boolean;
 }
 
-const dimensionLabels: Record<IndexDimension, string> = {
+const dimensionLabels: Record<string, string> = {
+  // Legacy generic dimensions
   scientific_rigor: 'Scientific Rigor',
   safety_profile: 'Safety Profile',
   efficacy_data: 'Efficacy Data',
   provider_quality: 'Provider Quality',
   value_alignment: 'Value Alignment',
+  // Tier 1 dimensions
+  clinicalRigor: 'Clinical Rigor',
+  outcomeEvidence: 'Outcome Evidence',
+  programDepth: 'Program Depth',
+  // Tier 2 dimensions
+  programEffectiveness: 'Program Effectiveness',
+  holisticIntegration: 'Holistic Integration',
+  practitionerQuality: 'Practitioner Quality',
+  // Tier 3 dimensions
+  wellnessDepth: 'Wellness Offering Depth',
+  transformativePotential: 'Transformative Potential',
+  settingEnvironment: 'Setting & Environment',
+  // Shared dimensions
+  experienceQuality: 'Experience Quality',
+  valueAlignment: 'Value Alignment',
 };
 
 function getScoreColor(score: number): string {
