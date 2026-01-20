@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae - Button System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            /* Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 48px;
+            --space-6: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--clarus-white);
+            color: var(--clarus-navy);
+            padding: var(--space-5);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-4);
+            color: var(--clarus-navy);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: var(--space-4) 0 var(--space-3);
+            color: var(--clarus-navy);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: var(--space-3) 0 var(--space-2);
+            color: var(--slate);
+        }
+
+        .component-section {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        /* ================================
+           BASE BUTTON STYLES
+           ================================ */
+        .btn {
+            font-family: var(--font-sans);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-1);
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        /* ================================
+           BUTTON SIZES
+           ================================ */
+        .btn--small {
+            font-size: 0.875rem;
+            padding: var(--space-1) var(--space-2);
+            height: 32px;
+        }
+
+        .btn--default {
+            font-size: 1rem;
+            padding: 12px var(--space-3);
+            height: 44px;
+        }
+
+        .btn--large {
+            font-size: 1.125rem;
+            padding: var(--space-2) var(--space-4);
+            height: 56px;
+        }
+
+        /* ================================
+           PRIMARY BUTTON
+           ================================ */
+        .btn--primary {
+            background-color: var(--clarus-navy);
+            color: var(--clarus-white);
+        }
+
+        .btn--primary:hover {
+            background-color: #243854;
+            box-shadow: 0 4px 12px rgba(26, 43, 74, 0.25);
+        }
+
+        .btn--primary:active {
+            background-color: #0f1a2a;
+        }
+
+        .btn--primary:disabled {
+            background-color: #8B9DB8;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ================================
+           SECONDARY BUTTON
+           ================================ */
+        .btn--secondary {
+            background-color: transparent;
+            color: var(--clarus-navy);
+            border: 1.5px solid var(--clarus-navy);
+        }
+
+        .btn--secondary:hover {
+            background-color: var(--clarus-navy);
+            color: var(--clarus-white);
+        }
+
+        .btn--secondary:active {
+            background-color: #0f1a2a;
+            color: var(--clarus-white);
+        }
+
+        .btn--secondary:disabled {
+            border-color: var(--slate);
+            color: var(--slate);
+            cursor: not-allowed;
+        }
+
+        /* ================================
+           TERTIARY / TEXT BUTTON
+           ================================ */
+        .btn--tertiary {
+            background-color: transparent;
+            color: var(--clarus-navy);
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .btn--tertiary:hover {
+            color: var(--clarus-gold);
+        }
+
+        .btn--tertiary:active {
+            color: #B8944C;
+        }
+
+        .btn--tertiary:disabled {
+            color: var(--slate);
+            cursor: not-allowed;
+        }
+
+        /* ================================
+           GOLD ACCENT BUTTON
+           ================================ */
+        .btn--gold {
+            background-color: var(--clarus-gold);
+            color: var(--clarus-navy);
+        }
+
+        .btn--gold:hover {
+            background-color: #D4B472;
+            box-shadow: 0 4px 12px rgba(201, 169, 98, 0.35);
+        }
+
+        .btn--gold:active {
+            background-color: #B8944C;
+        }
+
+        .btn--gold:disabled {
+            background-color: #E0D4BB;
+            color: #8B8579;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ================================
+           BUTTON WITH ICON
+           ================================ */
+        .btn svg {
+            width: 1em;
+            height: 1em;
+            fill: currentColor;
+        }
+
+        /* ================================
+           LABEL STYLES
+           ================================ */
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+            margin-bottom: var(--space-1);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clarus Vitae Button System</h1>
+
+    <!-- PRIMARY BUTTONS -->
+    <div class="component-section">
+        <h2>Primary Buttons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Navy background with white text. Used for primary actions.</p>
+
+        <h3>Sizes</h3>
+        <div class="button-row">
+            <button class="btn btn--primary btn--small">Small</button>
+            <button class="btn btn--primary btn--default">Default</button>
+            <button class="btn btn--primary btn--large">Large</button>
+        </div>
+
+        <h3>States</h3>
+        <div class="button-row">
+            <div>
+                <span class="label">Default</span>
+                <button class="btn btn--primary btn--default">Request Access</button>
+            </div>
+            <div>
+                <span class="label">Hover (simulated)</span>
+                <button class="btn btn--primary btn--default" style="background-color: #243854; box-shadow: 0 4px 12px rgba(26, 43, 74, 0.25);">Request Access</button>
+            </div>
+            <div>
+                <span class="label">Disabled</span>
+                <button class="btn btn--primary btn--default" disabled>Request Access</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECONDARY BUTTONS -->
+    <div class="component-section">
+        <h2>Secondary Buttons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Navy border with transparent background. Used for secondary actions.</p>
+
+        <h3>Sizes</h3>
+        <div class="button-row">
+            <button class="btn btn--secondary btn--small">Small</button>
+            <button class="btn btn--secondary btn--default">Default</button>
+            <button class="btn btn--secondary btn--large">Large</button>
+        </div>
+
+        <h3>States</h3>
+        <div class="button-row">
+            <div>
+                <span class="label">Default</span>
+                <button class="btn btn--secondary btn--default">Learn More</button>
+            </div>
+            <div>
+                <span class="label">Hover (simulated)</span>
+                <button class="btn btn--secondary btn--default" style="background-color: var(--clarus-navy); color: var(--clarus-white);">Learn More</button>
+            </div>
+            <div>
+                <span class="label">Disabled</span>
+                <button class="btn btn--secondary btn--default" disabled>Learn More</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TERTIARY BUTTONS -->
+    <div class="component-section">
+        <h2>Tertiary / Text Buttons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Text-only buttons for low-emphasis actions and links.</p>
+
+        <h3>Sizes</h3>
+        <div class="button-row">
+            <button class="btn btn--tertiary btn--small">Small</button>
+            <button class="btn btn--tertiary btn--default">Default</button>
+            <button class="btn btn--tertiary btn--large">Large</button>
+        </div>
+
+        <h3>States</h3>
+        <div class="button-row">
+            <div>
+                <span class="label">Default</span>
+                <button class="btn btn--tertiary btn--default">View Details</button>
+            </div>
+            <div>
+                <span class="label">Hover (simulated)</span>
+                <button class="btn btn--tertiary btn--default" style="color: var(--clarus-gold);">View Details</button>
+            </div>
+            <div>
+                <span class="label">Disabled</span>
+                <button class="btn btn--tertiary btn--default" disabled>View Details</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOLD ACCENT BUTTONS -->
+    <div class="component-section">
+        <h2>Gold Accent Buttons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Gold background for premium call-to-actions and highlights.</p>
+
+        <h3>Sizes</h3>
+        <div class="button-row">
+            <button class="btn btn--gold btn--small">Small</button>
+            <button class="btn btn--gold btn--default">Default</button>
+            <button class="btn btn--gold btn--large">Large</button>
+        </div>
+
+        <h3>States</h3>
+        <div class="button-row">
+            <div>
+                <span class="label">Default</span>
+                <button class="btn btn--gold btn--default">Book Consultation</button>
+            </div>
+            <div>
+                <span class="label">Hover (simulated)</span>
+                <button class="btn btn--gold btn--default" style="background-color: #D4B472; box-shadow: 0 4px 12px rgba(201, 169, 98, 0.35);">Book Consultation</button>
+            </div>
+            <div>
+                <span class="label">Disabled</span>
+                <button class="btn btn--gold btn--default" disabled>Book Consultation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUTTON WITH ICONS -->
+    <div class="component-section">
+        <h2>Buttons with Icons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Buttons can include icons for enhanced visual communication.</p>
+
+        <div class="button-row">
+            <button class="btn btn--primary btn--default">
+                <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                Explore Properties
+            </button>
+            <button class="btn btn--secondary btn--default">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Add to Wishlist
+            </button>
+            <button class="btn btn--tertiary btn--default">
+                <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                Schedule Visit
+            </button>
+        </div>
+    </div>
+
+    <!-- USAGE EXAMPLES -->
+    <div class="component-section">
+        <h2>Usage Examples</h2>
+
+        <h3>Form Actions</h3>
+        <div class="button-row">
+            <button class="btn btn--primary btn--default">Submit Application</button>
+            <button class="btn btn--secondary btn--default">Save Draft</button>
+            <button class="btn btn--tertiary btn--default">Cancel</button>
+        </div>
+
+        <h3>Card Actions</h3>
+        <div class="button-row">
+            <button class="btn btn--secondary btn--small">View Details</button>
+            <button class="btn btn--tertiary btn--small">Compare</button>
+        </div>
+
+        <h3>Hero CTA</h3>
+        <div class="button-row">
+            <button class="btn btn--gold btn--large">Begin Your Journey</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="60" viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg">
+  <title>Clarus Vitae - Wordmark Navy on White</title>
+  <desc>Primary logo version: Clarus Navy (#1A2B4A) on white background</desc>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&amp;display=swap');
+      .wordmark-clarus {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 36px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+      .wordmark-vitae {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 28.8px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+    </style>
+  </defs>
+  <!-- Background for demonstration -->
+  <rect width="400" height="60" fill="#FAFBFC"/>
+  <text class="wordmark-clarus" x="20" y="38">CLARUS</text>
+  <text class="wordmark-vitae" x="220" y="38">VITAE</text>
+</svg>

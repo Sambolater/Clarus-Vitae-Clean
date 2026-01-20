@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="80" viewBox="0 0 500 80" xmlns="http://www.w3.org/2000/svg">
+  <title>Clarus Vitae - Horizontal Lockup</title>
+  <desc>Symbol and wordmark combined in horizontal arrangement</desc>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&amp;display=swap');
+      .symbol-fill { fill: #1A2B4A; }
+      .wordmark-clarus {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 32px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+      .wordmark-vitae {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 25.6px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+    </style>
+  </defs>
+
+  <!-- Symbol (scaled to fit) -->
+  <g transform="translate(16, 10) scale(0.75)">
+    <!-- C letterform -->
+    <path class="symbol-fill" d="
+      M 30 0
+      C 12 0, 0 13, 0 28
+      C 0 43, 12 56, 30 56
+      L 30 50
+      C 16 50, 6 40, 6 28
+      C 6 16, 16 6, 30 6
+      Z
+    "/>
+    <!-- V letterform -->
+    <path class="symbol-fill" d="
+      M 24 12
+      L 40 52
+      L 56 12
+      L 50 12
+      L 40 42
+      L 30 12
+      Z
+    "/>
+  </g>
+
+  <!-- Divider line -->
+  <line x1="85" y1="16" x2="85" y2="64" stroke="#1A2B4A" stroke-width="1" opacity="0.3"/>
+
+  <!-- Wordmark -->
+  <text class="wordmark-clarus" x="105" y="44">CLARUS</text>
+  <text class="wordmark-vitae" x="290" y="44">VITAE</text>
+</svg>

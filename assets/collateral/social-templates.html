@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarus Vitae — Social Media Templates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --clarus-navy: #1A2B4A;
+      --clarus-white: #FAFBFC;
+      --clarus-gold: #C9A962;
+      --slate: #64748B;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F0F0F0;
+      padding: 60px 40px;
+      color: var(--clarus-navy);
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--clarus-navy);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .template-section {
+      margin-bottom: 80px;
+    }
+
+    .template-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .template-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--clarus-navy);
+    }
+
+    .template-dimensions {
+      font-size: 13px;
+      color: var(--slate);
+      background: rgba(26, 43, 74, 0.06);
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+
+    .template-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .template-wrapper {
+      background: white;
+      padding: 24px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(26, 43, 74, 0.08);
+    }
+
+    .template-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--slate);
+      margin-bottom: 16px;
+    }
+
+    /* ============================================
+       LINKEDIN TEMPLATE - 1200 x 627px
+       ============================================ */
+    .linkedin-template {
+      width: 600px;
+      height: 313.5px;
+      background: var(--clarus-navy);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .linkedin-template .background-pattern {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      opacity: 0.03;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        var(--clarus-white) 20px,
+        var(--clarus-white) 21px
+      );
+    }
+
+    .linkedin-template .content {
+      position: relative;
+      z-index: 1;
+      padding: 48px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .linkedin-template .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .linkedin-template .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+    }
+
+    .linkedin-template .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      color: var(--clarus-white);
+      opacity: 0.9;
+    }
+
+    .linkedin-template .headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--clarus-white);
+      line-height: 1.2;
+      max-width: 70%;
+    }
+
+    .linkedin-template .headline .highlight {
+      color: var(--clarus-gold);
+    }
+
+    .linkedin-template .tagline {
+      font-size: 13px;
+      color: var(--clarus-white);
+      opacity: 0.6;
+      letter-spacing: 0.02em;
+    }
+
+    .linkedin-template .gold-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 120px;
+      height: 3px;
+      background: var(--clarus-gold);
+    }
+
+    /* ============================================
+       INSTAGRAM TEMPLATE - 1080 x 1080px
+       ============================================ */
+    .instagram-template {
+      width: 400px;
+      height: 400px;
+      background: var(--clarus-white);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      border: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    .instagram-template .navy-header {
+      background: var(--clarus-navy);
+      padding: 32px;
+      height: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .instagram-template .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instagram-template .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+    }
+
+    .instagram-template .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--clarus-white);
+      opacity: 0.9;
+    }
+
+    .instagram-template .header-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--clarus-white);
+      line-height: 1.25;
+    }
+
+    .instagram-template .header-text .highlight {
+      color: var(--clarus-gold);
+    }
+
+    .instagram-template .content-area {
+      padding: 32px;
+      height: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .instagram-template .body-text {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .instagram-template .cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--clarus-navy);
+    }
+
+    .instagram-template .cta-arrow {
+      color: var(--clarus-gold);
+      font-size: 18px;
+    }
+
+    .instagram-template .gold-bar {
+      position: absolute;
+      bottom: 0;
+      left: 32px;
+      right: 32px;
+      height: 3px;
+      background: var(--clarus-gold);
+    }
+
+    /* ============================================
+       VARIANT TEMPLATES
+       ============================================ */
+    .variant-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--clarus-gold);
+      margin-bottom: 8px;
+    }
+
+    /* LinkedIn Quote Variant */
+    .linkedin-quote {
+      width: 600px;
+      height: 313.5px;
+      background: linear-gradient(135deg, var(--clarus-white) 0%, #F8F9FA 100%);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      border: 1px solid rgba(26, 43, 74, 0.06);
+    }
+
+    .linkedin-quote .left-accent {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--clarus-gold);
+    }
+
+    .linkedin-quote .content {
+      padding: 48px 48px 48px 56px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .linkedin-quote .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      color: var(--clarus-gold);
+      opacity: 0.3;
+      line-height: 0.5;
+      margin-bottom: 8px;
+    }
+
+    .linkedin-quote .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--clarus-navy);
+      line-height: 1.35;
+      font-style: italic;
+      max-width: 80%;
+    }
+
+    .linkedin-quote .attribution {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    .linkedin-quote .logo-bottom {
+      position: absolute;
+      bottom: 32px;
+      right: 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .linkedin-quote .logo-mark {
+      width: 24px;
+      height: 24px;
+      background: var(--clarus-navy);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--clarus-gold);
+    }
+
+    .linkedin-quote .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--clarus-navy);
+    }
+
+    /* Instagram Statistic Variant */
+    .instagram-stat {
+      width: 400px;
+      height: 400px;
+      background: var(--clarus-navy);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .instagram-stat .logo {
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instagram-stat .logo-mark {
+      width: 24px;
+      height: 24px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+    }
+
+    .instagram-stat .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--clarus-white);
+      opacity: 0.7;
+    }
+
+    .instagram-stat .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 96px;
+      font-weight: 500;
+      color: var(--clarus-gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .instagram-stat .stat-label {
+      font-size: 14px;
+      color: var(--clarus-white);
+      opacity: 0.8;
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+
+    .instagram-stat .stat-description {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: var(--clarus-white);
+      opacity: 0.9;
+      line-height: 1.4;
+      max-width: 280px;
+    }
+
+    .instagram-stat .gold-corners {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+      right: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--clarus-gold) 0%, var(--clarus-gold) 20%, transparent 20%, transparent 80%, var(--clarus-gold) 80%, var(--clarus-gold) 100%);
+    }
+
+    /* Specifications panel */
+    .specs-panel {
+      background: var(--clarus-navy);
+      color: var(--clarus-white);
+      padding: 32px;
+      border-radius: 4px;
+      max-width: 600px;
+      margin-top: 60px;
+    }
+
+    .specs-panel h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: var(--clarus-gold);
+    }
+
+    .specs-panel table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .specs-panel th {
+      text-align: left;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(250, 251, 252, 0.1);
+      font-weight: 500;
+      color: var(--clarus-white);
+      opacity: 0.6;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .specs-panel td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(250, 251, 252, 0.06);
+      color: rgba(250, 251, 252, 0.9);
+    }
+
+    .specs-panel td:first-child {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Social Media Templates</h1>
+  <p class="page-subtitle">Clarus Vitae Brand Collateral System</p>
+
+  <!-- LINKEDIN TEMPLATES -->
+  <section class="template-section">
+    <div class="template-header">
+      <h2 class="template-title">LinkedIn Post Templates</h2>
+      <span class="template-dimensions">1200 x 627 px</span>
+    </div>
+
+    <div class="template-container">
+      <!-- Primary LinkedIn -->
+      <div class="template-wrapper">
+        <p class="template-label">Primary — Announcement</p>
+        <div class="linkedin-template">
+          <div class="background-pattern"></div>
+          <div class="content">
+            <div class="logo">
+              <div class="logo-mark">CV</div>
+              <span class="logo-text">CLARUS VITAE</span>
+            </div>
+            <h2 class="headline">
+              <span class="highlight">Clarity</span> for Life's<br>Most Important Decisions
+            </h2>
+            <p class="tagline">clarusvitae.com</p>
+          </div>
+          <div class="gold-accent"></div>
+        </div>
+      </div>
+
+      <!-- Quote Variant -->
+      <div class="template-wrapper">
+        <p class="template-label">Variant — Quote / Insight</p>
+        <div class="linkedin-quote">
+          <div class="left-accent"></div>
+          <div class="content">
+            <span class="quote-mark">"</span>
+            <p class="quote-text">
+              [Compelling insight or quote that demonstrates thought leadership in longevity research]
+            </p>
+            <p class="attribution">— Dr. [Name], Chief Science Officer</p>
+          </div>
+          <div class="logo-bottom">
+            <div class="logo-mark">CV</div>
+            <span class="logo-text">CLARUS VITAE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM TEMPLATES -->
+  <section class="template-section">
+    <div class="template-header">
+      <h2 class="template-title">Instagram Post Templates</h2>
+      <span class="template-dimensions">1080 x 1080 px</span>
+    </div>
+
+    <div class="template-container">
+      <!-- Primary Instagram -->
+      <div class="template-wrapper">
+        <p class="template-label">Primary — Content</p>
+        <div class="instagram-template">
+          <div class="navy-header">
+            <div class="logo">
+              <div class="logo-mark">CV</div>
+              <span class="logo-text">CLARUS VITAE</span>
+            </div>
+            <h2 class="header-text">
+              <span class="highlight">[Topic]</span><br>
+              [Headline Text]
+            </h2>
+          </div>
+          <div class="content-area">
+            <p class="body-text">
+              [Supporting text that expands on the headline. Keep concise—2-3 sentences maximum for optimal readability.]
+            </p>
+            <div class="cta">
+              <span>Learn more</span>
+              <span class="cta-arrow">→</span>
+            </div>
+          </div>
+          <div class="gold-bar"></div>
+        </div>
+      </div>
+
+      <!-- Statistic Variant -->
+      <div class="template-wrapper">
+        <p class="template-label">Variant — Statistic</p>
+        <div class="instagram-stat">
+          <div class="logo">
+            <div class="logo-mark">CV</div>
+            <span class="logo-text">CLARUS VITAE</span>
+          </div>
+          <span class="stat-number">92%</span>
+          <span class="stat-label">of members report</span>
+          <p class="stat-description">
+            [Compelling outcome or metric that demonstrates value]
+          </p>
+          <div class="gold-corners"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIFICATIONS -->
+  <div class="specs-panel">
+    <h3>Template Specifications</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Dimensions</th>
+          <th>Format</th>
+          <th>Safe Zone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LinkedIn Post</td>
+          <td>1200 x 627 px</td>
+          <td>PNG / JPG</td>
+          <td>48px padding</td>
+        </tr>
+        <tr>
+          <td>Instagram Post</td>
+          <td>1080 x 1080 px</td>
+          <td>PNG / JPG</td>
+          <td>32px padding</td>
+        </tr>
+        <tr>
+          <td>Instagram Story</td>
+          <td>1080 x 1920 px</td>
+          <td>PNG / JPG</td>
+          <td>64px top/bottom</td>
+        </tr>
+        <tr>
+          <td>Twitter/X Header</td>
+          <td>1500 x 500 px</td>
+          <td>PNG / JPG</td>
+          <td>Center content</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

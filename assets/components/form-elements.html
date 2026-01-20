@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae - Form Elements</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+            --alert-amber: #B45309;
+            --error-red: #DC2626;
+
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            /* Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 48px;
+            --space-6: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--clarus-white);
+            color: var(--clarus-navy);
+            padding: var(--space-5);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-4);
+            color: var(--clarus-navy);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: var(--space-4) 0 var(--space-3);
+            color: var(--clarus-navy);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: var(--space-3) 0 var(--space-2);
+            color: var(--slate);
+        }
+
+        .component-section {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            margin-bottom: var(--space-3);
+        }
+
+        .form-demo {
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .state-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+            margin-bottom: var(--space-1);
+            display: block;
+        }
+
+        /* ================================
+           FORM FIELD CONTAINER
+           ================================ */
+        .form-field {
+            margin-bottom: var(--space-3);
+        }
+
+        /* ================================
+           LABELS
+           ================================ */
+        .form-label {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            margin-bottom: var(--space-1);
+        }
+
+        .form-label--required::after {
+            content: ' *';
+            color: var(--error-red);
+        }
+
+        .form-label--optional::after {
+            content: ' (optional)';
+            font-weight: 400;
+            color: var(--slate);
+            font-size: 0.75rem;
+        }
+
+        /* ================================
+           TEXT INPUT
+           ================================ */
+        .form-input {
+            width: 100%;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--clarus-navy);
+            background: var(--clarus-white);
+            border: 1.5px solid var(--stone);
+            border-radius: 4px;
+            padding: 12px var(--space-2);
+            transition: all 0.2s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--slate);
+            opacity: 0.7;
+        }
+
+        .form-input:hover {
+            border-color: var(--slate);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--clarus-navy);
+            box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);
+        }
+
+        .form-input:disabled {
+            background-color: #F5F5F3;
+            color: var(--slate);
+            cursor: not-allowed;
+        }
+
+        /* Error state */
+        .form-input--error {
+            border-color: var(--error-red);
+        }
+
+        .form-input--error:focus {
+            border-color: var(--error-red);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        /* Success state */
+        .form-input--success {
+            border-color: var(--verification-green);
+        }
+
+        .form-input--success:focus {
+            border-color: var(--verification-green);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+        }
+
+        /* ================================
+           HELPER TEXT
+           ================================ */
+        .form-helper {
+            font-size: 0.75rem;
+            color: var(--slate);
+            margin-top: 6px;
+        }
+
+        .form-helper--error {
+            color: var(--error-red);
+        }
+
+        .form-helper--success {
+            color: var(--verification-green);
+        }
+
+        /* ================================
+           SELECT DROPDOWN
+           ================================ */
+        .form-select {
+            width: 100%;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--clarus-navy);
+            background: var(--clarus-white);
+            border: 1.5px solid var(--stone);
+            border-radius: 4px;
+            padding: 12px var(--space-2);
+            padding-right: 40px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%2364748B'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .form-select:hover {
+            border-color: var(--slate);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--clarus-navy);
+            box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);
+        }
+
+        .form-select:disabled {
+            background-color: #F5F5F3;
+            color: var(--slate);
+            cursor: not-allowed;
+        }
+
+        /* ================================
+           CHECKBOX
+           ================================ */
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .form-checkbox__input {
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 1.5px solid var(--stone);
+            border-radius: 4px;
+            background: var(--clarus-white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+        }
+
+        .form-checkbox__input:hover {
+            border-color: var(--slate);
+        }
+
+        .form-checkbox__input:checked {
+            background: var(--clarus-navy);
+            border-color: var(--clarus-navy);
+        }
+
+        .form-checkbox__input:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .form-checkbox__input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);
+        }
+
+        .form-checkbox__input:disabled {
+            background-color: #F5F5F3;
+            cursor: not-allowed;
+        }
+
+        .form-checkbox__input:disabled:checked {
+            background-color: var(--slate);
+        }
+
+        .form-checkbox__label {
+            font-size: 0.875rem;
+            color: var(--clarus-navy);
+            line-height: 1.5;
+        }
+
+        /* ================================
+           RADIO BUTTON
+           ================================ */
+        .form-radio {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .form-radio__input {
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 1.5px solid var(--stone);
+            border-radius: 50%;
+            background: var(--clarus-white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+        }
+
+        .form-radio__input:hover {
+            border-color: var(--slate);
+        }
+
+        .form-radio__input:checked {
+            border-color: var(--clarus-navy);
+        }
+
+        .form-radio__input:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            background: var(--clarus-navy);
+            border-radius: 50%;
+        }
+
+        .form-radio__input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);
+        }
+
+        .form-radio__label {
+            font-size: 0.875rem;
+            color: var(--clarus-navy);
+            line-height: 1.5;
+        }
+
+        /* ================================
+           TEXTAREA
+           ================================ */
+        .form-textarea {
+            width: 100%;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--clarus-navy);
+            background: var(--clarus-white);
+            border: 1.5px solid var(--stone);
+            border-radius: 4px;
+            padding: 12px var(--space-2);
+            min-height: 120px;
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+
+        .form-textarea::placeholder {
+            color: var(--slate);
+            opacity: 0.7;
+        }
+
+        .form-textarea:hover {
+            border-color: var(--slate);
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--clarus-navy);
+            box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);
+        }
+
+        /* ================================
+           INPUT WITH ICON
+           ================================ */
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .form-input-wrapper .form-input {
+            padding-left: 44px;
+        }
+
+        .form-input-wrapper__icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--slate);
+            pointer-events: none;
+        }
+
+        /* ================================
+           CHARACTER COUNT
+           ================================ */
+        .form-char-count {
+            font-size: 0.75rem;
+            color: var(--slate);
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        .form-char-count--warning {
+            color: var(--alert-amber);
+        }
+
+        .form-char-count--error {
+            color: var(--error-red);
+        }
+    </style>
+</head>
+<body>
+    <h1>Clarus Vitae Form Elements</h1>
+
+    <!-- TEXT INPUTS -->
+    <div class="component-section">
+        <h2>Text Inputs</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Standard text inputs with various states.</p>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Default</span>
+                <div class="form-field">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="Enter your full name">
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">With Value</span>
+                <div class="form-field">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" value="Alexandra Worthington">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Focus State (simulated)</span>
+                <div class="form-field">
+                    <label class="form-label form-label--required">Email Address</label>
+                    <input type="email" class="form-input" value="alexandra@" style="border-color: var(--clarus-navy); box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.1);">
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">Disabled</span>
+                <div class="form-field">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" value="readonly@example.com" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Error State</span>
+                <div class="form-field">
+                    <label class="form-label form-label--required">Email Address</label>
+                    <input type="email" class="form-input form-input--error" value="invalid-email">
+                    <span class="form-helper form-helper--error">Please enter a valid email address</span>
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">Success State</span>
+                <div class="form-field">
+                    <label class="form-label form-label--required">Email Address</label>
+                    <input type="email" class="form-input form-input--success" value="valid@example.com">
+                    <span class="form-helper form-helper--success">Email verified</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>Input with Icon</h3>
+        <div class="form-row">
+            <div class="form-demo">
+                <div class="form-field">
+                    <label class="form-label">Search Properties</label>
+                    <div class="form-input-wrapper">
+                        <svg class="form-input-wrapper__icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        <input type="text" class="form-input" placeholder="Search by name or location...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>With Helper Text</h3>
+        <div class="form-row">
+            <div class="form-demo">
+                <div class="form-field">
+                    <label class="form-label form-label--optional">Referral Code</label>
+                    <input type="text" class="form-input" placeholder="Enter code">
+                    <span class="form-helper">If you were referred by a member, enter their code here</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SELECT DROPDOWN -->
+    <div class="component-section">
+        <h2>Select Dropdown</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Dropdown select for choosing from predefined options.</p>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Default</span>
+                <div class="form-field">
+                    <label class="form-label">Property Category</label>
+                    <select class="form-select">
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="medical">Medical Longevity</option>
+                        <option value="destination">Destination Wellness</option>
+                        <option value="retreat">Wellness Retreat</option>
+                        <option value="spa">Medical Spa</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">With Selection</span>
+                <div class="form-field">
+                    <label class="form-label">Property Category</label>
+                    <select class="form-select">
+                        <option value="" disabled>Select a category</option>
+                        <option value="medical" selected>Medical Longevity</option>
+                        <option value="destination">Destination Wellness</option>
+                        <option value="retreat">Wellness Retreat</option>
+                        <option value="spa">Medical Spa</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Disabled</span>
+                <div class="form-field">
+                    <label class="form-label">Property Category</label>
+                    <select class="form-select" disabled>
+                        <option value="medical" selected>Medical Longevity</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKBOXES -->
+    <div class="component-section">
+        <h2>Checkboxes</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">For multiple selections and agreements.</p>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Default States</span>
+                <div class="form-field">
+                    <label class="form-label">Wellness Interests</label>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <label class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox__input" checked>
+                            <span class="form-checkbox__label">Longevity & Anti-aging</span>
+                        </label>
+                        <label class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox__input">
+                            <span class="form-checkbox__label">Regenerative Medicine</span>
+                        </label>
+                        <label class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox__input" checked>
+                            <span class="form-checkbox__label">Preventive Diagnostics</span>
+                        </label>
+                        <label class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox__input" disabled>
+                            <span class="form-checkbox__label">Coming Soon (Disabled)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">Agreement Checkbox</span>
+                <div class="form-field">
+                    <label class="form-checkbox">
+                        <input type="checkbox" class="form-checkbox__input">
+                        <span class="form-checkbox__label">I agree to the <a href="#" style="color: var(--clarus-navy);">Terms of Service</a> and <a href="#" style="color: var(--clarus-navy);">Privacy Policy</a>. I understand that my data will be handled with strict confidentiality.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RADIO BUTTONS -->
+    <div class="component-section">
+        <h2>Radio Buttons</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">For single selection from multiple options.</p>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Default States</span>
+                <div class="form-field">
+                    <label class="form-label">Preferred Contact Method</label>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <label class="form-radio">
+                            <input type="radio" name="contact" class="form-radio__input" checked>
+                            <span class="form-radio__label">Email</span>
+                        </label>
+                        <label class="form-radio">
+                            <input type="radio" name="contact" class="form-radio__input">
+                            <span class="form-radio__label">Phone</span>
+                        </label>
+                        <label class="form-radio">
+                            <input type="radio" name="contact" class="form-radio__input">
+                            <span class="form-radio__label">Secure Message</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">Membership Tier</span>
+                <div class="form-field">
+                    <label class="form-label">Select Your Membership</label>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <label class="form-radio">
+                            <input type="radio" name="tier" class="form-radio__input">
+                            <span class="form-radio__label">Essential Access</span>
+                        </label>
+                        <label class="form-radio">
+                            <input type="radio" name="tier" class="form-radio__input" checked>
+                            <span class="form-radio__label">Premier Access</span>
+                        </label>
+                        <label class="form-radio">
+                            <input type="radio" name="tier" class="form-radio__input">
+                            <span class="form-radio__label">Concierge (by invitation)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXTAREA -->
+    <div class="component-section">
+        <h2>Text Area</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">For longer form text input.</p>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Default</span>
+                <div class="form-field">
+                    <label class="form-label form-label--optional">Additional Notes</label>
+                    <textarea class="form-textarea" placeholder="Share any specific requirements or preferences..."></textarea>
+                    <span class="form-char-count">0 / 500 characters</span>
+                </div>
+            </div>
+
+            <div class="form-demo">
+                <span class="state-label">With Content</span>
+                <div class="form-field">
+                    <label class="form-label">Wellness Goals</label>
+                    <textarea class="form-textarea">I am particularly interested in comprehensive longevity assessments and personalized wellness protocols. I would prefer properties with strong clinical oversight and privacy measures.</textarea>
+                    <span class="form-char-count">234 / 500 characters</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-demo">
+                <span class="state-label">Near Limit</span>
+                <div class="form-field">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea">This is a longer message that approaches the character limit...</textarea>
+                    <span class="form-char-count form-char-count--warning">450 / 500 characters</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM EXAMPLE -->
+    <div class="component-section">
+        <h2>Complete Form Example</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">A typical form layout combining multiple elements.</p>
+
+        <form style="max-width: 480px;">
+            <div class="form-field">
+                <label class="form-label form-label--required">Full Name</label>
+                <input type="text" class="form-input" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-field">
+                <label class="form-label form-label--required">Email Address</label>
+                <input type="email" class="form-input" placeholder="your@email.com">
+            </div>
+
+            <div class="form-field">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+            </div>
+
+            <div class="form-field">
+                <label class="form-label form-label--required">Primary Interest</label>
+                <select class="form-select">
+                    <option value="" disabled selected>Select your primary interest</option>
+                    <option value="longevity">Longevity Programs</option>
+                    <option value="diagnostics">Preventive Diagnostics</option>
+                    <option value="wellness">Destination Wellness</option>
+                    <option value="regenerative">Regenerative Medicine</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label form-label--optional">Tell Us About Your Goals</label>
+                <textarea class="form-textarea" placeholder="What are you hoping to achieve?"></textarea>
+            </div>
+
+            <div class="form-field">
+                <label class="form-checkbox">
+                    <input type="checkbox" class="form-checkbox__input">
+                    <span class="form-checkbox__label">I agree to the Terms of Service and Privacy Policy</span>
+                </label>
+            </div>
+
+            <div style="margin-top: var(--space-3);">
+                <button type="submit" style="
+                    font-family: var(--font-sans);
+                    font-weight: 500;
+                    font-size: 1rem;
+                    background: var(--clarus-navy);
+                    color: var(--clarus-white);
+                    border: none;
+                    border-radius: 4px;
+                    padding: 12px var(--space-3);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                ">Submit Request</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

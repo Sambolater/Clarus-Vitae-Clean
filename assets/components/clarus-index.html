@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae - Clarus Index Display</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            /* Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 48px;
+            --space-6: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--clarus-white);
+            color: var(--clarus-navy);
+            padding: var(--space-5);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-4);
+            color: var(--clarus-navy);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: var(--space-4) 0 var(--space-3);
+            color: var(--clarus-navy);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: var(--space-3) 0 var(--space-2);
+            color: var(--slate);
+        }
+
+        .component-section {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+            margin-bottom: var(--space-2);
+            display: block;
+        }
+
+        .display-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        /* ================================
+           LARGE INDEX DISPLAY (Hero)
+           ================================ */
+        .clarus-index--large {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-4);
+        }
+
+        .clarus-index--large__label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--slate);
+            margin-bottom: var(--space-1);
+        }
+
+        .clarus-index--large__score {
+            font-family: var(--font-serif);
+            font-size: 5rem;
+            font-weight: 600;
+            color: var(--clarus-gold);
+            line-height: 1;
+            margin-bottom: var(--space-1);
+        }
+
+        .clarus-index--large__max {
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            color: var(--slate);
+        }
+
+        .clarus-index--large__ring {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--stone);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--clarus-white) 0%, #F5F5F3 100%);
+        }
+
+        .clarus-index--large__ring::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--clarus-gold);
+            border-right-color: var(--clarus-gold);
+            transform: rotate(45deg);
+        }
+
+        /* ================================
+           MEDIUM INDEX DISPLAY (Card)
+           ================================ */
+        .clarus-index--medium {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--clarus-gold);
+            padding: var(--space-2) var(--space-3);
+            border-radius: 6px;
+        }
+
+        .clarus-index--medium__label {
+            font-family: var(--font-sans);
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--clarus-navy);
+            opacity: 0.8;
+        }
+
+        .clarus-index--medium__score {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--clarus-navy);
+            line-height: 1;
+        }
+
+        /* Navy variant */
+        .clarus-index--medium.clarus-index--navy {
+            background: var(--clarus-navy);
+        }
+
+        .clarus-index--medium.clarus-index--navy .clarus-index--medium__label,
+        .clarus-index--medium.clarus-index--navy .clarus-index--medium__score {
+            color: var(--clarus-gold);
+        }
+
+        /* ================================
+           SMALL / INLINE INDEX DISPLAY
+           ================================ */
+        .clarus-index--small {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--clarus-gold);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: var(--font-sans);
+        }
+
+        .clarus-index--small__label {
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--clarus-navy);
+            opacity: 0.7;
+        }
+
+        .clarus-index--small__score {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--clarus-navy);
+        }
+
+        /* Outline variant */
+        .clarus-index--small.clarus-index--outline {
+            background: transparent;
+            border: 1.5px solid var(--clarus-gold);
+        }
+
+        .clarus-index--small.clarus-index--outline .clarus-index--small__label,
+        .clarus-index--small.clarus-index--outline .clarus-index--small__score {
+            color: var(--clarus-gold);
+        }
+
+        /* ================================
+           INDEX BREAKDOWN (5 Dimensions)
+           ================================ */
+        .clarus-breakdown {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .clarus-breakdown__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid var(--stone);
+        }
+
+        .clarus-breakdown__title {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            color: var(--clarus-navy);
+        }
+
+        .clarus-breakdown__total {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--clarus-gold);
+        }
+
+        .clarus-breakdown__dimension {
+            margin-bottom: var(--space-2);
+        }
+
+        .clarus-breakdown__dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .clarus-breakdown__dimension-name {
+            font-size: 0.875rem;
+            color: var(--clarus-navy);
+            font-weight: 500;
+        }
+
+        .clarus-breakdown__dimension-score {
+            font-size: 0.875rem;
+            color: var(--slate);
+            font-weight: 500;
+        }
+
+        .clarus-breakdown__bar {
+            height: 8px;
+            background: var(--stone);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .clarus-breakdown__bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--clarus-navy) 0%, var(--clarus-gold) 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Dimension color variants */
+        .clarus-breakdown__dimension--clinical .clarus-breakdown__bar-fill {
+            background: var(--clarus-navy);
+        }
+
+        .clarus-breakdown__dimension--environment .clarus-breakdown__bar-fill {
+            background: var(--verification-green);
+        }
+
+        .clarus-breakdown__dimension--expertise .clarus-breakdown__bar-fill {
+            background: var(--clarus-gold);
+        }
+
+        .clarus-breakdown__dimension--experience .clarus-breakdown__bar-fill {
+            background: #8B6914;
+        }
+
+        .clarus-breakdown__dimension--outcomes .clarus-breakdown__bar-fill {
+            background: #2D4A6A;
+        }
+
+        /* ================================
+           COMPACT BREAKDOWN
+           ================================ */
+        .clarus-breakdown--compact {
+            max-width: 280px;
+        }
+
+        .clarus-breakdown--compact .clarus-breakdown__dimension {
+            margin-bottom: var(--space-1);
+        }
+
+        .clarus-breakdown--compact .clarus-breakdown__dimension-name {
+            font-size: 0.75rem;
+        }
+
+        .clarus-breakdown--compact .clarus-breakdown__bar {
+            height: 6px;
+        }
+
+        /* ================================
+           COMPARISON DISPLAY
+           ================================ */
+        .clarus-comparison {
+            display: flex;
+            gap: var(--space-4);
+            align-items: center;
+        }
+
+        .clarus-comparison__item {
+            text-align: center;
+        }
+
+        .clarus-comparison__label {
+            font-size: 0.75rem;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-1);
+        }
+
+        .clarus-comparison__score {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .clarus-comparison__score--property {
+            color: var(--clarus-gold);
+        }
+
+        .clarus-comparison__score--average {
+            color: var(--slate);
+        }
+
+        .clarus-comparison__vs {
+            font-size: 0.875rem;
+            color: var(--slate);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clarus Index Display System</h1>
+
+    <!-- LARGE DISPLAY -->
+    <div class="component-section">
+        <h2>Large Display (Property Hero)</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Used on property detail pages as the primary score showcase.</p>
+
+        <div class="display-row">
+            <div>
+                <span class="label">With Ring</span>
+                <div class="clarus-index--large">
+                    <div class="clarus-index--large__ring">
+                        <span class="clarus-index--large__label">Clarus Index</span>
+                        <span class="clarus-index--large__score">94</span>
+                        <span class="clarus-index--large__max">of 100</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="label">Without Ring</span>
+                <div class="clarus-index--large">
+                    <span class="clarus-index--large__label">Clarus Index</span>
+                    <span class="clarus-index--large__score">94</span>
+                    <span class="clarus-index--large__max">of 100</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDIUM DISPLAY -->
+    <div class="component-section">
+        <h2>Medium Display (Cards & Headers)</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Used on property cards and section headers.</p>
+
+        <div class="display-row">
+            <div>
+                <span class="label">Gold Background (Default)</span>
+                <div class="clarus-index--medium">
+                    <div>
+                        <span class="clarus-index--medium__label">Clarus Index</span>
+                    </div>
+                    <span class="clarus-index--medium__score">94</span>
+                </div>
+            </div>
+
+            <div>
+                <span class="label">Navy Background</span>
+                <div class="clarus-index--medium clarus-index--navy">
+                    <div>
+                        <span class="clarus-index--medium__label">Clarus Index</span>
+                    </div>
+                    <span class="clarus-index--medium__score">94</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>Score Variations</h3>
+        <div class="display-row">
+            <div class="clarus-index--medium">
+                <div><span class="clarus-index--medium__label">Clarus</span></div>
+                <span class="clarus-index--medium__score">97</span>
+            </div>
+            <div class="clarus-index--medium">
+                <div><span class="clarus-index--medium__label">Clarus</span></div>
+                <span class="clarus-index--medium__score">85</span>
+            </div>
+            <div class="clarus-index--medium">
+                <div><span class="clarus-index--medium__label">Clarus</span></div>
+                <span class="clarus-index--medium__score">72</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SMALL / INLINE DISPLAY -->
+    <div class="component-section">
+        <h2>Small / Inline Display</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Used inline with text, in lists, and compact layouts.</p>
+
+        <div class="display-row">
+            <div>
+                <span class="label">Gold Background (Default)</span>
+                <span class="clarus-index--small">
+                    <span class="clarus-index--small__label">Clarus</span>
+                    <span class="clarus-index--small__score">94</span>
+                </span>
+            </div>
+
+            <div>
+                <span class="label">Outline Variant</span>
+                <span class="clarus-index--small clarus-index--outline">
+                    <span class="clarus-index--small__label">Clarus</span>
+                    <span class="clarus-index--small__score">94</span>
+                </span>
+            </div>
+        </div>
+
+        <h3>Inline Usage Example</h3>
+        <p style="font-size: 1rem; color: var(--clarus-navy);">
+            Clinique La Prairie
+            <span class="clarus-index--small">
+                <span class="clarus-index--small__label">Clarus</span>
+                <span class="clarus-index--small__score">94</span>
+            </span>
+            has been a pioneer in regenerative medicine since 1931.
+        </p>
+    </div>
+
+    <!-- BREAKDOWN DISPLAY -->
+    <div class="component-section">
+        <h2>Index Breakdown (5 Dimensions)</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Detailed view showing scores across all five evaluation dimensions.</p>
+
+        <div class="display-row">
+            <div>
+                <span class="label">Full Breakdown</span>
+                <div class="clarus-breakdown">
+                    <div class="clarus-breakdown__header">
+                        <span class="clarus-breakdown__title">Clarus Index</span>
+                        <span class="clarus-breakdown__total">94</span>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--clinical">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Clinical Excellence</span>
+                            <span class="clarus-breakdown__dimension-score">96</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 96%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--environment">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Environment & Facilities</span>
+                            <span class="clarus-breakdown__dimension-score">93</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 93%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--expertise">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Expertise & Staff</span>
+                            <span class="clarus-breakdown__dimension-score">97</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 97%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--experience">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Guest Experience</span>
+                            <span class="clarus-breakdown__dimension-score">91</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 91%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--outcomes">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Outcomes & Results</span>
+                            <span class="clarus-breakdown__dimension-score">92</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="label">Compact Breakdown</span>
+                <div class="clarus-breakdown clarus-breakdown--compact">
+                    <div class="clarus-breakdown__header">
+                        <span class="clarus-breakdown__title">Index</span>
+                        <span class="clarus-breakdown__total">94</span>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--clinical">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Clinical</span>
+                            <span class="clarus-breakdown__dimension-score">96</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 96%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--environment">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Environment</span>
+                            <span class="clarus-breakdown__dimension-score">93</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 93%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--expertise">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Expertise</span>
+                            <span class="clarus-breakdown__dimension-score">97</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 97%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--experience">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Experience</span>
+                            <span class="clarus-breakdown__dimension-score">91</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 91%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clarus-breakdown__dimension clarus-breakdown__dimension--outcomes">
+                        <div class="clarus-breakdown__dimension-header">
+                            <span class="clarus-breakdown__dimension-name">Outcomes</span>
+                            <span class="clarus-breakdown__dimension-score">92</span>
+                        </div>
+                        <div class="clarus-breakdown__bar">
+                            <div class="clarus-breakdown__bar-fill" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPARISON DISPLAY -->
+    <div class="component-section">
+        <h2>Comparison Display</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">For comparing a property's score against the category average.</p>
+
+        <div class="clarus-comparison">
+            <div class="clarus-comparison__item">
+                <span class="clarus-comparison__label">This Property</span>
+                <span class="clarus-comparison__score clarus-comparison__score--property">94</span>
+            </div>
+            <span class="clarus-comparison__vs">vs</span>
+            <div class="clarus-comparison__item">
+                <span class="clarus-comparison__label">Category Avg</span>
+                <span class="clarus-comparison__score clarus-comparison__score--average">76</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

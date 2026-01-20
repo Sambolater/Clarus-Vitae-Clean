@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae Color Palette</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FAFBFC;
+            color: #1A2B4A;
+            padding: 64px;
+            line-height: 1.6;
+        }
+
+        .header {
+            margin-bottom: 64px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: #64748B;
+            font-size: 16px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748B;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E8E6E3;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .color-card {
+            background: white;
+            border: 1px solid #E8E6E3;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .color-swatch {
+            height: 160px;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+
+        .color-swatch.navy { background-color: #1A2B4A; }
+        .color-swatch.white { background-color: #FAFBFC; border-bottom: 1px solid #E8E6E3; }
+        .color-swatch.gold { background-color: #C9A962; }
+        .color-swatch.slate { background-color: #64748B; }
+        .color-swatch.stone { background-color: #E8E6E3; }
+        .color-swatch.green { background-color: #2D6A4F; }
+        .color-swatch.amber { background-color: #B45309; }
+
+        .color-info {
+            padding: 24px;
+        }
+
+        .color-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .color-values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .color-value {
+            background: #F8F9FA;
+            padding: 12px;
+            border-radius: 4px;
+        }
+
+        .color-value-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748B;
+            margin-bottom: 4px;
+        }
+
+        .color-value-data {
+            font-size: 14px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-weight: 500;
+        }
+
+        .color-usage {
+            font-size: 14px;
+            color: #64748B;
+            padding-top: 16px;
+            border-top: 1px solid #E8E6E3;
+        }
+
+        .color-usage strong {
+            color: #1A2B4A;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-primary {
+            background: #1A2B4A;
+            color: white;
+        }
+
+        .badge-secondary {
+            background: #E8E6E3;
+            color: #64748B;
+        }
+
+        .badge-functional {
+            background: #2D6A4F;
+            color: white;
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid #E8E6E3;
+            color: #64748B;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Clarus Vitae</h1>
+        <p>Brand Color Palette</p>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title">Primary Colors</h2>
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-swatch navy"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Clarus Navy
+                        <span class="badge badge-primary">Primary</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#1A2B4A</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">26, 43, 74</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Primary brand color, headers, navigation, key CTAs. Dominates layouts at 40-50%.
+                    </div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-swatch white"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Clarus White
+                        <span class="badge badge-primary">Primary</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#FAFBFC</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">250, 251, 252</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Primary background, breathing space, content areas. Slightly warm to reduce clinical feeling.
+                    </div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-swatch gold"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Clarus Gold
+                        <span class="badge badge-primary">Accent</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#C9A962</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">201, 169, 98</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Accent only - Index scores, achievement badges, key highlights. <strong>Maximum 5% of any layout.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Secondary Colors</h2>
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-swatch slate"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Slate
+                        <span class="badge badge-secondary">Secondary</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#64748B</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">100, 116, 139</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Secondary text, supporting information, metadata. Readable and professional.
+                    </div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-swatch stone"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Stone
+                        <span class="badge badge-secondary">Secondary</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#E8E6E3</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">232, 230, 227</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Subtle backgrounds, section dividers, cards. Warm neutral that adds depth.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Functional Colors</h2>
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-swatch green"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Verification Green
+                        <span class="badge badge-functional">Functional</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#2D6A4F</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">45, 106, 79</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Verified badges, positive indicators, trust signals. Authoritative, not "eco" green.
+                    </div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-swatch amber"></div>
+                <div class="color-info">
+                    <div class="color-name">
+                        Alert Amber
+                        <span class="badge badge-functional">Functional</span>
+                    </div>
+                    <div class="color-values">
+                        <div class="color-value">
+                            <div class="color-value-label">HEX</div>
+                            <div class="color-value-data">#B45309</div>
+                        </div>
+                        <div class="color-value">
+                            <div class="color-value-label">RGB</div>
+                            <div class="color-value-data">180, 83, 9</div>
+                        </div>
+                    </div>
+                    <div class="color-usage">
+                        <strong>Usage:</strong> Important notices, considerations, caveats. Draws attention without alarm.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Clarus Vitae Brand Color System | "Clarity for Life's Most Important Decisions"</p>
+    </footer>
+</body>
+</html>

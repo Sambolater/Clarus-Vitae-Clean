@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae Color Ratio Guidelines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FAFBFC;
+            color: #1A2B4A;
+            padding: 64px;
+            line-height: 1.6;
+        }
+
+        .header {
+            margin-bottom: 64px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: #64748B;
+            font-size: 16px;
+        }
+
+        .rule-box {
+            background: #1A2B4A;
+            color: white;
+            padding: 32px;
+            border-radius: 4px;
+            margin-bottom: 64px;
+        }
+
+        .rule-box h2 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .rule-item {
+            text-align: center;
+        }
+
+        .rule-percentage {
+            font-size: 48px;
+            font-weight: 600;
+            color: #C9A962;
+        }
+
+        .rule-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748B;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E8E6E3;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .example-card {
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid;
+        }
+
+        .example-card.correct {
+            border-color: #2D6A4F;
+        }
+
+        .example-card.incorrect {
+            border-color: #B45309;
+        }
+
+        .example-badge {
+            padding: 12px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-card.correct .example-badge {
+            background: #2D6A4F;
+            color: white;
+        }
+
+        .example-card.incorrect .example-badge {
+            background: #B45309;
+            color: white;
+        }
+
+        .example-content {
+            padding: 24px;
+            background: white;
+        }
+
+        /* Correct Layout Demo */
+        .demo-layout {
+            border: 1px solid #E8E6E3;
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        .demo-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-logo {
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .demo-nav {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+        }
+
+        .demo-hero {
+            padding: 32px 16px;
+            text-align: center;
+        }
+
+        .demo-hero h3 {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .demo-hero p {
+            font-size: 11px;
+            margin-bottom: 16px;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .demo-cards {
+            padding: 16px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .demo-card {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .demo-card-img {
+            height: 40px;
+        }
+
+        .demo-card-content {
+            padding: 8px;
+        }
+
+        .demo-card h4 {
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .demo-card p {
+            font-size: 8px;
+        }
+
+        .demo-score {
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        /* Correct layout colors */
+        .correct-demo .demo-header {
+            background: #1A2B4A;
+            color: #FAFBFC;
+        }
+
+        .correct-demo .demo-hero {
+            background: #FAFBFC;
+            color: #1A2B4A;
+        }
+
+        .correct-demo .demo-hero p {
+            color: #64748B;
+        }
+
+        .correct-demo .demo-btn {
+            background: #1A2B4A;
+            color: #FAFBFC;
+        }
+
+        .correct-demo .demo-cards {
+            background: #E8E6E3;
+        }
+
+        .correct-demo .demo-card {
+            background: white;
+            border: 1px solid #E8E6E3;
+        }
+
+        .correct-demo .demo-card-img {
+            background: linear-gradient(135deg, #1A2B4A 0%, #2a3b5a 100%);
+        }
+
+        .correct-demo .demo-card h4 {
+            color: #1A2B4A;
+        }
+
+        .correct-demo .demo-card p {
+            color: #64748B;
+        }
+
+        .correct-demo .demo-score {
+            color: #C9A962;
+        }
+
+        /* Incorrect layout colors */
+        .incorrect-demo .demo-header {
+            background: #C9A962;
+            color: #1A2B4A;
+        }
+
+        .incorrect-demo .demo-hero {
+            background: #C9A962;
+            color: #1A2B4A;
+        }
+
+        .incorrect-demo .demo-hero p {
+            color: #1A2B4A;
+        }
+
+        .incorrect-demo .demo-btn {
+            background: #1A2B4A;
+            color: #C9A962;
+        }
+
+        .incorrect-demo .demo-cards {
+            background: #C9A962;
+        }
+
+        .incorrect-demo .demo-card {
+            background: #FAFBFC;
+            border: 2px solid #C9A962;
+        }
+
+        .incorrect-demo .demo-card-img {
+            background: #C9A962;
+        }
+
+        .incorrect-demo .demo-card h4 {
+            color: #C9A962;
+        }
+
+        .incorrect-demo .demo-card p {
+            color: #64748B;
+        }
+
+        .incorrect-demo .demo-score {
+            color: #C9A962;
+        }
+
+        .example-notes {
+            margin-top: 16px;
+            padding: 16px;
+            background: #F8F9FA;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .example-notes h4 {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .example-notes ul {
+            list-style: none;
+            color: #64748B;
+        }
+
+        .example-notes li {
+            margin-bottom: 4px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .example-card.correct .example-notes li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2D6A4F;
+            font-weight: 600;
+        }
+
+        .example-card.incorrect .example-notes li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #B45309;
+            font-weight: 600;
+        }
+
+        .ratio-visual {
+            margin-top: 64px;
+            background: white;
+            border: 1px solid #E8E6E3;
+            border-radius: 4px;
+            padding: 32px;
+        }
+
+        .ratio-visual h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .ratio-bar-container {
+            margin-bottom: 32px;
+        }
+
+        .ratio-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .ratio-bar {
+            height: 48px;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .ratio-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .ratio-navy { background: #1A2B4A; color: white; }
+        .ratio-white { background: #FAFBFC; color: #1A2B4A; border: 1px solid #E8E6E3; }
+        .ratio-gold { background: #C9A962; color: #1A2B4A; }
+        .ratio-slate { background: #64748B; color: white; }
+        .ratio-stone { background: #E8E6E3; color: #1A2B4A; }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .guideline-card {
+            background: #F8F9FA;
+            padding: 24px;
+            border-radius: 4px;
+        }
+
+        .guideline-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guideline-card h4 .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .guideline-card p {
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid #E8E6E3;
+            color: #64748B;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Clarus Vitae</h1>
+        <p>Color Ratio Guidelines & Usage Rules</p>
+    </header>
+
+    <div class="rule-box">
+        <h2>The 80/15/5 Color Rule</h2>
+        <div class="rule-grid">
+            <div class="rule-item">
+                <div class="rule-percentage">80%</div>
+                <div class="rule-label">Navy + White<br>(Primary palette)</div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-percentage">15%</div>
+                <div class="rule-label">Slate + Stone<br>(Secondary palette)</div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-percentage">5%</div>
+                <div class="rule-label">Gold<br>(Accent only)</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <h2 class="section-title">Layout Comparison: Correct vs. Incorrect</h2>
+        <div class="comparison-grid">
+            <div class="example-card correct">
+                <div class="example-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Correct Usage
+                </div>
+                <div class="example-content">
+                    <div class="demo-layout correct-demo">
+                        <div class="demo-header">
+                            <div class="demo-logo">CLARUS VITAE</div>
+                            <div class="demo-nav">
+                                <span>Properties</span>
+                                <span>Index</span>
+                                <span>About</span>
+                            </div>
+                        </div>
+                        <div class="demo-hero">
+                            <h3>Clarity for Life's Most Important Decisions</h3>
+                            <p>The trusted research authority for premium wellness decisions</p>
+                            <span class="demo-btn">Explore Properties</span>
+                        </div>
+                        <div class="demo-cards">
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>Lanserhof Tegernsee</h4>
+                                    <p>Medical Longevity</p>
+                                    <span class="demo-score">92</span>
+                                </div>
+                            </div>
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>SHA Wellness</h4>
+                                    <p>Integrated Wellness</p>
+                                    <span class="demo-score">89</span>
+                                </div>
+                            </div>
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>Clinique La Prairie</h4>
+                                    <p>Luxury Medical</p>
+                                    <span class="demo-score">94</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-notes">
+                        <h4>Why This Works</h4>
+                        <ul>
+                            <li>Navy header provides authority</li>
+                            <li>White dominates content areas</li>
+                            <li>Gold used only for Index scores</li>
+                            <li>Stone provides subtle section division</li>
+                            <li>Overall ratio: ~80% Navy/White</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card incorrect">
+                <div class="example-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Incorrect Usage
+                </div>
+                <div class="example-content">
+                    <div class="demo-layout incorrect-demo">
+                        <div class="demo-header">
+                            <div class="demo-logo">CLARUS VITAE</div>
+                            <div class="demo-nav">
+                                <span>Properties</span>
+                                <span>Index</span>
+                                <span>About</span>
+                            </div>
+                        </div>
+                        <div class="demo-hero">
+                            <h3>Clarity for Life's Most Important Decisions</h3>
+                            <p>The trusted research authority for premium wellness decisions</p>
+                            <span class="demo-btn">Explore Properties</span>
+                        </div>
+                        <div class="demo-cards">
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>Lanserhof Tegernsee</h4>
+                                    <p>Medical Longevity</p>
+                                    <span class="demo-score">92</span>
+                                </div>
+                            </div>
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>SHA Wellness</h4>
+                                    <p>Integrated Wellness</p>
+                                    <span class="demo-score">89</span>
+                                </div>
+                            </div>
+                            <div class="demo-card">
+                                <div class="demo-card-img"></div>
+                                <div class="demo-card-content">
+                                    <h4>Clinique La Prairie</h4>
+                                    <p>Luxury Medical</p>
+                                    <span class="demo-score">94</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-notes">
+                        <h4>Why This Fails</h4>
+                        <ul>
+                            <li>Gold dominates (~60% of layout)</li>
+                            <li>Feels gaudy, not premium</li>
+                            <li>Reduces Gold's special significance</li>
+                            <li>Index scores lose visual impact</li>
+                            <li>Undermines "quiet authority" principle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ratio-visual">
+        <h3>Ideal Color Distribution</h3>
+
+        <div class="ratio-bar-container">
+            <div class="ratio-bar-label">
+                <span>Typical Page Layout</span>
+                <span>Total: 100%</span>
+            </div>
+            <div class="ratio-bar">
+                <div class="ratio-segment ratio-navy" style="width: 35%;">Navy 35%</div>
+                <div class="ratio-segment ratio-white" style="width: 45%;">White 45%</div>
+                <div class="ratio-segment ratio-stone" style="width: 10%;">Stone 10%</div>
+                <div class="ratio-segment ratio-slate" style="width: 5%;">Slate 5%</div>
+                <div class="ratio-segment ratio-gold" style="width: 5%;">Gold 5%</div>
+            </div>
+        </div>
+
+        <div class="ratio-bar-container">
+            <div class="ratio-bar-label">
+                <span>Content-Heavy Page</span>
+                <span>Total: 100%</span>
+            </div>
+            <div class="ratio-bar">
+                <div class="ratio-segment ratio-navy" style="width: 20%;">Navy 20%</div>
+                <div class="ratio-segment ratio-white" style="width: 60%;">White 60%</div>
+                <div class="ratio-segment ratio-stone" style="width: 12%;">Stone 12%</div>
+                <div class="ratio-segment ratio-slate" style="width: 5%;">Slate 5%</div>
+                <div class="ratio-segment ratio-gold" style="width: 3%;">3%</div>
+            </div>
+        </div>
+
+        <div class="ratio-bar-container">
+            <div class="ratio-bar-label">
+                <span>Dark Section / Footer</span>
+                <span>Total: 100%</span>
+            </div>
+            <div class="ratio-bar">
+                <div class="ratio-segment ratio-navy" style="width: 75%;">Navy 75%</div>
+                <div class="ratio-segment ratio-white" style="width: 15%;">White 15%</div>
+                <div class="ratio-segment ratio-slate" style="width: 5%;">5%</div>
+                <div class="ratio-segment ratio-gold" style="width: 5%;">5%</div>
+            </div>
+        </div>
+
+        <div class="guidelines-grid">
+            <div class="guideline-card">
+                <h4><span class="dot" style="background: #1A2B4A;"></span> Clarus Navy</h4>
+                <p>Use for headers, navigation, primary buttons, and key structural elements. Should feel authoritative and grounding.</p>
+            </div>
+            <div class="guideline-card">
+                <h4><span class="dot" style="background: #FAFBFC; border: 1px solid #E8E6E3;"></span> Clarus White</h4>
+                <p>Dominates content areas, creates breathing room. The canvas that lets other elements stand out.</p>
+            </div>
+            <div class="guideline-card">
+                <h4><span class="dot" style="background: #C9A962;"></span> Clarus Gold</h4>
+                <p><strong>Maximum 5% of any layout.</strong> Reserved exclusively for Index scores, premium badges, and key highlights. Overuse diminishes impact.</p>
+            </div>
+            <div class="guideline-card">
+                <h4><span class="dot" style="background: #64748B;"></span> Slate + Stone</h4>
+                <p>Supporting roles only. Slate for secondary text and metadata. Stone for subtle backgrounds and dividers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="margin-top: 64px;">
+        <h2 class="section-title">Key Color Usage Rules</h2>
+        <div style="background: white; border: 1px solid #E8E6E3; border-radius: 4px; padding: 32px;">
+            <ol style="font-size: 15px; color: #1A2B4A; line-height: 2;">
+                <li><strong>Navy and White must dominate</strong> - Together they should comprise 80%+ of any layout</li>
+                <li><strong>Gold is rare and meaningful</strong> - Maximum 5% of any layout; used only for scores and premium highlights</li>
+                <li><strong>Never use more than 3 colors</strong> in any single component or section</li>
+                <li><strong>Avoid gradients</strong> except for subtle depth on interactive elements</li>
+                <li><strong>Maintain contrast ratios</strong> - 4.5:1 minimum for body text, 3:1 for large text</li>
+            </ol>
+        </div>
+    </section>
+
+    <footer>
+        <p>Clarus Vitae Brand Color System | "Quiet Authority" - Restraint signals premium more than excess.</p>
+    </footer>
+</body>
+</html>

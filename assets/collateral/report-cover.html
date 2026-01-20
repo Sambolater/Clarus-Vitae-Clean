@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarus Vitae — Report Cover Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --clarus-navy: #1A2B4A;
+      --clarus-white: #FAFBFC;
+      --clarus-gold: #C9A962;
+      --slate: #64748B;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #D8D8D8;
+      padding: 60px 40px;
+      color: var(--clarus-navy);
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--clarus-navy);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--slate);
+    }
+
+    .covers-container {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .cover-wrapper {
+      text-align: center;
+    }
+
+    .cover-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--slate);
+      margin-bottom: 20px;
+    }
+
+    /* Report Cover: US Letter 8.5" x 11" at 72dpi = 612 x 792px
+       Display at ~60% = 367 x 475px */
+    .report-cover {
+      width: 367px;
+      height: 475px;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 8px 32px rgba(26, 43, 74, 0.2),
+        0 2px 8px rgba(26, 43, 74, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .report-cover:hover {
+      transform: translateY(-6px);
+    }
+
+    /* ============================================
+       PRIMARY COVER — NAVY BACKGROUND
+       ============================================ */
+    .cover-primary {
+      background: var(--clarus-navy);
+    }
+
+    .cover-primary .pattern-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.03;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 30px,
+          var(--clarus-white) 30px,
+          var(--clarus-white) 31px
+        );
+    }
+
+    .cover-primary .content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cover-primary .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: auto;
+    }
+
+    .cover-primary .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cover-primary .logo-mark span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+    }
+
+    .cover-primary .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      color: var(--clarus-white);
+      font-weight: 500;
+    }
+
+    .cover-primary .title-section {
+      margin-bottom: auto;
+    }
+
+    .cover-primary .document-type {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--clarus-gold);
+      margin-bottom: 16px;
+    }
+
+    .cover-primary .report-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--clarus-white);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cover-primary .report-subtitle {
+      font-size: 14px;
+      color: rgba(250, 251, 252, 0.6);
+      line-height: 1.5;
+      max-width: 80%;
+    }
+
+    .cover-primary .footer-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 24px;
+      border-top: 1px solid rgba(201, 169, 98, 0.2);
+    }
+
+    .cover-primary .meta-info {
+      font-size: 11px;
+      color: rgba(250, 251, 252, 0.5);
+    }
+
+    .cover-primary .meta-info span {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .cover-primary .confidential {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clarus-gold);
+      opacity: 0.7;
+    }
+
+    .cover-primary .gold-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 120px;
+      height: 4px;
+      background: var(--clarus-gold);
+    }
+
+    /* ============================================
+       ALTERNATE COVER — WHITE BACKGROUND
+       ============================================ */
+    .cover-alternate {
+      background: var(--clarus-white);
+      border: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    .cover-alternate .navy-header {
+      background: var(--clarus-navy);
+      padding: 48px;
+      height: 40%;
+      position: relative;
+    }
+
+    .cover-alternate .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cover-alternate .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cover-alternate .logo-mark span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+    }
+
+    .cover-alternate .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--clarus-white);
+    }
+
+    .cover-alternate .header-title {
+      position: absolute;
+      bottom: 48px;
+      left: 48px;
+      right: 48px;
+    }
+
+    .cover-alternate .document-type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--clarus-gold);
+      margin-bottom: 8px;
+    }
+
+    .cover-alternate .report-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--clarus-white);
+      line-height: 1.2;
+    }
+
+    .cover-alternate .content-area {
+      padding: 40px 48px 48px 48px;
+      height: 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cover-alternate .summary-section {
+      border-left: 3px solid var(--clarus-gold);
+      padding-left: 20px;
+    }
+
+    .cover-alternate .summary-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clarus-gold);
+      margin-bottom: 12px;
+    }
+
+    .cover-alternate .summary-text {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .cover-alternate .footer-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .cover-alternate .meta-info {
+      font-size: 11px;
+      color: var(--slate);
+    }
+
+    .cover-alternate .meta-info span {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .cover-alternate .meta-info strong {
+      color: var(--clarus-navy);
+      font-weight: 500;
+    }
+
+    .cover-alternate .confidential {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--slate);
+      opacity: 0.6;
+    }
+
+    .cover-alternate .gold-bar {
+      position: absolute;
+      bottom: 0;
+      left: 48px;
+      right: 48px;
+      height: 3px;
+      background: var(--clarus-gold);
+    }
+
+    /* ============================================
+       SPECIFICATIONS
+       ============================================ */
+    .specs-section {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(26, 43, 74, 0.06);
+    }
+
+    .specs-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--clarus-navy);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .spec-group h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clarus-gold);
+      margin-bottom: 12px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(26, 43, 74, 0.04);
+    }
+
+    .spec-item .label {
+      color: var(--slate);
+    }
+
+    .spec-item .value {
+      color: var(--clarus-navy);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .usage-note {
+      margin-top: 32px;
+      padding: 20px;
+      background: rgba(26, 43, 74, 0.03);
+      border-radius: 4px;
+      border-left: 3px solid var(--clarus-gold);
+    }
+
+    .usage-note h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--clarus-navy);
+      margin-bottom: 8px;
+    }
+
+    .usage-note p {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <h1 class="page-title">Report Cover Templates</h1>
+    <p class="page-subtitle">Clarus Vitae Brand Collateral — US Letter (8.5" x 11")</p>
+  </div>
+
+  <!-- Cover Display -->
+  <div class="covers-container">
+    <!-- Primary Cover -->
+    <div class="cover-wrapper">
+      <p class="cover-label">Primary — Full Navy</p>
+      <div class="report-cover cover-primary">
+        <div class="pattern-overlay"></div>
+        <div class="content">
+          <div class="logo-section">
+            <div class="logo-mark">
+              <span>CV</span>
+            </div>
+            <span class="logo-text">CLARUS VITAE</span>
+          </div>
+
+          <div class="title-section">
+            <p class="document-type">[Document Type]</p>
+            <h1 class="report-title">[Report Title Goes Here]</h1>
+            <p class="report-subtitle">[Brief subtitle or description of the report contents]</p>
+          </div>
+
+          <div class="footer-section">
+            <div class="meta-info">
+              <span>Prepared for: [Client Name]</span>
+              <span>[Month Year]</span>
+            </div>
+            <span class="confidential">Confidential</span>
+          </div>
+        </div>
+        <div class="gold-accent"></div>
+      </div>
+    </div>
+
+    <!-- Alternate Cover -->
+    <div class="cover-wrapper">
+      <p class="cover-label">Alternate — Split Layout</p>
+      <div class="report-cover cover-alternate">
+        <div class="navy-header">
+          <div class="logo-section">
+            <div class="logo-mark">
+              <span>CV</span>
+            </div>
+            <span class="logo-text">CLARUS VITAE</span>
+          </div>
+          <div class="header-title">
+            <p class="document-type">[Document Type]</p>
+            <h1 class="report-title">[Report Title]</h1>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <div class="summary-section">
+            <p class="summary-label">Executive Summary</p>
+            <p class="summary-text">
+              [Brief overview of the report's key findings or purpose. 2-3 sentences maximum.]
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <div class="meta-info">
+              <span><strong>Prepared for:</strong> [Client Name]</span>
+              <span><strong>Date:</strong> [Month Day, Year]</span>
+              <span><strong>Version:</strong> 1.0</span>
+            </div>
+            <span class="confidential">Confidential</span>
+          </div>
+        </div>
+        <div class="gold-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specifications -->
+  <div class="specs-section">
+    <h3 class="specs-title">Document Specifications</h3>
+    <div class="specs-grid">
+      <div class="spec-group">
+        <h4>Page Setup</h4>
+        <div class="spec-item">
+          <span class="label">Size</span>
+          <span class="value">8.5" x 11" (Letter)</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Orientation</span>
+          <span class="value">Portrait</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Margins</span>
+          <span class="value">0.75" all sides</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Bleed</span>
+          <span class="value">0.125" (if printing)</span>
+        </div>
+      </div>
+
+      <div class="spec-group">
+        <h4>Typography</h4>
+        <div class="spec-item">
+          <span class="label">Title</span>
+          <span class="value">Cormorant 36pt</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Subtitle</span>
+          <span class="value">Inter 14pt</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Labels</span>
+          <span class="value">Inter 10pt caps</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Body</span>
+          <span class="value">Inter 11pt</span>
+        </div>
+      </div>
+
+      <div class="spec-group">
+        <h4>Export Settings</h4>
+        <div class="spec-item">
+          <span class="label">Format</span>
+          <span class="value">PDF</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Resolution</span>
+          <span class="value">300 DPI</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Color Space</span>
+          <span class="value">RGB (screen)</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Fonts</span>
+          <span class="value">Embed all</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="usage-note">
+      <h4>Usage Guidelines</h4>
+      <p>
+        <strong>Primary Cover (Navy):</strong> Use for flagship reports, annual assessments, and client-facing deliverables where maximum brand presence is desired.<br><br>
+        <strong>Alternate Cover (Split):</strong> Use for internal documents, progress reports, and supplementary materials where a lighter presentation is appropriate.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

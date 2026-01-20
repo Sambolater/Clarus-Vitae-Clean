@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Properties | Clarus Vitae</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables - Design System */
+        :root {
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --max-width: 1200px;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 64px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--clarus-white);
+            color: var(--clarus-navy);
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 48px; line-height: 56px; }
+        h2 { font-size: 36px; line-height: 44px; }
+        h3 { font-size: 28px; line-height: 36px; font-weight: 600; }
+        h4 { font-size: 22px; line-height: 30px; font-weight: 600; }
+
+        p {
+            font-size: 16px;
+            line-height: 26px;
+            color: var(--slate);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Navigation */
+        .nav {
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--stone);
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-size: 19px;
+            display: block;
+            letter-spacing: 2.4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--slate);
+        }
+
+        .nav-links a.active {
+            color: var(--clarus-gold);
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            stroke: var(--clarus-navy);
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--stone);
+        }
+
+        .page-header h1 {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .page-header p {
+            max-width: 600px;
+        }
+
+        /* Main Layout */
+        .browse-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-xl) 0;
+        }
+
+        /* Filter Sidebar */
+        .filter-sidebar {
+            /* Sidebar container */
+        }
+
+        .filter-section {
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--stone);
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+
+        .filter-title {
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--clarus-navy);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+        }
+
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--slate);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .filter-option.selected .filter-checkbox {
+            background: var(--clarus-navy);
+            border-color: var(--clarus-navy);
+        }
+
+        .filter-option.selected .filter-checkbox::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: var(--clarus-navy);
+        }
+
+        .filter-count {
+            font-size: 12px;
+            color: var(--slate);
+            margin-left: auto;
+        }
+
+        /* Price Range Slider */
+        .price-range {
+            margin-top: var(--spacing-sm);
+        }
+
+        .price-slider {
+            width: 100%;
+            height: 4px;
+            background: var(--stone);
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .price-slider-fill {
+            position: absolute;
+            height: 100%;
+            background: var(--clarus-navy);
+            border-radius: 2px;
+            left: 10%;
+            right: 30%;
+        }
+
+        .price-slider-handle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 2px solid var(--clarus-navy);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .price-slider-handle.min {
+            left: 10%;
+            margin-left: -8px;
+        }
+
+        .price-slider-handle.max {
+            right: 30%;
+            margin-right: -8px;
+        }
+
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* Clear Filters */
+        .clear-filters {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            text-decoration: underline;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-top: var(--spacing-md);
+        }
+
+        .clear-filters:hover {
+            color: var(--slate);
+        }
+
+        /* Main Content */
+        .browse-content {
+            /* Content area */
+        }
+
+        /* Toolbar */
+        .browse-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .results-count {
+            font-size: 14px;
+            color: var(--slate);
+        }
+
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .sort-label {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        .sort-select {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            padding: 8px 32px 8px 12px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A2B4A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 14px;
+        }
+
+        /* Property Grid */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .property-card {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .property-card:hover {
+            box-shadow: 0 4px 20px rgba(26, 43, 74, 0.08);
+        }
+
+        .property-image {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            background: linear-gradient(135deg, var(--stone) 0%, #d0ceca 100%);
+            position: relative;
+        }
+
+        .property-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--verification-green);
+        }
+
+        .property-badge svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .property-content {
+            padding: var(--spacing-md);
+        }
+
+        .property-tier {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .property-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 4px;
+            color: var(--clarus-navy);
+        }
+
+        .property-location {
+            font-size: 14px;
+            color: var(--slate);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--stone);
+        }
+
+        .clarus-index-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .index-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .index-score {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--clarus-gold);
+        }
+
+        .view-profile {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .view-profile:hover {
+            text-decoration: underline;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-xl);
+        }
+
+        .pagination-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            background: white;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover {
+            border-color: var(--clarus-navy);
+        }
+
+        .pagination-btn.active {
+            background: var(--clarus-navy);
+            border-color: var(--clarus-navy);
+            color: white;
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--stone);
+            margin-top: var(--spacing-xxl);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--slate);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--clarus-navy);
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .property-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; line-height: 44px; }
+
+            .browse-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-sidebar {
+                display: none; /* Hide on mobile, could be a drawer instead */
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="homepage.html" class="logo">
+                CLARUS
+                <span>VITAE</span>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="active">Properties</a>
+                <a href="#">The Index</a>
+                <a href="#">About</a>
+                <a href="#">Advisory</a>
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Browse Properties</h1>
+            <p>Explore our curated selection of the world's most exceptional wellness and longevity destinations, each evaluated by our expert advisory team.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="browse-layout">
+            <!-- Filter Sidebar -->
+            <aside class="filter-sidebar">
+                <!-- Tier Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-title">Property Tier</h3>
+                    <div class="filter-options">
+                        <label class="filter-option selected">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Medical Longevity</span>
+                            <span class="filter-count">24</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Integrative Wellness</span>
+                            <span class="filter-count">48</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Luxury Destination</span>
+                            <span class="filter-count">67</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Specialty Retreat</span>
+                            <span class="filter-count">35</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Treatment Type Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-title">Treatment Focus</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Longevity Medicine</span>
+                            <span class="filter-count">32</span>
+                        </label>
+                        <label class="filter-option selected">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Diagnostic Assessment</span>
+                            <span class="filter-count">45</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Detox & Reset</span>
+                            <span class="filter-count">58</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Mental Wellness</span>
+                            <span class="filter-count">29</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Fitness & Performance</span>
+                            <span class="filter-count">41</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Location Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-title">Location</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Europe</span>
+                            <span class="filter-count">78</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Asia Pacific</span>
+                            <span class="filter-count">52</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">North America</span>
+                            <span class="filter-count">34</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Middle East</span>
+                            <span class="filter-count">18</span>
+                        </label>
+                        <label class="filter-option">
+                            <div class="filter-checkbox"></div>
+                            <span class="filter-label">Caribbean</span>
+                            <span class="filter-count">12</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Range Filter -->
+                <div class="filter-section">
+                    <h3 class="filter-title">Price Range (per week)</h3>
+                    <div class="price-range">
+                        <div class="price-slider">
+                            <div class="price-slider-fill"></div>
+                            <div class="price-slider-handle min"></div>
+                            <div class="price-slider-handle max"></div>
+                        </div>
+                        <div class="price-labels">
+                            <span>$10,000</span>
+                            <span>$150,000+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="clear-filters">Clear all filters</button>
+            </aside>
+
+            <!-- Browse Content -->
+            <div class="browse-content">
+                <!-- Toolbar -->
+                <div class="browse-toolbar">
+                    <span class="results-count">Showing 48 of 194 properties</span>
+                    <div class="sort-dropdown">
+                        <span class="sort-label">Sort by:</span>
+                        <select class="sort-select">
+                            <option value="index">Clarus Index (High to Low)</option>
+                            <option value="index-asc">Clarus Index (Low to High)</option>
+                            <option value="name">Name (A-Z)</option>
+                            <option value="price">Price (Low to High)</option>
+                            <option value="price-desc">Price (High to Low)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Property Grid -->
+                <div class="property-grid">
+                    <!-- Property 1 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Medical Longevity</div>
+                            <h3 class="property-name">Vitalis Longevity Institute</h3>
+                            <p class="property-location">Swiss Alps, Switzerland</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">94</span>
+                                </div>
+                                <a href="property-profile.html" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 2 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Medical Longevity</div>
+                            <h3 class="property-name">Lanserhof Tegernsee</h3>
+                            <p class="property-location">Bavaria, Germany</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">92</span>
+                                </div>
+                                <a href="#" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 3 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Integrative Wellness</div>
+                            <h3 class="property-name">Kamalaya Koh Samui</h3>
+                            <p class="property-location">Koh Samui, Thailand</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">91</span>
+                                </div>
+                                <a href="#" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 4 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Medical Longevity</div>
+                            <h3 class="property-name">Clinique La Prairie</h3>
+                            <p class="property-location">Montreux, Switzerland</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">90</span>
+                                </div>
+                                <a href="#" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 5 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Luxury Destination</div>
+                            <h3 class="property-name">Aman Wellness</h3>
+                            <p class="property-location">Phuket, Thailand</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">89</span>
+                                </div>
+                                <a href="#" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 6 -->
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="property-content">
+                            <div class="property-tier">Medical Longevity</div>
+                            <h3 class="property-name">SHA Wellness Clinic</h3>
+                            <p class="property-location">Alicante, Spain</p>
+                            <div class="property-footer">
+                                <div class="clarus-index-badge">
+                                    <span class="index-label">Index</span>
+                                    <span class="index-score">88</span>
+                                </div>
+                                <a href="#" class="view-profile">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn disabled">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">4</button>
+                    <button class="pagination-btn">5</button>
+                    <button class="pagination-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Methodology</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2025 Clarus Vitae. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

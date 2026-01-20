@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitalis Longevity Institute | Clarus Vitae</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables - Design System */
+        :root {
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+            --alert-amber: #B45309;
+
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --max-width: 1200px;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 64px;
+            --spacing-xxxl: 96px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--clarus-white);
+            color: var(--clarus-navy);
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 48px; line-height: 56px; }
+        h2 { font-size: 36px; line-height: 44px; }
+        h3 { font-size: 28px; line-height: 36px; font-weight: 600; }
+        h4 { font-size: 22px; line-height: 30px; font-weight: 600; }
+
+        p {
+            font-size: 16px;
+            line-height: 26px;
+            color: var(--slate);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Navigation */
+        .nav {
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--stone);
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-size: 19px;
+            display: block;
+            letter-spacing: 2.4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--slate);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--clarus-navy);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 16px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a3b5a;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--clarus-navy);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 15px 31px;
+            border-radius: 4px;
+            border: 1.5px solid var(--clarus-navy);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--clarus-navy);
+            color: white;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--stone) 0%, #d0ceca 100%);
+            position: relative;
+        }
+
+        .hero-image::after {
+            content: 'Property Hero Image';
+            position: absolute;
+            bottom: var(--spacing-md);
+            right: var(--spacing-md);
+            font-size: 12px;
+            color: var(--slate);
+            background: white;
+            padding: 4px 8px;
+            border-radius: 2px;
+        }
+
+        /* Property Header */
+        .property-header {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--stone);
+        }
+
+        .property-header-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--spacing-xl);
+            align-items: start;
+        }
+
+        .property-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .tier-badge {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: white;
+            background: var(--clarus-navy);
+            padding: 4px 10px;
+            border-radius: 2px;
+        }
+
+        .verified-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--verification-green);
+        }
+
+        .verified-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .property-title {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .property-location-header {
+            font-size: 18px;
+            color: var(--slate);
+        }
+
+        /* Clarus Index Card */
+        .index-card {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            padding: var(--spacing-lg);
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .index-card-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .index-score-large {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 300;
+            color: var(--clarus-gold);
+            line-height: 1;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .index-context {
+            font-size: 13px;
+            color: var(--slate);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .index-breakdown {
+            text-align: left;
+        }
+
+        .index-dimension {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .dimension-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+        }
+
+        .dimension-score {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--clarus-navy);
+        }
+
+        .dimension-bar {
+            height: 6px;
+            background: var(--stone);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            background: var(--clarus-navy);
+            border-radius: 3px;
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .content-primary {
+            /* Primary content area */
+        }
+
+        .content-sidebar {
+            /* Sidebar area */
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--stone);
+        }
+
+        /* Overview */
+        .overview-text {
+            font-size: 18px;
+            line-height: 30px;
+            color: var(--clarus-navy);
+        }
+
+        /* What Sets Apart */
+        .differentiator-list {
+            list-style: none;
+        }
+
+        .differentiator-item {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .differentiator-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            color: var(--clarus-gold);
+        }
+
+        .differentiator-content h5 {
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--clarus-navy);
+            margin-bottom: 4px;
+        }
+
+        .differentiator-content p {
+            font-size: 14px;
+            line-height: 22px;
+        }
+
+        /* Programs */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .program-card {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            padding: var(--spacing-md);
+        }
+
+        .program-duration {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .program-name {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--clarus-navy);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .program-price {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .program-desc {
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        /* Expert Notes */
+        .expert-note {
+            background: var(--stone);
+            border-radius: 4px;
+            padding: var(--spacing-lg);
+        }
+
+        .expert-quote {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-style: italic;
+            color: var(--clarus-navy);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .expert-attribution {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .expert-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #d0ceca;
+        }
+
+        .expert-info {
+            /* Expert info styling */
+        }
+
+        .expert-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--clarus-navy);
+        }
+
+        .expert-title {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: var(--clarus-navy);
+            border-radius: 4px;
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-box h4 {
+            color: white;
+            font-weight: 400;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-box .btn-primary {
+            background: var(--clarus-gold);
+            color: var(--clarus-navy);
+        }
+
+        .cta-box .btn-primary:hover {
+            background: #d9b972;
+        }
+
+        .privacy-note {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Related Properties */
+        .related {
+            padding: var(--spacing-xxl) 0;
+            background: var(--stone);
+        }
+
+        .related h3 {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .property-card {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .property-card:hover {
+            box-shadow: 0 4px 20px rgba(26, 43, 74, 0.08);
+        }
+
+        .property-image {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            background: linear-gradient(135deg, #e8e6e3 0%, #d0ceca 100%);
+        }
+
+        .property-content {
+            padding: var(--spacing-md);
+        }
+
+        .property-tier {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--slate);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .property-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 4px;
+            color: var(--clarus-navy);
+        }
+
+        .property-location {
+            font-size: 14px;
+            color: var(--slate);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--stone);
+        }
+
+        .clarus-index-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .index-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .index-score {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--clarus-gold);
+        }
+
+        .view-profile {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            text-decoration: none;
+        }
+
+        .view-profile:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--stone);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--slate);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--clarus-navy);
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .property-header-content {
+                grid-template-columns: 1fr;
+            }
+
+            .index-card {
+                max-width: 320px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .programs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; line-height: 44px; }
+            h2 { font-size: 28px; line-height: 36px; }
+
+            .hero-image { height: 250px; }
+
+            .programs-grid,
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="homepage.html" class="logo">
+                CLARUS
+                <span>VITAE</span>
+            </a>
+            <div class="nav-links">
+                <a href="browse.html">Properties</a>
+                <a href="#">The Index</a>
+                <a href="#">About</a>
+                <a href="#">Advisory</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Image -->
+    <div class="hero-image"></div>
+
+    <!-- Property Header -->
+    <section class="property-header">
+        <div class="container">
+            <div class="property-header-content">
+                <div class="property-info">
+                    <div class="property-meta">
+                        <span class="tier-badge">Medical Longevity</span>
+                        <span class="verified-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            Expert Verified
+                        </span>
+                    </div>
+                    <h1 class="property-title">Vitalis Longevity Institute</h1>
+                    <p class="property-location-header">Swiss Alps, Switzerland</p>
+                </div>
+                <div class="index-card">
+                    <div class="index-card-label">Clarus Index</div>
+                    <div class="index-score-large">94</div>
+                    <div class="index-context">Top 5% of Medical Longevity properties</div>
+                    <div class="index-breakdown">
+                        <div class="index-dimension">
+                            <div class="dimension-header">
+                                <span class="dimension-label">Clinical Rigor</span>
+                                <span class="dimension-score">97</span>
+                            </div>
+                            <div class="dimension-bar">
+                                <div class="dimension-fill" style="width: 97%;"></div>
+                            </div>
+                        </div>
+                        <div class="index-dimension">
+                            <div class="dimension-header">
+                                <span class="dimension-label">Outcome Evidence</span>
+                                <span class="dimension-score">95</span>
+                            </div>
+                            <div class="dimension-bar">
+                                <div class="dimension-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div class="index-dimension">
+                            <div class="dimension-header">
+                                <span class="dimension-label">Program Depth</span>
+                                <span class="dimension-score">93</span>
+                            </div>
+                            <div class="dimension-bar">
+                                <div class="dimension-fill" style="width: 93%;"></div>
+                            </div>
+                        </div>
+                        <div class="index-dimension">
+                            <div class="dimension-header">
+                                <span class="dimension-label">Experience Quality</span>
+                                <span class="dimension-score">92</span>
+                            </div>
+                            <div class="dimension-bar">
+                                <div class="dimension-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                        <div class="index-dimension">
+                            <div class="dimension-header">
+                                <span class="dimension-label">Value Alignment</span>
+                                <span class="dimension-score">91</span>
+                            </div>
+                            <div class="dimension-bar">
+                                <div class="dimension-fill" style="width: 91%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <div class="content-primary">
+                <!-- Overview -->
+                <div class="section">
+                    <h3 class="section-title">Overview</h3>
+                    <p class="overview-text">Vitalis Longevity Institute represents the pinnacle of evidence-based longevity medicine in Europe. Established in 2018, the institute maintains a 1:2 physician-to-guest ratio during its comprehensive assessment programs. Their proprietary VITA Protocol combines advanced diagnostics (including full-body MRI, epigenetic age testing, and continuous glucose monitoring) with personalized intervention strategies developed by a team of 12 board-certified physicians.</p>
+                    <br>
+                    <p>Guests report an average biological age reduction of 4.8 years (measured via GrimAge epigenetic clock) following their initial 14-day intensive program. The 18-month follow-up retention rate stands at 78%, significantly above industry average.</p>
+                </div>
+
+                <!-- What Sets Apart -->
+                <div class="section">
+                    <h3 class="section-title">What Sets This Apart</h3>
+                    <ul class="differentiator-list">
+                        <li class="differentiator-item">
+                            <svg class="differentiator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <div class="differentiator-content">
+                                <h5>Exceptional Physician Ratio</h5>
+                                <p>1:2 physician-to-guest ratio during assessment phases, with 24/7 medical supervision throughout stay. All 12 on-site physicians are board-certified in relevant specialties.</p>
+                            </div>
+                        </li>
+                        <li class="differentiator-item">
+                            <svg class="differentiator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18 9l-5 5-2-2-4 4"/>
+                            </svg>
+                            <div class="differentiator-content">
+                                <h5>Published Outcome Data</h5>
+                                <p>4.8-year average biological age reduction verified by third-party testing. Results published in peer-reviewed longevity journals with full methodology disclosure.</p>
+                            </div>
+                        </li>
+                        <li class="differentiator-item">
+                            <svg class="differentiator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                            <div class="differentiator-content">
+                                <h5>Post-Program Integration</h5>
+                                <p>18-month structured follow-up program with monthly physician consultations, quarterly biomarker testing, and dedicated concierge support for protocol adherence.</p>
+                            </div>
+                        </li>
+                        <li class="differentiator-item">
+                            <svg class="differentiator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                            <div class="differentiator-content">
+                                <h5>Privacy Architecture</h5>
+                                <p>Air-gapped medical records system with Swiss data protection. Guest identities never shared with external parties, including insurers. Maximum 8 guests at any time.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Programs -->
+                <div class="section">
+                    <h3 class="section-title">Programs</h3>
+                    <div class="programs-grid">
+                        <div class="program-card">
+                            <div class="program-duration">14 Days</div>
+                            <h4 class="program-name">VITA Assessment Intensive</h4>
+                            <div class="program-price">From CHF 85,000</div>
+                            <p class="program-desc">Comprehensive baseline assessment with full diagnostic battery, personalized protocol development, and initial intervention implementation.</p>
+                        </div>
+                        <div class="program-card">
+                            <div class="program-duration">7 Days</div>
+                            <h4 class="program-name">Executive Reset</h4>
+                            <div class="program-price">From CHF 45,000</div>
+                            <p class="program-desc">Focused assessment for time-constrained executives. Core diagnostics with targeted intervention recommendations and follow-up protocol.</p>
+                        </div>
+                        <div class="program-card">
+                            <div class="program-duration">21 Days</div>
+                            <h4 class="program-name">Deep Regeneration</h4>
+                            <div class="program-price">From CHF 150,000</div>
+                            <p class="program-desc">Extended protocol including experimental therapies (senolytics, peptide optimization), advanced body composition analysis, and cognitive enhancement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert Notes -->
+                <div class="section">
+                    <h3 class="section-title">Expert Notes</h3>
+                    <div class="expert-note">
+                        <p class="expert-quote">"Vitalis represents the current standard for evidence-based longevity medicine. Their commitment to outcome tracking and transparent methodology sets them apart from clinics making similar claims without verification. The physician density is genuinely exceptional."</p>
+                        <div class="expert-attribution">
+                            <div class="expert-avatar"></div>
+                            <div class="expert-info">
+                                <div class="expert-name">Dr. Elena Vasquez, MD, PhD</div>
+                                <div class="expert-title">Clarus Vitae Medical Advisor, Former Stanford Longevity Research</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-sidebar">
+                <!-- Inquiry CTA -->
+                <div class="cta-box">
+                    <h4>Secure Inquiry</h4>
+                    <p>Request detailed information or schedule a consultation. Your inquiry remains confidential.</p>
+                    <a href="#" class="btn-primary">Make Inquiry</a>
+                    <p class="privacy-note">Privacy-protected. No cookies. No tracking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Properties -->
+    <section class="related">
+        <div class="container">
+            <h3>Related Properties</h3>
+            <div class="related-grid">
+                <div class="property-card">
+                    <div class="property-image"></div>
+                    <div class="property-content">
+                        <div class="property-tier">Medical Longevity</div>
+                        <h4 class="property-name">Lanserhof Tegernsee</h4>
+                        <p class="property-location">Bavaria, Germany</p>
+                        <div class="property-footer">
+                            <div class="clarus-index-badge">
+                                <span class="index-label">Index</span>
+                                <span class="index-score">92</span>
+                            </div>
+                            <a href="#" class="view-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-image"></div>
+                    <div class="property-content">
+                        <div class="property-tier">Medical Longevity</div>
+                        <h4 class="property-name">Clinique La Prairie</h4>
+                        <p class="property-location">Montreux, Switzerland</p>
+                        <div class="property-footer">
+                            <div class="clarus-index-badge">
+                                <span class="index-label">Index</span>
+                                <span class="index-score">90</span>
+                            </div>
+                            <a href="#" class="view-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-image"></div>
+                    <div class="property-content">
+                        <div class="property-tier">Medical Longevity</div>
+                        <h4 class="property-name">SHA Wellness Clinic</h4>
+                        <p class="property-location">Alicante, Spain</p>
+                        <div class="property-footer">
+                            <div class="clarus-index-badge">
+                                <span class="index-label">Index</span>
+                                <span class="index-score">88</span>
+                            </div>
+                            <a href="#" class="view-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Methodology</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2025 Clarus Vitae. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

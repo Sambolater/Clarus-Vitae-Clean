@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarus Vitae - Property Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --clarus-navy: #1A2B4A;
+            --clarus-white: #FAFBFC;
+            --clarus-gold: #C9A962;
+            --slate: #64748B;
+            --stone: #E8E6E3;
+            --verification-green: #2D6A4F;
+
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            /* Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 48px;
+            --space-6: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #F5F5F3;
+            color: var(--clarus-navy);
+            padding: var(--space-5);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-4);
+            color: var(--clarus-navy);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: var(--space-4) 0 var(--space-3);
+            color: var(--clarus-navy);
+        }
+
+        .component-section {
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--space-3);
+        }
+
+        /* ================================
+           PROPERTY CARD
+           ================================ */
+        .property-card {
+            background: var(--clarus-white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--stone);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            box-shadow: 0 8px 32px rgba(26, 43, 74, 0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Image Container - 3:2 Ratio */
+        .property-card__image {
+            position: relative;
+            width: 100%;
+            padding-top: 66.67%; /* 3:2 ratio */
+            background: linear-gradient(135deg, var(--stone) 0%, #D4D2CF 100%);
+            overflow: hidden;
+        }
+
+        .property-card__image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Image Placeholder */
+        .property-card__image-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--slate);
+        }
+
+        .property-card__image-placeholder svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.5;
+        }
+
+        /* Tier Badge */
+        .property-card__tier {
+            position: absolute;
+            top: var(--space-2);
+            left: var(--space-2);
+            background: var(--clarus-navy);
+            color: var(--clarus-white);
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            border-radius: 2px;
+        }
+
+        .property-card__tier--medical {
+            background: var(--clarus-navy);
+        }
+
+        .property-card__tier--destination {
+            background: var(--verification-green);
+        }
+
+        /* Clarus Index Badge */
+        .property-card__index {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            background: var(--clarus-gold);
+            color: var(--clarus-navy);
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .property-card__index-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
+
+        /* Card Content */
+        .property-card__content {
+            padding: var(--space-3);
+        }
+
+        .property-card__name {
+            font-family: var(--font-serif);
+            font-size: 1.375rem;
+            font-weight: 500;
+            color: var(--clarus-navy);
+            margin-bottom: var(--space-1);
+            line-height: 1.3;
+        }
+
+        .property-card__location {
+            font-size: 0.875rem;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: var(--space-2);
+        }
+
+        .property-card__location svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--slate);
+        }
+
+        /* Card Tags */
+        .property-card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-1);
+            margin-top: var(--space-2);
+        }
+
+        .property-card__tag {
+            font-size: 0.75rem;
+            color: var(--slate);
+            background: var(--stone);
+            padding: 4px 10px;
+            border-radius: 2px;
+        }
+
+        /* Card Footer */
+        .property-card__footer {
+            padding: var(--space-2) var(--space-3);
+            border-top: 1px solid var(--stone);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .property-card__verification {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--verification-green);
+        }
+
+        .property-card__verification svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--verification-green);
+        }
+
+        .property-card__action {
+            font-size: 0.875rem;
+            color: var(--clarus-navy);
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .property-card__action:hover {
+            color: var(--clarus-gold);
+        }
+
+        .property-card__action svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ================================
+           COMPACT CARD VARIANT
+           ================================ */
+        .property-card--compact .property-card__image {
+            padding-top: 56.25%; /* 16:9 ratio */
+        }
+
+        .property-card--compact .property-card__content {
+            padding: var(--space-2);
+        }
+
+        .property-card--compact .property-card__name {
+            font-size: 1.125rem;
+        }
+
+        /* ================================
+           FEATURED CARD VARIANT
+           ================================ */
+        .property-card--featured {
+            border: 2px solid var(--clarus-gold);
+        }
+
+        .property-card--featured .property-card__index {
+            background: var(--clarus-navy);
+            color: var(--clarus-gold);
+        }
+
+        /* Label styling */
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+            margin-bottom: var(--space-2);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clarus Vitae Property Card</h1>
+
+    <!-- DEFAULT CARDS -->
+    <div class="component-section">
+        <h2>Property Cards</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Card component for displaying wellness properties with Clarus Index scores.</p>
+
+        <div class="card-grid">
+            <!-- Medical Longevity Property -->
+            <article class="property-card">
+                <div class="property-card__image">
+                    <div class="property-card__image-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span class="property-card__tier property-card__tier--medical">Medical Longevity</span>
+                    <span class="property-card__index">
+                        <span class="property-card__index-label">Clarus</span>
+                        94
+                    </span>
+                </div>
+                <div class="property-card__content">
+                    <h3 class="property-card__name">Clinique La Prairie</h3>
+                    <p class="property-card__location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Montreux, Switzerland
+                    </p>
+                    <div class="property-card__tags">
+                        <span class="property-card__tag">Longevity</span>
+                        <span class="property-card__tag">Diagnostics</span>
+                        <span class="property-card__tag">Regenerative</span>
+                    </div>
+                </div>
+                <div class="property-card__footer">
+                    <span class="property-card__verification">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                        Verified
+                    </span>
+                    <a href="#" class="property-card__action">
+                        View Profile
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Destination Wellness Property -->
+            <article class="property-card">
+                <div class="property-card__image">
+                    <div class="property-card__image-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span class="property-card__tier property-card__tier--destination">Destination Wellness</span>
+                    <span class="property-card__index">
+                        <span class="property-card__index-label">Clarus</span>
+                        87
+                    </span>
+                </div>
+                <div class="property-card__content">
+                    <h3 class="property-card__name">SHA Wellness Clinic</h3>
+                    <p class="property-card__location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Alicante, Spain
+                    </p>
+                    <div class="property-card__tags">
+                        <span class="property-card__tag">Wellness</span>
+                        <span class="property-card__tag">Nutrition</span>
+                        <span class="property-card__tag">Fitness</span>
+                    </div>
+                </div>
+                <div class="property-card__footer">
+                    <span class="property-card__verification">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                        Verified
+                    </span>
+                    <a href="#" class="property-card__action">
+                        View Profile
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Featured Property -->
+            <article class="property-card property-card--featured">
+                <div class="property-card__image">
+                    <div class="property-card__image-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span class="property-card__tier property-card__tier--medical">Medical Longevity</span>
+                    <span class="property-card__index">
+                        <span class="property-card__index-label">Clarus</span>
+                        97
+                    </span>
+                </div>
+                <div class="property-card__content">
+                    <h3 class="property-card__name">Lanserhof Tegernsee</h3>
+                    <p class="property-card__location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Bavaria, Germany
+                    </p>
+                    <div class="property-card__tags">
+                        <span class="property-card__tag">LANS Med</span>
+                        <span class="property-card__tag">Detox</span>
+                        <span class="property-card__tag">Longevity</span>
+                    </div>
+                </div>
+                <div class="property-card__footer">
+                    <span class="property-card__verification">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                        Verified
+                    </span>
+                    <a href="#" class="property-card__action">
+                        View Profile
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- COMPACT CARDS -->
+    <div class="component-section">
+        <h2>Compact Cards</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Smaller card variant for list views and sidebars.</p>
+
+        <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+            <article class="property-card property-card--compact">
+                <div class="property-card__image">
+                    <div class="property-card__image-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span class="property-card__index">
+                        <span class="property-card__index-label">Clarus</span>
+                        91
+                    </span>
+                </div>
+                <div class="property-card__content">
+                    <h3 class="property-card__name">Vivamayr Altaussee</h3>
+                    <p class="property-card__location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Austria
+                    </p>
+                </div>
+            </article>
+
+            <article class="property-card property-card--compact">
+                <div class="property-card__image">
+                    <div class="property-card__image-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span class="property-card__index">
+                        <span class="property-card__index-label">Clarus</span>
+                        88
+                    </span>
+                </div>
+                <div class="property-card__content">
+                    <h3 class="property-card__name">Buchinger Wilhelmi</h3>
+                    <p class="property-card__location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Germany
+                    </p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- HOVER STATES -->
+    <div class="component-section">
+        <h2>Interactive States</h2>
+        <p style="color: var(--slate); margin-bottom: var(--space-3);">Cards include hover effects with subtle shadow and lift.</p>
+
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+                <span class="label">Default State</span>
+                <article class="property-card" style="width: 320px;">
+                    <div class="property-card__image" style="padding-top: 50%;">
+                        <span class="property-card__index">
+                            <span class="property-card__index-label">Clarus</span>
+                            94
+                        </span>
+                    </div>
+                    <div class="property-card__content">
+                        <h3 class="property-card__name">Example Property</h3>
+                        <p class="property-card__location">Location, Country</p>
+                    </div>
+                </article>
+            </div>
+
+            <div>
+                <span class="label">Hover State (simulated)</span>
+                <article class="property-card" style="width: 320px; box-shadow: 0 8px 32px rgba(26, 43, 74, 0.12); transform: translateY(-2px);">
+                    <div class="property-card__image" style="padding-top: 50%;">
+                        <span class="property-card__index">
+                            <span class="property-card__index-label">Clarus</span>
+                            94
+                        </span>
+                    </div>
+                    <div class="property-card__content">
+                        <h3 class="property-card__name">Example Property</h3>
+                        <p class="property-card__location">Location, Country</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

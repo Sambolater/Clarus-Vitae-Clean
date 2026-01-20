@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="100" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <title>Clarus Vitae - Stacked Wordmark</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&amp;display=swap');
+      .wordmark-clarus {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 36px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+      .wordmark-vitae {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 28.8px;
+        letter-spacing: 0.25em;
+        fill: #1A2B4A;
+      }
+    </style>
+  </defs>
+  <text class="wordmark-clarus" text-anchor="middle" x="100" y="40">CLARUS</text>
+  <text class="wordmark-vitae" text-anchor="middle" x="100" y="80">VITAE</text>
+</svg>

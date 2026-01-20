@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarus Vitae — Business Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --clarus-navy: #1A2B4A;
+      --clarus-white: #FAFBFC;
+      --clarus-gold: #C9A962;
+      --slate: #64748B;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #E8E8E8;
+      padding: 60px 40px;
+      color: var(--clarus-navy);
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--clarus-navy);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .card-container {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .card-wrapper {
+      text-align: center;
+    }
+
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--slate);
+      margin-bottom: 20px;
+    }
+
+    /* Business Card Dimensions: 3.5" x 2" at 300dpi = 1050 x 600px
+       Display at 50% = 525 x 300px */
+    .business-card {
+      width: 350px;
+      height: 200px;
+      border-radius: 4px;
+      position: relative;
+      box-shadow:
+        0 4px 12px rgba(26, 43, 74, 0.15),
+        0 1px 3px rgba(26, 43, 74, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .business-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 8px 24px rgba(26, 43, 74, 0.2),
+        0 2px 6px rgba(26, 43, 74, 0.1);
+    }
+
+    /* ============================================
+       FRONT OF CARD
+       ============================================ */
+    .card-front {
+      background: var(--clarus-navy);
+      overflow: hidden;
+    }
+
+    .card-front .pattern {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      opacity: 0.04;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        var(--clarus-white) 8px,
+        var(--clarus-white) 9px
+      );
+    }
+
+    .card-front .content {
+      position: relative;
+      z-index: 1;
+      padding: 28px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-front .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-front .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--clarus-gold);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-front .logo-mark svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .card-front .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: var(--clarus-white);
+      font-weight: 500;
+    }
+
+    .card-front .person-info {
+      border-top: 1px solid rgba(201, 169, 98, 0.3);
+      padding-top: 16px;
+    }
+
+    .card-front .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--clarus-white);
+      margin-bottom: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    .card-front .title {
+      font-size: 11px;
+      color: var(--clarus-gold);
+      letter-spacing: 0.04em;
+    }
+
+    .card-front .gold-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--clarus-gold);
+    }
+
+    /* ============================================
+       BACK OF CARD
+       ============================================ */
+    .card-back {
+      background: var(--clarus-white);
+      border: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    .card-back .gold-edge {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--clarus-gold);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .card-back .content {
+      padding: 28px 28px 28px 36px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-back .contact-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-back .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--clarus-navy);
+    }
+
+    .card-back .contact-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--clarus-gold);
+      flex-shrink: 0;
+    }
+
+    .card-back .contact-text {
+      letter-spacing: 0.01em;
+    }
+
+    .card-back .footer-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .card-back .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--slate);
+    }
+
+    .card-back .logo-mini {
+      width: 20px;
+      height: 20px;
+      background: var(--clarus-navy);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back .logo-mini span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--clarus-gold);
+    }
+
+    /* ============================================
+       SPECIFICATIONS
+       ============================================ */
+    .specs-section {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(26, 43, 74, 0.06);
+    }
+
+    .specs-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--clarus-navy);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .spec-group h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clarus-gold);
+      margin-bottom: 12px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(26, 43, 74, 0.04);
+    }
+
+    .spec-item .label {
+      color: var(--slate);
+    }
+
+    .spec-item .value {
+      color: var(--clarus-navy);
+      font-weight: 500;
+    }
+
+    .color-swatch {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Business Card</h1>
+  <p class="page-subtitle">Clarus Vitae Brand Collateral — 3.5" x 2" (Standard US)</p>
+
+  <!-- Card Display -->
+  <div class="card-container">
+    <!-- Front -->
+    <div class="card-wrapper">
+      <p class="card-label">Front</p>
+      <div class="business-card card-front">
+        <div class="pattern"></div>
+        <div class="content">
+          <div class="logo-section">
+            <div class="logo-mark">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="12" y="17" font-family="Cormorant Garamond, Georgia, serif" font-size="12" font-weight="600" fill="#1A2B4A" text-anchor="middle">CV</text>
+              </svg>
+            </div>
+            <span class="logo-text">CLARUS VITAE</span>
+          </div>
+          <div class="person-info">
+            <p class="name">[Full Name]</p>
+            <p class="title">[Professional Title]</p>
+          </div>
+        </div>
+        <div class="gold-accent"></div>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="card-wrapper">
+      <p class="card-label">Back</p>
+      <div class="business-card card-back">
+        <div class="gold-edge"></div>
+        <div class="content">
+          <div class="contact-section">
+            <div class="contact-item">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <span class="contact-text">[email]@clarusvitae.com</span>
+            </div>
+            <div class="contact-item">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span class="contact-text">+1 (000) 000-0000</span>
+            </div>
+            <div class="contact-item">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <span class="contact-text">clarusvitae.com</span>
+            </div>
+          </div>
+          <div class="footer-section">
+            <span class="tagline">Clarity for Life's Most Important Decisions</span>
+            <div class="logo-mini">
+              <span>CV</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specifications -->
+  <div class="specs-section">
+    <h3 class="specs-title">Print Specifications</h3>
+    <div class="specs-grid">
+      <div class="spec-group">
+        <h4>Dimensions</h4>
+        <div class="spec-item">
+          <span class="label">Size</span>
+          <span class="value">3.5" x 2" (88.9 x 50.8 mm)</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Bleed</span>
+          <span class="value">0.125" (3.175 mm)</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Safe Zone</span>
+          <span class="value">0.125" from trim</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Corner Radius</span>
+          <span class="value">0.125" (3 mm)</span>
+        </div>
+      </div>
+
+      <div class="spec-group">
+        <h4>Print Setup</h4>
+        <div class="spec-item">
+          <span class="label">Resolution</span>
+          <span class="value">300 DPI minimum</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Color Mode</span>
+          <span class="value">CMYK</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">File Format</span>
+          <span class="value">PDF/X-1a:2001</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Rich Black</span>
+          <span class="value">C60 M40 Y40 K100</span>
+        </div>
+      </div>
+
+      <div class="spec-group">
+        <h4>Paper Stock</h4>
+        <div class="spec-item">
+          <span class="label">Weight</span>
+          <span class="value">32pt or 130lb cover</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Finish</span>
+          <span class="value">Soft-touch matte</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Optional</span>
+          <span class="value">Gold foil on logo</span>
+        </div>
+      </div>
+
+      <div class="spec-group">
+        <h4>Brand Colors (CMYK)</h4>
+        <div class="spec-item">
+          <span class="label"><span class="color-swatch" style="background: #1A2B4A;"></span>Clarus Navy</span>
+          <span class="value">C89 M74 Y42 K42</span>
+        </div>
+        <div class="spec-item">
+          <span class="label"><span class="color-swatch" style="background: #C9A962;"></span>Clarus Gold</span>
+          <span class="value">C18 M28 Y68 K0</span>
+        </div>
+        <div class="spec-item">
+          <span class="label"><span class="color-swatch" style="background: #FAFBFC;"></span>Clarus White</span>
+          <span class="value">Paper white</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
