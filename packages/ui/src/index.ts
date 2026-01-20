@@ -38,11 +38,26 @@ export {
   type ScoreBreakdownProps,
   type DimensionScore,
   type IndexDimension,
+  type PropertyTier as ScorePropertyTier,
 } from './components/Score';
 export {
   ScoreComparison,
   type ScoreComparisonProps,
   type ComparisonProperty,
+} from './components/Score';
+export {
+  RecognitionBadges,
+  type RecognitionBadgesProps,
+  type PropertyRecognition,
+} from './components/Score';
+export {
+  ScoreCard,
+  type ScoreCardProps,
+  type ScoreCardProperty,
+} from './components/Score';
+export {
+  ScoreTooltip,
+  type ScoreTooltipProps,
 } from './components/Score';
 
 // ============================================================================

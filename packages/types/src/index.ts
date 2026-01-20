@@ -11,3 +11,4 @@ export * from './treatment';
 export * from './review';
 export * from './user';
 export * from './clarus-index';
+export * from './scoring';
