@@ -30,7 +30,7 @@ function getClient() {
 
   // Try to initialize Prisma client
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
     const { PrismaClient } = require('@prisma/client');
     cachedClient = new PrismaClient({
       log:
