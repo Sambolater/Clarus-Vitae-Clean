@@ -1,4 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import {
+  verificationCodes,
+  generateCode,
+  checkRateLimit,
+  RATE_LIMIT_WINDOW,
+  CODE_EXPIRY,
+} from './utils';
 
 /**
  * Privacy Verification API
@@ -6,49 +13,6 @@ import { type NextRequest, NextResponse } from 'next/server';
  * Sends a verification code to the user's email to verify identity
  * before allowing access to privacy dashboard actions.
  */
-
-// In-memory store for verification codes (use Redis in production)
-const verificationCodes = new Map<
-  string,
-  { code: string; expiry: Date; attempts: number }
->();
-
-// Rate limiting (use Redis in production)
-const rateLimits = new Map<string, { count: number; resetAt: Date }>();
-
-const MAX_ATTEMPTS = 5;
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const CODE_EXPIRY = 30 * 60 * 1000; // 30 minutes
-
-/**
- * Generate a 6-digit verification code
- */
-function generateCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-/**
- * Check rate limit for an IP address
- */
-function checkRateLimit(ip: string): boolean {
-  const now = new Date();
-  const limit = rateLimits.get(ip);
-
-  if (!limit || now > limit.resetAt) {
-    rateLimits.set(ip, {
-      count: 1,
-      resetAt: new Date(now.getTime() + RATE_LIMIT_WINDOW),
-    });
-    return true;
-  }
-
-  if (limit.count >= MAX_ATTEMPTS) {
-    return false;
-  }
-
-  limit.count++;
-  return true;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -121,39 +85,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-/**
- * Verify a code (exported for use by other routes)
- */
-export function verifyCode(email: string, code: string): boolean {
-  const normalizedEmail = email.toLowerCase().trim();
-  const stored = verificationCodes.get(normalizedEmail);
-
-  if (!stored) {
-    return false;
-  }
-
-  // Check expiry
-  if (new Date() > stored.expiry) {
-    verificationCodes.delete(normalizedEmail);
-    return false;
-  }
-
-  // Check attempts
-  if (stored.attempts >= MAX_ATTEMPTS) {
-    verificationCodes.delete(normalizedEmail);
-    return false;
-  }
-
-  stored.attempts++;
-
-  // Verify code
-  if (stored.code !== code) {
-    return false;
-  }
-
-  // Code is valid - remove it (single use)
-  verificationCodes.delete(normalizedEmail);
-  return true;
 }
