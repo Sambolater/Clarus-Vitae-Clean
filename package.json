@@ -17,7 +17,9 @@
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
     "db:seed": "pnpm --filter @clarus-vitae/database db:seed",
-    "db:studio": "pnpm --filter @clarus-vitae/database db:studio"
+    "db:studio": "pnpm --filter @clarus-vitae/database db:studio",
+    "search:init": "pnpm --filter @clarus-vitae/database search:init",
+    "search:reindex": "pnpm --filter @clarus-vitae/database search:reindex"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

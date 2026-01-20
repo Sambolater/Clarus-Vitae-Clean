@@ -13,6 +13,8 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "search:init": "tsx scripts/search-init.ts",
+    "search:reindex": "tsx scripts/search-reindex.ts",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
@@ -22,7 +24,8 @@
   },
   "dependencies": {
     "@clarus-vitae/types": "workspace:*",
-    "@prisma/client": "^5.9.0"
+    "@prisma/client": "^5.9.0",
+    "meilisearch": "^0.37.0"
   },
   "devDependencies": {
     "@clarus-vitae/config": "workspace:*",
