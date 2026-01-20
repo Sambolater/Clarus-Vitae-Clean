@@ -1,6 +1,3 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-
 import type { PropertyVisit, TeamMember, TeamMemberReview } from '@clarus-vitae/types';
 import {
   ContactAdvisor,
@@ -9,6 +6,8 @@ import {
   TeamMemberHeader,
   TeamMemberVisits,
 } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 interface TeamMemberPageProps {
   params: Promise<{

@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-
 import type { CollectiveStats, TeamMember } from '@clarus-vitae/types';
 import {
   ContactAdvisorCTA,
@@ -7,6 +5,7 @@ import {
   TeamHero,
   TrustStatement,
 } from '@clarus-vitae/ui';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Our Advisory Team | Clarus Vitae',
