@@ -75,30 +75,53 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   // Fetch author from PostgreSQL if we have an authorId
-  let author = null;
+  let author: {
+    id: string;
+    slug: string;
+    name: string;
+    title: string | null;
+    imageUrl: string | null;
+    credentials: string[];
+  } | null = null;
   if (article.authorId) {
     try {
-      author = await prisma.teamMember.findUnique({
+      const authorData = await prisma.teamMember.findUnique({
         where: { id: article.authorId },
         select: {
           id: true,
           slug: true,
           name: true,
           title: true,
-          imageUrl: true,
+          photoUrl: true,
           credentials: true,
         },
       });
+      if (authorData) {
+        author = {
+          ...authorData,
+          imageUrl: authorData.photoUrl,
+        };
+      }
     } catch {
       // Author fetch failed, continue without author
     }
   }
 
   // Fetch related properties from PostgreSQL
-  let relatedProperties = [];
+  interface RelatedProperty {
+    id: string;
+    slug: string;
+    name: string;
+    country: string;
+    city: string | null;
+    tier: number;
+    heroImageUrl: string | null;
+    propertyScore: { overallScore: number } | null;
+  }
+  let relatedProperties: RelatedProperty[] = [];
   if (article.relatedProperties?.length) {
     try {
-      relatedProperties = await prisma.property.findMany({
+      const propertyData = await prisma.property.findMany({
         where: {
           slug: { in: article.relatedProperties },
         },
@@ -109,14 +132,39 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           country: true,
           city: true,
           tier: true,
-          heroImageUrl: true,
-          propertyScore: {
-            select: {
-              overallScore: true,
-            },
+          overallScore: true,
+          images: {
+            where: { isFeatured: true },
+            select: { url: true },
+            take: 1,
           },
         },
       });
+      // Map to expected interface
+      const tierToNumber: Record<string, number> = {
+        TIER_1: 1,
+        TIER_2: 2,
+        TIER_3: 3,
+      };
+      relatedProperties = propertyData.map((p: {
+        id: string;
+        slug: string;
+        name: string;
+        country: string;
+        city: string | null;
+        tier: string;
+        overallScore: number | null;
+        images: { url: string }[];
+      }) => ({
+        id: p.id,
+        slug: p.slug,
+        name: p.name,
+        country: p.country,
+        city: p.city,
+        tier: tierToNumber[p.tier] || 3,
+        heroImageUrl: p.images[0]?.url || null,
+        propertyScore: p.overallScore ? { overallScore: p.overallScore } : null,
+      }));
     } catch {
       // Properties fetch failed, continue without related properties
     }
