@@ -56,13 +56,13 @@ function buildWhereClause(params: DiagnosticsQueryParams) {
 function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
-      return { name: 'asc' };
+      return { name: 'asc' as const };
     case 'properties_desc':
-      return { properties: { _count: 'desc' } };
+      return { properties: { _count: 'desc' as const } };
     case 'category':
-      return [{ category: 'asc' }, { name: 'asc' }];
+      return [{ category: 'asc' as const }, { name: 'asc' as const }];
     default:
-      return { name: 'asc' };
+      return { name: 'asc' as const };
   }
 }
 

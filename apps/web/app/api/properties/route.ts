@@ -105,19 +105,19 @@ function buildWhereClause(params: PropertiesQueryParams) {
 function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'score_desc':
-      return { overallScore: 'desc' };
+      return { overallScore: 'desc' as const };
     case 'score_asc':
-      return { overallScore: 'asc' };
+      return { overallScore: 'asc' as const };
     case 'price_asc':
-      return { priceMin: 'asc' };
+      return { priceMin: 'asc' as const };
     case 'price_desc':
-      return { priceMax: 'desc' };
+      return { priceMax: 'desc' as const };
     case 'newest':
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
     case 'reviews':
-      return { reviews: { _count: 'desc' } };
+      return { reviews: { _count: 'desc' as const } };
     default:
-      return { overallScore: 'desc' };
+      return { overallScore: 'desc' as const };
   }
 }
 

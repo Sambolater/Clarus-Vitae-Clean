@@ -87,18 +87,18 @@ const evidenceLevelOrder: Record<EvidenceLevel, number> = {
 function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
-      return { name: 'asc' };
+      return { name: 'asc' as const };
     case 'properties_desc':
-      return { properties: { _count: 'desc' } };
+      return { properties: { _count: 'desc' as const } };
     case 'evidence_desc':
       // Sort by evidence level strength - we'll handle this specially
-      return { evidenceLevel: 'asc' };
+      return { evidenceLevel: 'asc' as const };
     case 'price_asc':
-      return { priceRangeMin: 'asc' };
+      return { priceRangeMin: 'asc' as const };
     case 'price_desc':
-      return { priceRangeMax: 'desc' };
+      return { priceRangeMax: 'desc' as const };
     default:
-      return { name: 'asc' };
+      return { name: 'asc' as const };
   }
 }
 

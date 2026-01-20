@@ -42,17 +42,17 @@ function parseQueryParams(request: NextRequest): ReviewsQueryParams {
 function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'newest':
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
     case 'oldest':
-      return { createdAt: 'asc' };
+      return { createdAt: 'asc' as const };
     case 'highest':
-      return { overallRating: 'desc' };
+      return { overallRating: 'desc' as const };
     case 'lowest':
-      return { overallRating: 'asc' };
+      return { overallRating: 'asc' as const };
     case 'helpful':
-      return { helpfulCount: 'desc' };
+      return { helpfulCount: 'desc' as const };
     default:
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
   }
 }
 
