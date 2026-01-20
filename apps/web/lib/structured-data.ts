@@ -4,7 +4,7 @@
  * Generates schema.org compliant structured data for various page types.
  */
 
-import { PropertyTier } from '@clarus-vitae/database';
+import { type PropertyTier } from '@clarus-vitae/database';
 
 interface PropertyStructuredDataInput {
   name: string;

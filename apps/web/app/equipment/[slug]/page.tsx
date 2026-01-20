@@ -1,10 +1,11 @@
+import { db, type EquipmentCategory, type TreatmentCategory } from '@clarus-vitae/database';
+import { Container, Breadcrumbs, PropertyCard, TreatmentCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { db } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, PropertyCard, TreatmentCard } from '@clarus-vitae/ui';
-import { equipmentCategoryLabels, treatmentCategoryLabels, medicalDisclaimer } from '@/lib/treatments';
+
 import { formatPriceRange } from '@/lib/properties';
+import { equipmentCategoryLabels, treatmentCategoryLabels } from '@/lib/treatments';
 
 interface EquipmentPageProps {
   params: Promise<{ slug: string }>;
@@ -102,8 +103,8 @@ export async function generateMetadata({ params }: EquipmentPageProps): Promise<
   }
 
   const { equipment } = data;
-  const categoryLabel = equipmentCategoryLabels[equipment.category];
-  const propertiesCount = equipment.properties.filter((p) => p.property?.published).length;
+  const _categoryLabel = equipmentCategoryLabels[equipment.category as EquipmentCategory];
+  const propertiesCount = equipment.properties.filter((p: any) => p.property?.published).length;
   const brandModel = [equipment.brand, equipment.model].filter(Boolean).join(' ');
 
   return {
@@ -128,8 +129,8 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
   const { equipment, relatedEquipment } = data;
 
   const publishedProperties = equipment.properties
-    .filter((pe) => pe.property?.published)
-    .map((pe) => ({
+    .filter((pe: any) => pe.property?.published)
+    .map((pe: any) => ({
       id: pe.property.id,
       slug: pe.property.slug,
       name: pe.property.name,
@@ -151,8 +152,8 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
     }));
 
   const publishedTreatments = equipment.treatments
-    .filter((te) => te.treatment?.published)
-    .map((te) => ({
+    .filter((te: any) => te.treatment?.published)
+    .map((te: any) => ({
       id: te.treatment.id,
       slug: te.treatment.slug,
       name: te.treatment.name,
@@ -184,7 +185,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
       <section className="border-b border-stone bg-white py-12">
         <div className="mx-auto max-w-4xl px-6">
           <span className="inline-flex items-center rounded-full bg-stone px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate">
-            {equipmentCategoryLabels[equipment.category]}
+            {equipmentCategoryLabels[equipment.category as EquipmentCategory]}
           </span>
 
           <h1 className="mt-4 font-display text-4xl font-medium text-clarus-navy md:text-5xl">
@@ -241,7 +242,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
               <section>
                 <h2 className="font-display text-2xl font-medium text-clarus-navy">Capabilities</h2>
                 <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                  {equipment.capabilities.map((capability, index) => (
+                  {equipment.capabilities.map((capability: any, index: any) => (
                     <li
                       key={index}
                       className="flex items-start gap-2 rounded-lg border border-stone bg-white p-4"
@@ -273,11 +274,11 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
               Treatments Using This Equipment
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {publishedTreatments.map((treatment) => (
+              {publishedTreatments.map((treatment: any) => (
                 <Link key={treatment.id} href={`/treatments/${treatment.slug}`}>
                   <TreatmentCard
                     name={treatment.name}
-                    category={treatmentCategoryLabels[treatment.category]}
+                    category={treatmentCategoryLabels[treatment.category as TreatmentCategory] ?? 'Treatment'}
                     evidenceLevel={treatment.evidenceLevel}
                     description={treatment.description.substring(0, 100) + '...'}
                     propertiesCount={treatment.propertiesCount}
@@ -301,7 +302,7 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
 
           {publishedProperties.length > 0 ? (
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {publishedProperties.slice(0, 6).map((property) => (
+              {publishedProperties.slice(0, 6).map((property: any) => (
                 <Link key={property.id} href={`/properties/${property.slug}`}>
                   <PropertyCard
                     name={property.name}
@@ -338,18 +339,18 @@ export default async function EquipmentPage({ params }: EquipmentPageProps) {
               Related Equipment
             </h2>
             <p className="mt-2 text-slate">
-              Other {equipmentCategoryLabels[equipment.category].toLowerCase()} equipment:
+              Other {(equipmentCategoryLabels[equipment.category as EquipmentCategory] ?? 'similar').toLowerCase()} equipment:
             </p>
 
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {relatedEquipment.map((re) => (
+              {relatedEquipment.map((re: any) => (
                 <Link
                   key={re.id}
                   href={`/equipment/${re.slug}`}
                   className="group rounded-lg border border-stone bg-white p-6 transition-shadow hover:shadow-card-hover"
                 >
                   <span className="text-xs font-medium uppercase tracking-wide text-slate">
-                    {equipmentCategoryLabels[re.category]}
+                    {equipmentCategoryLabels[re.category as EquipmentCategory]}
                   </span>
                   <h3 className="mt-1 font-medium text-clarus-navy group-hover:underline">
                     {re.name}

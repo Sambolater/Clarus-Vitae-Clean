@@ -5,8 +5,8 @@
  * filtering by verified status and sorting options.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, Prisma } from '@clarus-vitae/database';
+import { db } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,20 +39,20 @@ function parseQueryParams(request: NextRequest): ReviewsQueryParams {
   };
 }
 
-function buildOrderBy(sort: SortOption): Prisma.ReviewOrderByWithRelationInput {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'newest':
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
     case 'oldest':
-      return { createdAt: 'asc' };
+      return { createdAt: 'asc' as const };
     case 'highest':
-      return { overallRating: 'desc' };
+      return { overallRating: 'desc' as const };
     case 'lowest':
-      return { overallRating: 'asc' };
+      return { overallRating: 'asc' as const };
     case 'helpful':
-      return { helpfulCount: 'desc' };
+      return { helpfulCount: 'desc' as const };
     default:
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
   }
 }
 
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
 
     // Build where clause for reviews
-    const where: Prisma.ReviewWhereInput = {
+    const where: Record<string, unknown> = {
       propertyId: property.id,
       status: 'APPROVED',
     };
@@ -113,7 +113,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     ]);
 
     // Transform reviews for response
-    const transformedReviews = reviews.map((review) => ({
+    const transformedReviews = reviews.map((review: any) => ({
       id: review.id,
 
       // Reviewer info

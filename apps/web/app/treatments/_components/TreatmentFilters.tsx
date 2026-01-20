@@ -1,13 +1,14 @@
 'use client';
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import {
   FilterSidebar,
   Checkbox,
   RangeSlider,
 } from '@clarus-vitae/ui';
-import { TreatmentCategory, EvidenceLevel } from '@clarus-vitae/database';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
+
 import {
   treatmentCategoryLabels,
   evidenceLevelLabels,
@@ -110,7 +111,7 @@ export function TreatmentFilters() {
             <Checkbox
               key={category}
               id={`category-${category}`}
-              label={treatmentCategoryLabels[category]}
+              label={treatmentCategoryLabels[category] ?? category}
               checked={currentFilters.categories.includes(category)}
               onChange={() => toggleCategory(category)}
             />
@@ -128,7 +129,7 @@ export function TreatmentFilters() {
             <Checkbox
               key={level}
               id={`evidence-${level}`}
-              label={evidenceLevelLabels[level]}
+              label={evidenceLevelLabels[level] ?? level}
               checked={currentFilters.evidenceLevels.includes(level)}
               onChange={() => toggleEvidenceLevel(level)}
             />

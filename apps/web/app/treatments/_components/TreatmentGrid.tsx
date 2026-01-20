@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { TreatmentCard, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+import Link from 'next/link';
+
 import {
-  TreatmentListItem,
+  type TreatmentListItem,
   formatTreatmentPriceRange,
   treatmentCategoryLabels,
 } from '@/lib/treatments';
@@ -54,7 +55,7 @@ export function TreatmentGrid({ treatments, isLoading = false }: TreatmentGridPr
         <Link key={treatment.id} href={`/treatments/${treatment.slug}`}>
           <TreatmentCard
             name={treatment.name}
-            category={treatmentCategoryLabels[treatment.category]}
+            category={treatmentCategoryLabels[treatment.category] ?? 'Treatment'}
             evidenceLevel={treatment.evidenceLevel}
             description={treatment.description}
             propertiesCount={treatment.propertiesCount}

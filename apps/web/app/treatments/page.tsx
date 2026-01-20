@@ -1,16 +1,19 @@
+import { db, type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
+import { Container, LoadingSpinner, Breadcrumbs, Input } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { db, TreatmentCategory, EvidenceLevel } from '@clarus-vitae/database';
-import { Container, LoadingSpinner, Breadcrumbs, Input } from '@clarus-vitae/ui';
-import { TreatmentFilters } from './_components/TreatmentFilters';
-import { TreatmentGrid } from './_components/TreatmentGrid';
-import { CategoryNav } from './_components/CategoryNav';
-import { TreatmentSortAndPagination } from './_components/TreatmentSortAndPagination';
+
 import {
   type TreatmentListItem,
   type TreatmentsResponse,
-  TreatmentSortOption,
+  type TreatmentSortOption,
 } from '@/lib/treatments';
+
+import { CategoryNav } from './_components/CategoryNav';
+import { TreatmentFilters } from './_components/TreatmentFilters';
+import { TreatmentGrid } from './_components/TreatmentGrid';
+import { TreatmentSortAndPagination } from './_components/TreatmentSortAndPagination';
+
 
 export const metadata: Metadata = {
   title: 'Treatments & Therapies Database | Clarus Vitae',
@@ -143,7 +146,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
   ]);
 
   // Transform the response
-  let transformedTreatments: TreatmentListItem[] = treatments.map((treatment) => ({
+  let transformedTreatments: TreatmentListItem[] = treatments.map((treatment: any) => ({
     id: treatment.id,
     slug: treatment.slug,
     name: treatment.name,
@@ -160,7 +163,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
   // Sort by evidence level if needed
   if (sort === 'evidence_desc') {
     transformedTreatments = transformedTreatments.sort(
-      (a, b) => evidenceLevelOrder[b.evidenceLevel] - evidenceLevelOrder[a.evidenceLevel]
+      (a, b) => (evidenceLevelOrder[b.evidenceLevel] ?? 0) - (evidenceLevelOrder[a.evidenceLevel] ?? 0)
     );
   }
 

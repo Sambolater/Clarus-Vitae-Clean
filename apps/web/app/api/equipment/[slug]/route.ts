@@ -4,8 +4,8 @@
  * Retrieves a single equipment item by slug with full details.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -104,8 +104,8 @@ export async function GET(
       description: equipment.description,
       capabilities: equipment.capabilities,
       treatments: equipment.treatments
-        .filter((te) => te.treatment?.published)
-        .map((te) => ({
+        .filter((te: any) => te.treatment?.published)
+        .map((te: any) => ({
           id: te.treatment.id,
           slug: te.treatment.slug,
           name: te.treatment.name,
@@ -114,8 +114,8 @@ export async function GET(
           description: te.treatment.description.substring(0, 100) + '...',
         })),
       properties: equipment.properties
-        .filter((pe) => pe.property?.published)
-        .map((pe) => ({
+        .filter((pe: any) => pe.property?.published)
+        .map((pe: any) => ({
           id: pe.property.id,
           slug: pe.property.slug,
           name: pe.property.name,
@@ -135,7 +135,7 @@ export async function GET(
           notes: pe.notes,
           featuredImage: pe.property.images[0] || null,
         })),
-      relatedEquipment: relatedEquipment.map((re) => ({
+      relatedEquipment: relatedEquipment.map((re: any) => ({
         id: re.id,
         slug: re.slug,
         name: re.name,
@@ -145,8 +145,8 @@ export async function GET(
         description: re.description.substring(0, 100) + '...',
         propertiesCount: re._count.properties,
       })),
-      treatmentsCount: equipment.treatments.filter((te) => te.treatment?.published).length,
-      propertiesCount: equipment.properties.filter((pe) => pe.property?.published).length,
+      treatmentsCount: equipment.treatments.filter((te: any) => te.treatment?.published).length,
+      propertiesCount: equipment.properties.filter((pe: any) => pe.property?.published).length,
     };
 
     return NextResponse.json(transformedEquipment);

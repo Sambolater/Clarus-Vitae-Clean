@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { TreatmentCategory, EvidenceLevel } from '@clarus-vitae/database';
+import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
 import { TreatmentCard } from '@clarus-vitae/ui';
+import Link from 'next/link';
+
 import { treatmentCategoryLabels } from '@/lib/treatments';
 
 interface RelatedTreatment {
@@ -38,7 +39,7 @@ export function RelatedTreatments({ treatments, currentTreatmentName }: RelatedT
             <Link key={treatment.id} href={`/treatments/${treatment.slug}`}>
               <TreatmentCard
                 name={treatment.name}
-                category={treatmentCategoryLabels[treatment.category]}
+                category={treatmentCategoryLabels[treatment.category] ?? 'Treatment'}
                 evidenceLevel={treatment.evidenceLevel}
                 description={treatment.description}
                 propertiesCount={treatment.propertiesCount}
@@ -52,10 +53,10 @@ export function RelatedTreatments({ treatments, currentTreatmentName }: RelatedT
         {treatments.length > 0 && (
           <div className="mt-8 text-center">
             <Link
-              href={`/treatments?category=${treatments[0].category}`}
+              href={`/treatments?category=${treatments[0]?.category ?? ''}`}
               className="inline-flex items-center gap-2 text-sm font-medium text-clarus-navy hover:underline"
             >
-              View all {treatmentCategoryLabels[treatments[0].category]} treatments
+              View all {(treatments[0]?.category ? treatmentCategoryLabels[treatments[0].category] : null) ?? 'related'} treatments
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"

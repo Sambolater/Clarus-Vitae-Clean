@@ -5,8 +5,8 @@
  * All filters are applied via query parameters.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, PropertyTier, WellnessApproach, FocusArea, Prisma } from '@clarus-vitae/database';
+import { db, type PropertyTier, type WellnessApproach, type FocusArea } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -54,8 +54,8 @@ function parseQueryParams(request: NextRequest): PropertiesQueryParams {
   };
 }
 
-function buildWhereClause(params: PropertiesQueryParams): Prisma.PropertyWhereInput {
-  const where: Prisma.PropertyWhereInput = {
+function buildWhereClause(params: PropertiesQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -102,22 +102,22 @@ function buildWhereClause(params: PropertiesQueryParams): Prisma.PropertyWhereIn
   return where;
 }
 
-function buildOrderBy(sort: SortOption): Prisma.PropertyOrderByWithRelationInput {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'score_desc':
-      return { overallScore: 'desc' };
+      return { overallScore: 'desc' as const };
     case 'score_asc':
-      return { overallScore: 'asc' };
+      return { overallScore: 'asc' as const };
     case 'price_asc':
-      return { priceMin: 'asc' };
+      return { priceMin: 'asc' as const };
     case 'price_desc':
-      return { priceMax: 'desc' };
+      return { priceMax: 'desc' as const };
     case 'newest':
-      return { createdAt: 'desc' };
+      return { createdAt: 'desc' as const };
     case 'reviews':
-      return { reviews: { _count: 'desc' } };
+      return { reviews: { _count: 'desc' as const } };
     default:
-      return { overallScore: 'desc' };
+      return { overallScore: 'desc' as const };
   }
 }
 
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Transform the response
-    const transformedProperties = properties.map((property) => ({
+    const transformedProperties = properties.map((property: any) => ({
       id: property.id,
       slug: property.slug,
       name: property.name,

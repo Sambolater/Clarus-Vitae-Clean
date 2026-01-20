@@ -4,8 +4,8 @@
  * Retrieves a paginated list of diagnostics with optional filtering.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, DiagnosticCategory, Prisma } from '@clarus-vitae/database';
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -34,8 +34,8 @@ function parseQueryParams(request: NextRequest): DiagnosticsQueryParams {
   };
 }
 
-function buildWhereClause(params: DiagnosticsQueryParams): Prisma.DiagnosticWhereInput {
-  const where: Prisma.DiagnosticWhereInput = {
+function buildWhereClause(params: DiagnosticsQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -53,16 +53,16 @@ function buildWhereClause(params: DiagnosticsQueryParams): Prisma.DiagnosticWher
   return where;
 }
 
-function buildOrderBy(sort: SortOption): Prisma.DiagnosticOrderByWithRelationInput | Prisma.DiagnosticOrderByWithRelationInput[] {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
-      return { name: 'asc' };
+      return { name: 'asc' as const };
     case 'properties_desc':
-      return { properties: { _count: 'desc' } };
+      return { properties: { _count: 'desc' as const } };
     case 'category':
-      return [{ category: 'asc' }, { name: 'asc' }];
+      return [{ category: 'asc' as const }, { name: 'asc' as const }];
     default:
-      return { name: 'asc' };
+      return { name: 'asc' as const };
   }
 }
 
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
-    const transformedDiagnostics = diagnostics.map((diagnostic) => ({
+    const transformedDiagnostics = diagnostics.map((diagnostic: any) => ({
       id: diagnostic.id,
       slug: diagnostic.slug,
       name: diagnostic.name,

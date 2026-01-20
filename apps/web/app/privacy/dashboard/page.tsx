@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 /**
  * Privacy Dashboard Page
@@ -169,7 +169,7 @@ export default function PrivacyDashboardPage() {
               Access Your Data
             </h2>
             <p className="mt-2 text-sm text-slate">
-              Enter the email address you've used with Clarus Vitae. We'll send you
+              Enter the email address you&apos;ve used with Clarus Vitae. We&apos;ll send you
               a verification code to access your data.
             </p>
 
@@ -307,12 +307,12 @@ export default function PrivacyDashboardPage() {
               Deletion Request Received
             </h2>
             <p className="mt-2 text-slate">
-              We've received your request to delete all your data. Your data will be
+              We&apos;ve received your request to delete all your data. Your data will be
               removed from our active systems within 7 days and from backups within
               30 days.
             </p>
             <p className="mt-4 text-sm text-slate">
-              You'll receive a confirmation email when the deletion is complete.
+              You&apos;ll receive a confirmation email when the deletion is complete.
             </p>
             <Link
               href="/"
@@ -335,7 +335,7 @@ export default function PrivacyDashboardPage() {
             Your Data
           </h1>
           <p className="mt-4 text-lg text-white/80">
-            Here's everything we have stored about you.
+            Here&apos;s everything we have stored about you.
           </p>
         </div>
       </section>

@@ -28,8 +28,12 @@ function hasAnalyticsConsent(): boolean {
   try {
     const cookies = document.cookie.split(';').reduce(
       (acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
+        const parts = cookie.trim().split('=');
+        const key = parts[0];
+        const value = parts[1];
+        if (key) {
+          acc[key] = value ?? '';
+        }
         return acc;
       },
       {} as Record<string, string>

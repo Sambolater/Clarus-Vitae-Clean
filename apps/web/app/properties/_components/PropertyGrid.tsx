@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { PropertyCard, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
-import { PropertyListItem, formatPriceRange, focusAreaLabels } from '@/lib/properties';
+import Link from 'next/link';
+
+import { type PropertyListItem, formatPriceRange, focusAreaLabels } from '@/lib/properties';
 
 interface PropertyGridProps {
   properties: PropertyListItem[];
@@ -60,7 +61,7 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
               property.pricing.max,
               property.pricing.currency
             )}
-            focusAreas={property.focusAreas.slice(0, 3).map((area) => focusAreaLabels[area])}
+            focusAreas={property.focusAreas.slice(0, 3).map((area) => focusAreaLabels[area] ?? area).filter(Boolean) as string[]}
             href={`/properties/${property.slug}`}
           />
         </Link>

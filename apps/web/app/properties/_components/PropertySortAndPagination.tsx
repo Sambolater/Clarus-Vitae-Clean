@@ -1,8 +1,9 @@
 'use client';
 
+import { Select, Button } from '@clarus-vitae/ui';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { Select, Button } from '@clarus-vitae/ui';
+
 import { sortOptions } from '@/lib/properties';
 
 interface SortControlProps {

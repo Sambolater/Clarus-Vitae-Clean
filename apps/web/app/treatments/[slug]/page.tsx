@@ -1,7 +1,14 @@
+import { db, type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
+import { Container, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { db } from '@clarus-vitae/database';
-import { Container, Breadcrumbs } from '@clarus-vitae/ui';
+
+import {
+  treatmentCategoryLabels,
+  evidenceLevelLabels,
+  medicalDisclaimer,
+} from '@/lib/treatments';
+
 import {
   TreatmentHero,
   TreatmentInfoSections,
@@ -9,11 +16,6 @@ import {
   EquipmentSection,
   RelatedTreatments,
 } from './_components';
-import {
-  treatmentCategoryLabels,
-  evidenceLevelLabels,
-  medicalDisclaimer,
-} from '@/lib/treatments';
 
 interface TreatmentPageProps {
   params: Promise<{ slug: string }>;
@@ -111,9 +113,8 @@ export async function generateMetadata({ params }: TreatmentPageProps): Promise<
   }
 
   const { treatment } = data;
-  const categoryLabel = treatmentCategoryLabels[treatment.category];
-  const evidenceLabel = evidenceLevelLabels[treatment.evidenceLevel];
-  const propertiesCount = treatment.properties.filter((p) => p.property?.published).length;
+  const evidenceLabel = evidenceLevelLabels[treatment.evidenceLevel as EvidenceLevel];
+  const propertiesCount = treatment.properties.filter((p: any) => p.property?.published).length;
 
   return {
     title: `${treatment.name}: What It Is, Evidence & Where To Get It | Clarus Vitae`,
@@ -138,8 +139,8 @@ export default async function TreatmentPage({ params }: TreatmentPageProps) {
 
   // Filter to only published properties
   const publishedProperties = treatment.properties
-    .filter((pt) => pt.property?.published)
-    .map((pt) => ({
+    .filter((pt: any) => pt.property?.published)
+    .map((pt: any) => ({
       id: pt.property.id,
       slug: pt.property.slug,
       name: pt.property.name,
@@ -160,7 +161,7 @@ export default async function TreatmentPage({ params }: TreatmentPageProps) {
       featuredImage: pt.property.images[0] || null,
     }));
 
-  const transformedRelated = relatedTreatments.map((rt) => ({
+  const transformedRelated = relatedTreatments.map((rt: any) => ({
     id: rt.id,
     slug: rt.slug,
     name: rt.name,
@@ -173,7 +174,7 @@ export default async function TreatmentPage({ params }: TreatmentPageProps) {
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Treatments', href: '/treatments' },
-    { label: treatmentCategoryLabels[treatment.category], href: `/treatments?category=${treatment.category}` },
+    { label: treatmentCategoryLabels[treatment.category as TreatmentCategory], href: `/treatments?category=${treatment.category}` },
     { label: treatment.name, href: `/treatments/${slug}` },
   ];
 
@@ -224,7 +225,7 @@ export default async function TreatmentPage({ params }: TreatmentPageProps) {
         {treatment.equipment.length > 0 && (
           <div className="mx-auto max-w-4xl border-t border-stone">
             <EquipmentSection
-              equipment={treatment.equipment.map((te) => ({
+              equipment={treatment.equipment.map((te: any) => ({
                 id: te.equipment.id,
                 slug: te.equipment.slug,
                 name: te.equipment.name,

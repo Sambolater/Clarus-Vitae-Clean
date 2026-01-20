@@ -58,6 +58,8 @@ jobs:
 
       - name: Generate Prisma Client
         run: pnpm db:generate
+        env:
+          DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
 
       - name: Run type check
         run: pnpm type-check
@@ -86,9 +88,12 @@ jobs:
 
       - name: Generate Prisma Client
         run: pnpm db:generate
+        env:
+          DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
 
       - name: Build
         run: pnpm build
         env:
           NEXT_PUBLIC_APP_URL: https://clarusvitae.com
           NEXT_PUBLIC_ENABLE_RESEARCH_MODE: 'true'
+# CI Trigger

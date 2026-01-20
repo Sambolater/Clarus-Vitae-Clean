@@ -1,7 +1,8 @@
 'use client';
 
+import { type EvidenceLevel, type TreatmentCategory } from '@clarus-vitae/database';
 import { cn } from '@clarus-vitae/utils';
-import { EvidenceLevel, TreatmentCategory } from '@clarus-vitae/database';
+
 import {
   evidenceLevelConfig,
   evidenceLevelDescriptions,
@@ -30,7 +31,7 @@ export function TreatmentHero({
   priceRangeMax,
   aliases,
 }: TreatmentHeroProps) {
-  const evidence = evidenceLevelConfig[evidenceLevel];
+  const evidence = evidenceLevelConfig[evidenceLevel]!;
 
   return (
     <section className="border-b border-stone bg-white py-12">

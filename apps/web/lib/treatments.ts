@@ -2,7 +2,7 @@
  * Treatment-related utility functions and types
  */
 
-import { TreatmentCategory, EvidenceLevel, DiagnosticCategory, EquipmentCategory } from '@clarus-vitae/database';
+import { type TreatmentCategory, type EvidenceLevel, type DiagnosticCategory, type EquipmentCategory } from '@clarus-vitae/database';
 
 // Category labels for display
 export const treatmentCategoryLabels: Record<TreatmentCategory, string> = {

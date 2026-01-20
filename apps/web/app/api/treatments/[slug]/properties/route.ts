@@ -5,8 +5,8 @@
  * Supports filtering by country, tier, and price range.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, PropertyTier, Prisma } from '@clarus-vitae/database';
+import { db, type PropertyTier } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -57,7 +57,7 @@ export async function GET(
     }
 
     // Build property filter conditions
-    const propertyWhere: Prisma.PropertyWhereInput = {
+    const propertyWhere: Record<string, unknown> = {
       published: true,
     };
 
@@ -135,7 +135,7 @@ export async function GET(
     ]);
 
     // Transform the response
-    const transformedProperties = propertyTreatments.map((pt) => ({
+    const transformedProperties = propertyTreatments.map((pt: any) => ({
       id: pt.property.id,
       slug: pt.property.slug,
       name: pt.property.name,

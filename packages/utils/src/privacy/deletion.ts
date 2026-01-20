@@ -180,10 +180,11 @@ export function createDeletionResult(
   }
 ): DeletionResult {
   const requestId = generateDeletionRequestId();
-  const totalItems = Object.values(itemCounts).reduce((sum, val) => {
-    if (typeof val === 'number') return sum + val;
-    return sum;
-  }, 0);
+  const totalItems =
+    itemCounts.inquiries +
+    itemCounts.reviews +
+    itemCounts.comparisons +
+    itemCounts.savedProperties;
 
   const needsVerification = !request.userId && !request.verificationCode;
   const verificationToken = needsVerification

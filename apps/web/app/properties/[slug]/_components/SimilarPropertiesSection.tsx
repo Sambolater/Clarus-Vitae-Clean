@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import { type PropertyTier } from '@clarus-vitae/database';
+import { ClarusIndexBadge, TierBadge } from '@clarus-vitae/ui';
 import Image from 'next/image';
-import { ClarusIndexBadge, TierBadge, Button } from '@clarus-vitae/ui';
-import { PropertyTier } from '@clarus-vitae/database';
+import Link from 'next/link';
+
 import { formatPriceRange } from '@/lib/properties';
 
 interface SimilarProperty {
@@ -53,9 +54,12 @@ export function SimilarPropertiesSection({
               Based on tier, location, and focus areas
             </p>
           </div>
-          <Button variant="secondary" size="sm" href={compareUrl}>
+          <Link
+            href={compareUrl}
+            className="inline-flex h-9 items-center justify-center rounded-md border border-clarus-navy bg-transparent px-4 text-sm font-medium text-clarus-navy transition-colors hover:bg-stone"
+          >
             Compare These
-          </Button>
+          </Link>
         </div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

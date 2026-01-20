@@ -1,6 +1,6 @@
 'use client';
 
-import { DiscretionLevel } from '@clarus-vitae/database';
+import { type DiscretionLevel } from '@clarus-vitae/database';
 
 interface DarkData {
   physicianPatientRatio: string | null;
@@ -105,7 +105,7 @@ export function PropertyDarkDataSection({ darkData }: PropertyDarkDataSectionPro
           {darkData.discretionLevel && (
             <DataPoint
               label="Discretion Level"
-              value={discretionLabels[darkData.discretionLevel]}
+              value={discretionLabels[darkData.discretionLevel] ?? null}
               description="Privacy and confidentiality protocols in place"
             />
           )}

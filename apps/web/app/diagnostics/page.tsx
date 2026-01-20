@@ -1,7 +1,8 @@
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
+import { Container, Breadcrumbs, EmptyState } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { db, DiagnosticCategory } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, EmptyState, SkeletonCard } from '@clarus-vitae/ui';
+
 import { diagnosticCategoryLabels } from '@/lib/treatments';
 
 export const metadata: Metadata = {
@@ -63,7 +64,7 @@ async function getDiagnostics(searchParams: SearchParams) {
   const totalPages = Math.ceil(totalCount / limit);
 
   return {
-    diagnostics: diagnostics.map((d) => ({
+    diagnostics: diagnostics.map((d: any) => ({
       ...d,
       propertiesCount: d._count.properties,
     })),
@@ -170,14 +171,14 @@ export default async function DiagnosticsPage({ searchParams }: DiagnosticsPageP
             />
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {diagnostics.map((diagnostic) => (
+              {diagnostics.map((diagnostic: any) => (
                 <Link
                   key={diagnostic.id}
                   href={`/diagnostics/${diagnostic.slug}`}
                   className="group rounded-lg border border-stone bg-white p-6 transition-shadow hover:shadow-card-hover"
                 >
                   <span className="text-xs font-medium uppercase tracking-wide text-slate">
-                    {diagnosticCategoryLabels[diagnostic.category]}
+                    {diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory]}
                   </span>
                   <h3 className="mt-2 font-display text-lg font-medium text-clarus-navy group-hover:underline">
                     {diagnostic.name}

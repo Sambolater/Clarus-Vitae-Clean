@@ -5,8 +5,8 @@
  * properties that offer this treatment and related equipment.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -119,8 +119,8 @@ export async function GET(
       potentialRisks: treatment.potentialRisks,
       contraindications: treatment.contraindications,
       properties: treatment.properties
-        .filter((pt) => pt.property)
-        .map((pt) => ({
+        .filter((pt: any) => pt.property)
+        .map((pt: any) => ({
           id: pt.property.id,
           slug: pt.property.slug,
           name: pt.property.name,
@@ -140,7 +140,7 @@ export async function GET(
           notes: pt.notes,
           featuredImage: pt.property.images[0] || null,
         })),
-      equipment: treatment.equipment.map((te) => ({
+      equipment: treatment.equipment.map((te: any) => ({
         id: te.equipment.id,
         slug: te.equipment.slug,
         name: te.equipment.name,
@@ -149,7 +149,7 @@ export async function GET(
         category: te.equipment.category,
         description: te.equipment.description.substring(0, 150) + '...',
       })),
-      relatedTreatments: relatedTreatments.map((rt) => ({
+      relatedTreatments: relatedTreatments.map((rt: any) => ({
         id: rt.id,
         slug: rt.slug,
         name: rt.name,

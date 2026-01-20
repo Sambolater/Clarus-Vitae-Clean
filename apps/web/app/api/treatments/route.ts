@@ -5,8 +5,8 @@
  * Supports filtering by category, evidence level, price range, and search.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { db, TreatmentCategory, EvidenceLevel, Prisma } from '@clarus-vitae/database';
+import { db, type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // ISR: 1 hour
@@ -43,8 +43,8 @@ function parseQueryParams(request: NextRequest): TreatmentsQueryParams {
   };
 }
 
-function buildWhereClause(params: TreatmentsQueryParams): Prisma.TreatmentWhereInput {
-  const where: Prisma.TreatmentWhereInput = {
+function buildWhereClause(params: TreatmentsQueryParams) {
+  const where: Record<string, unknown> = {
     published: true,
   };
 
@@ -84,21 +84,21 @@ const evidenceLevelOrder: Record<EvidenceLevel, number> = {
   TRADITIONAL: 1,
 };
 
-function buildOrderBy(sort: SortOption): Prisma.TreatmentOrderByWithRelationInput | Prisma.TreatmentOrderByWithRelationInput[] {
+function buildOrderBy(sort: SortOption) {
   switch (sort) {
     case 'alphabetical':
-      return { name: 'asc' };
+      return { name: 'asc' as const };
     case 'properties_desc':
-      return { properties: { _count: 'desc' } };
+      return { properties: { _count: 'desc' as const } };
     case 'evidence_desc':
       // Sort by evidence level strength - we'll handle this specially
-      return { evidenceLevel: 'asc' };
+      return { evidenceLevel: 'asc' as const };
     case 'price_asc':
-      return { priceRangeMin: 'asc' };
+      return { priceRangeMin: 'asc' as const };
     case 'price_desc':
-      return { priceRangeMax: 'desc' };
+      return { priceRangeMax: 'desc' as const };
     default:
-      return { name: 'asc' };
+      return { name: 'asc' as const };
   }
 }
 
@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Transform and potentially re-sort if evidence level sort
-    let transformedTreatments = treatments.map((treatment) => ({
+    let transformedTreatments = treatments.map((treatment: any) => ({
       id: treatment.id,
       slug: treatment.slug,
       name: treatment.name,
@@ -152,7 +152,8 @@ export async function GET(request: NextRequest) {
     // Re-sort for evidence level (since Prisma can't sort by enum value directly)
     if (params.sort === 'evidence_desc') {
       transformedTreatments = transformedTreatments.sort(
-        (a, b) => evidenceLevelOrder[b.evidenceLevel] - evidenceLevelOrder[a.evidenceLevel]
+        (a: { evidenceLevel: EvidenceLevel }, b: { evidenceLevel: EvidenceLevel }) =>
+          (evidenceLevelOrder[b.evidenceLevel] ?? 0) - (evidenceLevelOrder[a.evidenceLevel] ?? 0)
       );
     }
 

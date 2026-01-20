@@ -27,7 +27,7 @@ export interface ComparisonTableProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const ComparisonTable = forwardRef<HTMLDivElement, ComparisonTableProps>(
   ({ items, rows, onRemoveItem, emptySlots = 0, onAddItem, className, ...props }, ref) => {
-    const totalSlots = items.length + emptySlots;
+    const _totalSlots = items.length + emptySlots;
 
     return (
       <div ref={ref} className={cn('overflow-x-auto', className)} {...props}>

@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { type TreatmentCategory, type EvidenceLevel as EvidenceLevelType, type DiagnosticCategory, type EquipmentCategory } from '@clarus-vitae/database';
 import { EvidenceLevel } from '@clarus-vitae/ui';
-import { TreatmentCategory, EvidenceLevel as EvidenceLevelType, DiagnosticCategory, EquipmentCategory } from '@clarus-vitae/database';
+import Link from 'next/link';
 
 interface Treatment {
   id: string;

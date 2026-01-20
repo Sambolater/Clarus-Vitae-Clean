@@ -1,8 +1,10 @@
 'use client';
 
+import { type FocusArea } from '@clarus-vitae/database';
+import { Button } from '@clarus-vitae/ui';
+import Link from 'next/link';
 import { useState } from 'react';
-import { Button, TierBadge } from '@clarus-vitae/ui';
-import { FocusArea } from '@clarus-vitae/database';
+
 import { focusAreaLabels } from '@/lib/properties';
 
 interface Program {
@@ -154,13 +156,12 @@ function ProgramCard({ program, propertySlug }: { program: Program; propertySlug
 
           {/* CTA */}
           <div className="flex gap-3">
-            <Button
-              variant="primary"
-              size="sm"
+            <Link
               href={`/inquire?property=${propertySlug}&program=${program.id}`}
+              className="inline-flex h-9 items-center justify-center rounded-md bg-clarus-navy px-4 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
             >
               Inquire About This Program
-            </Button>
+            </Link>
           </div>
         </div>
       )}

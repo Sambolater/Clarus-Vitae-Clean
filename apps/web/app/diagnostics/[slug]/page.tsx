@@ -1,10 +1,11 @@
+import { db, type DiagnosticCategory } from '@clarus-vitae/database';
+import { Container, Breadcrumbs, PropertyCard } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { db } from '@clarus-vitae/database';
-import { Container, Breadcrumbs, PropertyCard } from '@clarus-vitae/ui';
-import { diagnosticCategoryLabels, medicalDisclaimer } from '@/lib/treatments';
+
 import { formatPriceRange } from '@/lib/properties';
+import { diagnosticCategoryLabels, medicalDisclaimer } from '@/lib/treatments';
 
 interface DiagnosticPageProps {
   params: Promise<{ slug: string }>;
@@ -86,8 +87,8 @@ export async function generateMetadata({ params }: DiagnosticPageProps): Promise
   }
 
   const { diagnostic } = data;
-  const categoryLabel = diagnosticCategoryLabels[diagnostic.category];
-  const propertiesCount = diagnostic.properties.filter((p) => p.property?.published).length;
+  const _categoryLabel = diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory];
+  const propertiesCount = diagnostic.properties.filter((p: any) => p.property?.published).length;
 
   return {
     title: `${diagnostic.name}: What It Measures & Where To Get It | Clarus Vitae`,
@@ -111,8 +112,8 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
   const { diagnostic, relatedDiagnostics } = data;
 
   const publishedProperties = diagnostic.properties
-    .filter((pd) => pd.property?.published)
-    .map((pd) => ({
+    .filter((pd: any) => pd.property?.published)
+    .map((pd: any) => ({
       id: pd.property.id,
       slug: pd.property.slug,
       name: pd.property.name,
@@ -135,7 +136,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Diagnostics', href: '/diagnostics' },
-    { label: diagnosticCategoryLabels[diagnostic.category], href: `/diagnostics?category=${diagnostic.category}` },
+    { label: diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory], href: `/diagnostics?category=${diagnostic.category}` },
     { label: diagnostic.name, href: `/diagnostics/${slug}` },
   ];
 
@@ -152,7 +153,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
       <section className="border-b border-stone bg-white py-12">
         <div className="mx-auto max-w-4xl px-6">
           <span className="inline-flex items-center rounded-full bg-stone px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate">
-            {diagnosticCategoryLabels[diagnostic.category]}
+            {diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory]}
           </span>
 
           <h1 className="mt-4 font-display text-4xl font-medium text-clarus-navy md:text-5xl">
@@ -211,7 +212,7 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
 
           {publishedProperties.length > 0 ? (
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {publishedProperties.slice(0, 6).map((property) => (
+              {publishedProperties.slice(0, 6).map((property: any) => (
                 <Link key={property.id} href={`/properties/${property.slug}`}>
                   <PropertyCard
                     name={property.name}
@@ -248,11 +249,11 @@ export default async function DiagnosticPage({ params }: DiagnosticPageProps) {
               Related Diagnostics
             </h2>
             <p className="mt-2 text-slate">
-              Other {diagnosticCategoryLabels[diagnostic.category].toLowerCase()} diagnostics you might consider:
+              Other {(diagnosticCategoryLabels[diagnostic.category as DiagnosticCategory] ?? 'similar').toLowerCase()} diagnostics you might consider:
             </p>
 
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {relatedDiagnostics.map((rd) => (
+              {relatedDiagnostics.map((rd: any) => (
                 <Link
                   key={rd.id}
                   href={`/diagnostics/${rd.slug}`}

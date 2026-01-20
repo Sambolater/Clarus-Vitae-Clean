@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 /**
  * Privacy Data Deletion API
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
+    const _normalizedEmail = email.toLowerCase().trim();
 
     // Generate deletion request ID
     const requestId = `del_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
@@ -65,11 +65,11 @@ export async function POST(request: NextRequest) {
     // const emailHash = await hashEmail(normalizedEmail, emailPepper);
 
     // Count items to be deleted
-    let inquiryCount = 0;
-    let reviewCount = 0;
-    let comparisonCount = 0;
-    let savedCount = 0;
-    let hasAccount = false;
+    const inquiryCount = 0;
+    const reviewCount = 0;
+    const comparisonCount = 0;
+    const savedCount = 0;
+    const hasAccount = false;
 
     // TODO: Replace with actual database operations
     // 1. Soft delete inquiries

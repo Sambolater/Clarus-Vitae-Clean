@@ -1,5 +1,6 @@
 import { cn } from '@clarus-vitae/utils';
 import { type HTMLAttributes, forwardRef } from 'react';
+
 import { type PropertyRecognition, RecognitionBadges } from './RecognitionBadges';
 
 export type PropertyTier = 'medical_longevity' | 'integrated_wellness' | 'luxury_destination';

@@ -1,9 +1,10 @@
 'use client';
 
+import { Select, Button } from '@clarus-vitae/ui';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { Select, Button } from '@clarus-vitae/ui';
-import { treatmentSortOptions, TreatmentSortOption } from '@/lib/treatments';
+
+import { treatmentSortOptions, type TreatmentSortOption } from '@/lib/treatments';
 
 interface TreatmentSortAndPaginationProps {
   totalCount: number;

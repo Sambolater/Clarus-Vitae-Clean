@@ -1,6 +1,7 @@
+import { type FocusArea } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
-import { FocusArea } from '@clarus-vitae/database';
+
 import { focusAreaLabels } from '@/lib/properties';
 
 interface FocusAreaPageProps {

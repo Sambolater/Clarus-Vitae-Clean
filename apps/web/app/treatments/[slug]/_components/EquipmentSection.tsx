@@ -1,7 +1,8 @@
 'use client';
 
+import { type EquipmentCategory } from '@clarus-vitae/database';
 import Link from 'next/link';
-import { EquipmentCategory } from '@clarus-vitae/database';
+
 import { equipmentCategoryLabels } from '@/lib/treatments';
 
 interface Equipment {
