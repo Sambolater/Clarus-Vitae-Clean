@@ -2,6 +2,8 @@ import { db } from '@clarus-vitae/database';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 import { ReviewWriteClient } from './_components/ReviewWriteClient';
 
 export const metadata: Metadata = {

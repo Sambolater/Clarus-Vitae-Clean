@@ -39,6 +39,9 @@ packages/database/prisma/*.db-journal
 # Vercel
 .vercel
 
+# Sanity CMS
+.sanity
+
 # TypeScript
 *.tsbuildinfo
 

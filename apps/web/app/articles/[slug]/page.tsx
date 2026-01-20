@@ -20,6 +20,8 @@ import { ArticleHeader } from '../_components/ArticleHeader';
 import { RelatedArticles } from '../_components/RelatedArticles';
 import { RelatedProperties } from '../_components/RelatedProperties';
 
+export const dynamic = 'force-dynamic';
+
 interface ArticlePageProps {
   params: { slug: string };
 }

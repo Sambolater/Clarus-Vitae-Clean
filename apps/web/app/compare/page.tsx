@@ -2,6 +2,8 @@ import { db } from '@clarus-vitae/database';
 import { Container, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 import { ComparisonPageClient } from './_components/ComparisonPageClient';
 
 interface ComparePageProps {

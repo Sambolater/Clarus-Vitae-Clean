@@ -3,6 +3,8 @@ import { Container, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 
 import { JsonLd } from '@/components/JsonLd';
 import { tierLabels, focusAreaLabels } from '@/lib/properties';

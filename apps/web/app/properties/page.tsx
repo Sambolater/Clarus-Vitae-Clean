@@ -3,6 +3,8 @@ import { Container, LoadingSpinner, Breadcrumbs } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
 
 import { MobileFilterDrawer } from './_components/MobileFilterDrawer';

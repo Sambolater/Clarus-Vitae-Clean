@@ -3,6 +3,8 @@ import { Container } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 import { ArticleCategoryNav } from './_components/ArticleCategoryNav';
 import { ArticleGrid } from './_components/ArticleGrid';
 
