@@ -1,0 +1,20 @@
+# Clarus Vitae Code Owners
+# These owners will be the default owners for everything in the repo.
+
+# Global ownership
+* @clarus-vitae/core-team
+
+# Apps
+/apps/web/ @clarus-vitae/frontend-team
+
+# Packages
+/packages/database/ @clarus-vitae/backend-team
+/packages/ui/ @clarus-vitae/frontend-team
+/packages/config/ @clarus-vitae/core-team
+
+# Documentation
+/docs/ @clarus-vitae/core-team
+*.md @clarus-vitae/core-team
+
+# CI/CD
+/.github/ @clarus-vitae/devops-team

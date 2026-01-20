@@ -1,0 +1,319 @@
+// Clarus Vitae Database Schema
+// This is the Prisma schema file for the platform's PostgreSQL database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================
+// PROPERTY MODELS
+// ============================================
+
+model Property {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  tier      PropertyTier
+  overview  String   @db.Text
+
+  // Location
+  country   String
+  region    String?
+  city      String?
+  latitude  Float?
+  longitude Float?
+
+  // Pricing
+  minPrice         Int?
+  maxPrice         Int?
+  currency         String   @default("USD")
+  minStayDays      Int?
+  maxStayDays      Int?
+
+  // Contact
+  website   String?
+  email     String?
+  phone     String?
+
+  // Clarus Index
+  clarusIndexScore Float?
+  verificationDate DateTime?
+
+  // Relations
+  images       PropertyImage[]
+  treatments   PropertyTreatment[]
+  reviews      Review[]
+  inquiries    Inquiry[]
+  indexScores  ClarusIndexScore[]
+  focusAreas   PropertyFocusArea[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tier])
+  @@index([country])
+  @@index([clarusIndexScore])
+}
+
+enum PropertyTier {
+  TIER_1  // Medical Longevity & Clinical Wellness
+  TIER_2  // Integrated Wellness Retreats
+  TIER_3  // Luxury Destination Wellness
+}
+
+model PropertyImage {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url         String
+  alt         String
+  width       Int
+  height      Int
+  aspectRatio String
+  isFeatured  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+}
+
+model PropertyFocusArea {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  focusArea   FocusArea
+
+  @@unique([propertyId, focusArea])
+  @@index([focusArea])
+}
+
+enum FocusArea {
+  LONGEVITY
+  DETOX
+  WEIGHT_METABOLIC
+  STRESS_BURNOUT
+  FITNESS_PERFORMANCE
+  BEAUTY_AESTHETIC
+  HOLISTIC_SPIRITUAL
+  MEDICAL_ASSESSMENT
+  POST_ILLNESS
+  ADDICTION_BEHAVIORAL
+  COGNITIVE_BRAIN
+  SLEEP
+  WOMENS_HEALTH
+  MENS_HEALTH
+  GENERAL_REJUVENATION
+}
+
+// ============================================
+// TREATMENT MODELS
+// ============================================
+
+model Treatment {
+  id             String           @id @default(cuid())
+  slug           String           @unique
+  name           String
+  category       TreatmentCategory
+  evidenceLevel  EvidenceLevel
+  description    String           @db.Text
+  overview       String           @db.Text
+  benefits       String[]
+  considerations String[]
+
+  // Pricing
+  minPrice  Int?
+  maxPrice  Int?
+  currency  String   @default("USD")
+  typicalDuration String?
+
+  // Relations
+  properties PropertyTreatment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([evidenceLevel])
+}
+
+enum TreatmentCategory {
+  LONGEVITY
+  DETOX
+  METABOLIC
+  STRESS
+  FITNESS
+  BEAUTY
+  HOLISTIC
+  DIAGNOSTIC
+  RECOVERY
+  ADDICTION
+  COGNITIVE
+  SLEEP
+  WOMENS_HEALTH
+  MENS_HEALTH
+  GENERAL
+}
+
+enum EvidenceLevel {
+  STRONG
+  MODERATE
+  EMERGING
+  TRADITIONAL
+  INSUFFICIENT
+}
+
+model PropertyTreatment {
+  id          String    @id @default(cuid())
+  propertyId  String
+  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  treatmentId String
+  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+
+  // Property-specific treatment info
+  priceNote   String?
+  notes       String?
+
+  @@unique([propertyId, treatmentId])
+  @@index([treatmentId])
+}
+
+// ============================================
+// CLARUS INDEX MODELS
+// ============================================
+
+model ClarusIndexScore {
+  id           String   @id @default(cuid())
+  propertyId   String
+  property     Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  overallScore Float
+  tier         IndexTier
+
+  // Dimension scores (stored as JSON for flexibility across tiers)
+  dimensions   Json
+
+  assessmentDate DateTime
+  assessedBy     String
+  methodology    String   @default("v1.0")
+
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([tier])
+}
+
+enum IndexTier {
+  EXCEPTIONAL   // 90-100
+  DISTINGUISHED // 80-89
+  NOTABLE       // 70-79
+  CURATED       // 60-69
+}
+
+// ============================================
+// REVIEW MODELS
+// ============================================
+
+model Review {
+  id           String     @id @default(cuid())
+  propertyId   String
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  type              ReviewType
+  authorName        String?
+  authorCredentials String?
+
+  visitDate    DateTime
+  programType  String
+  stayDuration Int
+
+  // Outcome metrics
+  goalAchievement        Int?    // 1-5 scale
+  measurableImprovement  String?
+  protocolQuality        Int?    // 1-5 scale
+  followUpQuality        Int?    // 1-5 scale
+  sustainabilityDays     Int?
+  wouldRecommend         Boolean @default(true)
+
+  narrative     String   @db.Text
+  strengths     String[]
+  considerations String[]
+  bestFor       String[]
+
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([propertyId])
+  @@index([type])
+}
+
+enum ReviewType {
+  VERIFIED_GUEST
+  EXPERT_ASSESSMENT
+}
+
+// ============================================
+// INQUIRY MODELS
+// ============================================
+
+model Inquiry {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  name             String?
+  email            String
+  phone            String?
+  message          String   @db.Text
+  preferredContact ContactMethod
+  interests        String[]
+  budgetRange      String?
+
+  // Travel dates
+  earliestDate DateTime?
+  latestDate   DateTime?
+  datesFlexible Boolean  @default(true)
+
+  isSecure  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([createdAt])
+}
+
+enum ContactMethod {
+  EMAIL
+  PHONE
+  SECURE
+}
+
+// ============================================
+// ADVISORY TEAM MODELS
+// ============================================
+
+model AdvisoryTeamMember {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  name            String
+  title           String
+  credentials     String[]
+  bio             String   @db.Text
+  specializations String[]
+  propertiesVisited Int    @default(0)
+
+  photoUrl String?
+  photoAlt String?
+
+  contactEmail String?
+  isActive     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
