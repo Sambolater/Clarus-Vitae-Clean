@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Clarus Vitae Design System CSS Custom Properties */
+:root {
+  /* Primary Colors */
+  --color-clarus-navy: #1A2B4A;
+  --color-clarus-white: #FAFBFC;
+  --color-clarus-gold: #C9A962;
+
+  /* Secondary Colors */
+  --color-slate: #64748B;
+  --color-stone: #E8E6E3;
+  --color-warm-gray: #F5F5F4;
+
+  /* Functional Colors */
+  --color-verification-green: #2D6A4F;
+  --color-alert-amber: #B45309;
+  --color-error-red: #DC2626;
+  --color-success-green: #16A34A;
+
+  /* Tier Colors */
+  --color-tier-1: #1A365D;
+  --color-tier-2: #234E52;
+  --color-tier-3: #5B4B3A;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --space-unit: 8px;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+
+  /* Layout */
+  --max-width: 1200px;
+  --gutter: 24px;
+}
+
+/* Google Fonts fallback for Storybook */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply bg-clarus-white text-clarus-navy font-body antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+
+  h4, h5, h6 {
+    @apply font-body font-semibold;
+  }
+}
+
+@layer components {
+  /* Focus ring utility */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-clarus-navy focus-visible:ring-offset-2;
+  }
+}
