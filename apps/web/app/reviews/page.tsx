@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 
 import { ReviewsHubClient } from './_components/ReviewsHubClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Reviews | Clarus Vitae',
   description:
