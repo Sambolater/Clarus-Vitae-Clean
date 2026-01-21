@@ -17,6 +17,10 @@ const globalForPrisma = globalThis as unknown as {
 let cachedClient: any = null;
 
 function getClient() {
+    // Skip initialization if database URL is not available (build time)
+    if (!process.env.POSTGRES_PRISMA_URL) {
+          return null;
+    }
   // Return cached client if already initialized
   if (cachedClient) {
     return cachedClient;
