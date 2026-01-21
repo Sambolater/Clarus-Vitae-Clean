@@ -1,5 +1,6 @@
 {
-  "installCommand": "cd ../.. && pnpm install",
+  "installCommand": "cd ../.. && corepack enable && pnpm install",
   "buildCommand": "cd ../.. && DATABASE_URL=\"postgresql://dummy:dummy@localhost:5432/dummy\" pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "framework": "nextjs"
 }
