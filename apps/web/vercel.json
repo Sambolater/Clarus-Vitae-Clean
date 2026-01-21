@@ -1,6 +1,6 @@
 {
-  "installCommand": "cd ../.. && corepack enable && pnpm install",
-  "buildCommand": "cd ../.. && export POSTGRES_PRISMA_URL=\"postgresql://postgres.vrxuenztipcybiwadtrj:jyrZhKNARrs3EDPg@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true\" && export POSTGRES_URL_NON_POOLING=\"postgresql://postgres.vrxuenztipcybiwadtrj:jyrZhKNARrs3EDPg@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres\" && pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
+    "installCommand": "cd ../.. && corepack enable && pnpm install",
+    "buildCommand": "cd ../.. && pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
+    "outputDirectory": ".next",
+    "framework": "nextjs"
 }
