@@ -1,6 +1,6 @@
 'use client';
 
-import { type TreatmentCategory, type EvidenceLevel as EvidenceLevelType, type DiagnosticCategory, type EquipmentCategory } from '@clarus-vitae/database';
+import { type TreatmentCategory, type EvidenceLevel as EvidenceLevelType, type DiagnosticCategory, type EquipmentCategory } from '@clarus-vitae/database/types';
 import { EvidenceLevel } from '@clarus-vitae/ui';
 import Link from 'next/link';
 

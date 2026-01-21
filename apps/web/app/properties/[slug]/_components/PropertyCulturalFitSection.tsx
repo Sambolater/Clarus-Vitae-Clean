@@ -1,6 +1,6 @@
 'use client';
 
-import { type GenderSeparation, type SoloFriendliness, type LGBTQWelcoming } from '@clarus-vitae/database';
+import { type GenderSeparation, type SoloFriendliness, type LGBTQWelcoming } from '@clarus-vitae/database/types';
 
 interface CulturalFit {
   genderSeparatedFacilities: GenderSeparation | null;
