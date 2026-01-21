@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "corepack enable && pnpm install",
-  "buildCommand": "DATABASE_URL=\"postgresql://dummy:dummy@localhost:5432/dummy\" pnpm --filter @clarus-vitae/database db:generate && DATABASE_URL=\"postgresql://dummy:dummy@localhost:5432/dummy\" pnpm build --filter=@clarus-vitae/web",
+  "buildCommand": "export DATABASE_URL=\"postgresql://dummy:dummy@localhost:5432/dummy\" && pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
   "outputDirectory": "apps/web/.next",
   "framework": null
 }
