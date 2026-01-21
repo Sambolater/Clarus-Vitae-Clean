@@ -49,3 +49,4 @@ packages/database/prisma/*.db-journal
 .cache
 *.pem
 package-lock.json
+.env*.local
