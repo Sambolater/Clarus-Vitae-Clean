@@ -1,6 +1,11 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  // Required for Prisma in monorepos on Vercel
+  outputFileTracingRoot: path.join(__dirname, '../../'),
 
   // Package transpilation for monorepo
   transpilePackages: [
