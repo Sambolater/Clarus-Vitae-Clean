@@ -273,6 +273,9 @@ importers:
       react:
         specifier: ^18.0.0
         version: 18.3.1
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       '@clarus-vitae/config':
         specifier: workspace:*

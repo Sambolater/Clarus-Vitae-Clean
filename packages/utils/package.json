@@ -19,5 +19,8 @@
     "@clarus-vitae/config": "workspace:*",
     "@types/react": "^18.0.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "server-only": "^0.0.1"
   }
 }

@@ -10,7 +10,11 @@
  * - Soft delete with hard delete scheduling
  * - Backup purge within 30 days (per GDPR requirements)
  * - Audit trail for compliance
+ *
+ * NOTE: This module is server-only due to encryption dependencies.
  */
+
+import 'server-only';
 
 import { generateSecureToken } from './encryption';
 

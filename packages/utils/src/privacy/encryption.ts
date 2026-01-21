@@ -9,7 +9,11 @@
  * - Unique IV per encryption operation
  * - Key derivation using scrypt
  * - Timing-safe comparison for validation
+ *
+ * NOTE: This module is server-only due to Node.js crypto dependencies.
  */
+
+import 'server-only';
 
 import {
   createCipheriv,
