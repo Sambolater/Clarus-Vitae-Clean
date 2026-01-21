@@ -53,8 +53,8 @@ export async function generateMetadata({ params }: DestinationPageProps): Promis
 }
 
 export async function generateStaticParams() {
-  // Skip static generation if DATABASE_URL is not available (build time)
-  if (!process.env.DATABASE_URL) {
+  // Skip static generation if database URL is not available (build time)
+  if (!process.env.POSTGRES_PRISMA_URL && !process.env.DATABASE_URL) {
     return [];
   }
 
