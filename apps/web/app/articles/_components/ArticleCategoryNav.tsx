@@ -1,6 +1,6 @@
 'use client';
 
-import type { ArticleCategory } from '@clarus-vitae/database/sanity';
+import type { ArticleCategory } from '@clarus-vitae/database/sanity/types';
 import Link from 'next/link';
 import React from 'react';
 
