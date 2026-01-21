@@ -9,6 +9,7 @@ const nextConfig = {
 
   // Package transpilation for monorepo
   transpilePackages: [
+    '@clarus-vitae/database',
     '@clarus-vitae/ui',
     '@clarus-vitae/utils',
     '@clarus-vitae/types',
@@ -47,6 +48,9 @@ const nextConfig = {
     // Note: optimizeCss requires 'critters' package - disabled for CI compatibility
     // optimizeCss: true,
   },
+
+  // Keep Prisma as external to avoid bundling issues
+  serverExternalPackages: ['@prisma/client', 'prisma'],
 
   // Headers for security and caching
   headers: async () => {
