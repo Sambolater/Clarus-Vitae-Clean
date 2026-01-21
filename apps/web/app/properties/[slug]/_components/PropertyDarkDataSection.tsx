@@ -1,6 +1,6 @@
 'use client';
 
-import { type DiscretionLevel } from '@clarus-vitae/database';
+import { type DiscretionLevel } from '@clarus-vitae/database/types';
 
 interface DarkData {
   physicianPatientRatio: string | null;

@@ -1,6 +1,6 @@
 'use client';
 
-import { type TreatmentCategory } from '@clarus-vitae/database';
+import { type TreatmentCategory } from '@clarus-vitae/database/types';
 import { cn } from '@clarus-vitae/utils';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database';
+import { type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database/types';
 import {
   FilterSidebar,
   Checkbox,

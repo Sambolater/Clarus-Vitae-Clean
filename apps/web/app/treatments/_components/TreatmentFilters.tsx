@@ -1,6 +1,6 @@
 'use client';
 
-import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database';
+import { type TreatmentCategory, type EvidenceLevel } from '@clarus-vitae/database/types';
 import {
   FilterSidebar,
   Checkbox,

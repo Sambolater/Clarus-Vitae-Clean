@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyTier } from '@clarus-vitae/database';
+import { type PropertyTier } from '@clarus-vitae/database/types';
 import { PropertyCard } from '@clarus-vitae/ui';
 import Link from 'next/link';
 

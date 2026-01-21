@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyTier } from '@clarus-vitae/database';
+import { type PropertyTier } from '@clarus-vitae/database/types';
 import { TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
 import Image from 'next/image';
 import Link from 'next/link';

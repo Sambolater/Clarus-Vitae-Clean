@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyTier } from '@clarus-vitae/database';
+import { type PropertyTier } from '@clarus-vitae/database/types';
 import { ScoreBreakdown, type DimensionScore } from '@clarus-vitae/ui';
 
 interface PropertyScoreSectionProps {

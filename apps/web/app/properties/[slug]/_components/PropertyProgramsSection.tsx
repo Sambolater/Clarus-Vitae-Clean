@@ -1,6 +1,6 @@
 'use client';
 
-import { type FocusArea } from '@clarus-vitae/database';
+import { type FocusArea } from '@clarus-vitae/database/types';
 import { Button } from '@clarus-vitae/ui';
 import Link from 'next/link';
 import { useState } from 'react';

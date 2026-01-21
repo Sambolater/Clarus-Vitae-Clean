@@ -4,7 +4,13 @@
  * Exports the Prisma client and related utilities for database access.
  * Also exports search utilities for Meilisearch integration.
  * Also exports Sanity CMS integration for editorial content.
+ *
+ * This module is server-only. Client components should import types from
+ * '@clarus-vitae/database/types' instead.
  */
+
+// Prevent client-side imports of this module
+import 'server-only';
 
 export { db } from './client';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyTier } from '@clarus-vitae/database';
+import { type PropertyTier } from '@clarus-vitae/database/types';
 import { StarRating } from '@clarus-vitae/ui';
 import Link from 'next/link';
 import { useState } from 'react';
