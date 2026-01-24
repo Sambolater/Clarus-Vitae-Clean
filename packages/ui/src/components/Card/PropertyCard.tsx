@@ -26,12 +26,6 @@ const tierLabels: Record<PropertyTier, string> = {
   TIER_3: 'Luxury Destination',
 };
 
-const tierColors: Record<PropertyTier, string> = {
-  TIER_1: 'bg-tier-1',
-  TIER_2: 'bg-tier-2',
-  TIER_3: 'bg-tier-3',
-};
-
 function getScoreTier(score: number): { label: string; color: string } {
   if (score >= 90) return { label: 'Exceptional', color: 'text-clarus-gold' };
   if (score >= 80) return { label: 'Distinguished', color: 'text-white' };
@@ -58,8 +52,8 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
       tier,
       score,
       imageUrl,
-      priceRange,
-      focusAreas = [],
+      _priceRange,
+      _focusAreas = [],
       href,
       onCompare,
       onSave,

@@ -3,16 +3,17 @@ import { Container, LoadingSpinner } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-export const dynamic = 'force-dynamic';
-
 import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
-import { SiteHeader } from '../_components/SiteHeader';
+
 import { SiteFooter } from '../_components/SiteFooter';
+import { SiteHeader } from '../_components/SiteHeader';
 
 import { MobileFilterDrawer } from './_components/MobileFilterDrawer';
 import { PropertyFilters } from './_components/PropertyFilters';
 import { PropertyGrid } from './_components/PropertyGrid';
 import { SortControl, Pagination } from './_components/PropertySortAndPagination';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Best Wellness Retreats & Longevity Clinics | Clarus Vitae',

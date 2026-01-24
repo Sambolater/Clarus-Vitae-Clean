@@ -2,9 +2,9 @@ import { db } from '@clarus-vitae/database';
 import { Container } from '@clarus-vitae/ui';
 import Link from 'next/link';
 
-import { SiteHeader } from './_components/SiteHeader';
-import { SiteFooter } from './_components/SiteFooter';
 import { HomeSearch } from './_components/HomeSearch';
+import { SiteFooter } from './_components/SiteFooter';
+import { SiteHeader } from './_components/SiteHeader';
 
 interface FeaturedProperty {
   id: string;
