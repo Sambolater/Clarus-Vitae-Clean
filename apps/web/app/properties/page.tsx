@@ -1,11 +1,13 @@
 import { db, type PropertyTier, type FocusArea, type WellnessApproach } from '@clarus-vitae/database';
-import { Container, LoadingSpinner, Breadcrumbs } from '@clarus-vitae/ui';
+import { Container, LoadingSpinner } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
 import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
+import { SiteHeader } from '../_components/SiteHeader';
+import { SiteFooter } from '../_components/SiteFooter';
 
 import { MobileFilterDrawer } from './_components/MobileFilterDrawer';
 import { PropertyFilters } from './_components/PropertyFilters';
@@ -241,26 +243,20 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   const { properties, pagination } = await getProperties(params);
   const activeFiltersCount = countActiveFilters(params);
 
-  const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
-  ];
-
   return (
-    <main className="min-h-screen bg-clarus-white">
+    <div className="min-h-screen bg-clarus-white">
+      <SiteHeader />
+
       {/* Hero Section */}
-      <section className="border-b border-stone bg-white py-12">
+      <section className="border-b-4 border-clarus-navy bg-white py-12">
         <Container>
-          <Breadcrumbs items={breadcrumbItems} className="mb-6" />
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display text-4xl font-medium text-clarus-navy md:text-5xl">
-              Wellness Properties
-            </h1>
-            <p className="mt-4 text-lg text-slate">
-              Discover the world&apos;s finest wellness destinations, independently
-              evaluated using the Clarus Index methodology.
-            </p>
-          </div>
+          <h1 className="font-display text-4xl font-medium text-clarus-navy md:text-5xl">
+            Browse Properties
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-slate">
+            Explore our curated selection of the world&apos;s most exceptional wellness and longevity
+            destinations, each evaluated by our expert advisory team.
+          </p>
         </Container>
       </section>
 
@@ -317,6 +313,8 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           </div>
         </Container>
       </section>
-    </main>
+
+      <SiteFooter />
+    </div>
   );
 }

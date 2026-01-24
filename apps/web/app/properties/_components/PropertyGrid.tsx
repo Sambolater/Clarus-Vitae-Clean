@@ -77,6 +77,7 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
             href={`/properties/${property.slug}`}
             onCompare={() => handleCompare(property)}
             isInComparison={inComparison}
+            verified={property.badges.verifiedExcellence}
           />
         );
       })}

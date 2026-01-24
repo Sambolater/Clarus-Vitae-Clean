@@ -17,6 +17,7 @@ export interface PropertyCardProps extends HTMLAttributes<HTMLDivElement> {
   onSave?: () => void;
   isSaved?: boolean;
   isInComparison?: boolean;
+  verified?: boolean;
 }
 
 const tierLabels: Record<PropertyTier, string> = {
@@ -64,13 +65,13 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
       onSave,
       isSaved = false,
       isInComparison = false,
+      verified = false,
       className,
       ...props
     },
     ref
   ) => {
     const scoreTier = getScoreTier(score);
-    const CardWrapper = href ? 'a' : 'div';
 
     return (
       <div
@@ -95,24 +96,18 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
             </div>
           )}
 
-          {/* Tier Badge */}
-          <span
-            className={cn(
-              'absolute left-3 top-3 rounded-md px-2 py-1 text-xs font-medium uppercase tracking-wide text-white',
-              tierColors[tier]
-            )}
-          >
-            {tierLabels[tier]}
-          </span>
+          {/* Verified Badge */}
+          {verified && (
+            <span className="absolute right-3 top-3 flex items-center gap-1 rounded bg-white/95 px-2 py-1 text-xs font-medium text-verification-green">
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Verified
+            </span>
+          )}
 
-          {/* Score Badge */}
-          <div className="absolute bottom-3 right-3 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-clarus-navy">
-            <span className={cn('font-display text-xl', scoreTier.color)}>{score}</span>
-            <span className="text-[8px] uppercase tracking-wide text-white/70">Index</span>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="absolute right-3 top-3 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          {/* Action Buttons - Bottom right, show on hover */}
+          <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
             {onSave && (
               <button
                 onClick={(e) => {
@@ -159,37 +154,30 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
         </div>
 
         {/* Content */}
-        <CardWrapper
-          {...(href ? { href } : {})}
-          className="block p-4"
-        >
-          <h3 className="font-display text-xl text-clarus-navy">{name}</h3>
+        <div className="p-5">
+          <span className="text-xs font-medium uppercase tracking-wider text-clarus-gold">
+            {tierLabels[tier]}
+          </span>
+          <h3 className="mt-1 font-display text-xl text-clarus-navy">{name}</h3>
           <p className="mt-1 text-sm text-slate">
             {location}, {country}
           </p>
 
-          {priceRange && (
-            <p className="mt-2 text-sm font-medium text-clarus-navy">{priceRange}</p>
-          )}
-
-          {focusAreas.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {focusAreas.slice(0, 3).map((area) => (
-                <span
-                  key={area}
-                  className="rounded-md bg-stone px-2 py-0.5 text-xs text-slate"
-                >
-                  {area}
-                </span>
-              ))}
-              {focusAreas.length > 3 && (
-                <span className="rounded-md bg-stone px-2 py-0.5 text-xs text-slate">
-                  +{focusAreas.length - 3} more
-                </span>
-              )}
+          <div className="mt-4 flex items-center justify-between border-t border-stone pt-4">
+            <div className="flex items-baseline gap-1">
+              <span className="text-xs uppercase tracking-wide text-slate">Index</span>
+              <span className={cn('font-display text-2xl', scoreTier.color)}>{score}</span>
             </div>
-          )}
-        </CardWrapper>
+            {href && (
+              <a
+                href={href}
+                className="text-sm font-medium text-clarus-navy hover:underline"
+              >
+                View Profile
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
