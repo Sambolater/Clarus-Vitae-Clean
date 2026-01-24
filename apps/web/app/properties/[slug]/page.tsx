@@ -1,11 +1,12 @@
 import { db, type PropertyTier, type FocusArea } from '@clarus-vitae/database';
-import { Container, Breadcrumbs } from '@clarus-vitae/ui';
+import { Container } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-
+import { SiteHeader } from '../../_components/SiteHeader';
+import { SiteFooter } from '../../_components/SiteFooter';
 import { JsonLd } from '@/components/JsonLd';
 import { tierLabels, focusAreaLabels } from '@/lib/properties';
 import {
@@ -256,6 +257,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
   const { property, similarProperties } = data;
   const reviewStats = calculateReviewStats(property.reviews);
 
+  // Breadcrumb items for structured data
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Properties', href: '/properties' },
@@ -292,16 +294,11 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
   );
 
   return (
-    <main className="min-h-screen bg-clarus-white">
+    <div className="min-h-screen bg-clarus-white">
+      <SiteHeader />
+
       {/* Structured Data for SEO */}
       <JsonLd data={[propertyStructuredData, breadcrumbStructuredData]} />
-
-      {/* Breadcrumbs */}
-      <div className="border-b border-stone bg-white">
-        <Container>
-          <Breadcrumbs items={breadcrumbItems} className="py-4" />
-        </Container>
-      </div>
 
       {/* Hero Section */}
       <PropertyHero
@@ -554,6 +551,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         currentPropertySlug={slug}
       />
 
+      <SiteFooter />
+
       {/* Mobile Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-stone bg-white p-4 shadow-lg lg:hidden">
         <div className="flex items-center justify-between gap-4">
@@ -579,6 +578,6 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
