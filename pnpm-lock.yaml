@@ -161,7 +161,7 @@ importers:
         specifier: ^2.0.13
         version: 2.0.15
       '@prisma/client':
-        specifier: ^5.9.0
+        specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
       '@sanity/client':
         specifier: ^6.15.0
@@ -180,7 +180,7 @@ importers:
         specifier: workspace:*
         version: link:../config
       prisma:
-        specifier: ^5.9.0
+        specifier: ^5.22.0
         version: 5.22.0
       tsx:
         specifier: ^4.7.0
