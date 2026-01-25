@@ -52,8 +52,6 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
       tier,
       score,
       imageUrl,
-      _priceRange,
-      _focusAreas = [],
       href,
       onCompare,
       onSave,
