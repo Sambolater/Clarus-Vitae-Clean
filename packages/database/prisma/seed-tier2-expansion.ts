@@ -1153,6 +1153,47 @@ async function main() {
   }
 
   // ============================================
+  // CREATE HERO IMAGES
+  // ============================================
+  console.log('🖼️ Adding hero images...');
+
+  const heroImages = [
+    { propertyId: sixSensesDouro.id, url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop&q=80', alt: 'Six Senses Douro Valley vineyard terraces overlooking the river' },
+    { propertyId: comoShambhala.id, url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920&h=1080&fit=crop&q=80', alt: 'Como Shambhala Estate jungle retreat in Bali' },
+    { propertyId: ananda.id, url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&q=80', alt: 'Ananda in the Himalayas palace with mountain views' },
+    { propertyId: ranchMalibu.id, url: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&h=1080&fit=crop&q=80', alt: 'The Ranch Malibu mountain landscape' },
+    { propertyId: lefay.id, url: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=1920&h=1080&fit=crop&q=80', alt: 'Lefay Resort overlooking Lake Garda' },
+    { propertyId: brenners.id, url: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1920&h=1080&fit=crop&q=80', alt: 'Brenners Park-Hotel historic spa building' },
+    { propertyId: forestis.id, url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop&q=80', alt: 'Forestis Dolomites alpine mountain views' },
+    { propertyId: lilyValley.id, url: 'https://images.unsplash.com/photo-1534008897995-27a23e859048?w=1920&h=1080&fit=crop&q=80', alt: 'Lily of the Valley Mediterranean coastal view' },
+    { propertyId: euphoria.id, url: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=1920&h=1080&fit=crop&q=80', alt: 'Euphoria Retreat Greek hillside setting' },
+    { propertyId: schlossElmau.id, url: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1920&h=1080&fit=crop&q=80', alt: 'Schloss Elmau Bavarian Alps castle' },
+    { propertyId: miravalAZ.id, url: 'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=1920&h=1080&fit=crop&q=80', alt: 'Miraval Arizona desert landscape' },
+    { propertyId: calaVie.id, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=1080&fit=crop&q=80', alt: 'Cal-a-Vie Health Spa Mediterranean villa' },
+    { propertyId: bodyHoliday.id, url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop&q=80', alt: 'The BodyHoliday Caribbean beachfront' },
+    { propertyId: shantiMaurice.id, url: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&h=1080&fit=crop&q=80', alt: 'Shanti Maurice Mauritius ocean villa' },
+    { propertyId: absoluteSanctuary.id, url: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1920&h=1080&fit=crop&q=80', alt: 'Absolute Sanctuary Koh Samui tropical retreat' },
+  ];
+
+  for (const img of heroImages) {
+    await prisma.propertyImage.create({
+      data: {
+        propertyId: img.propertyId,
+        url: img.url,
+        alt: img.alt,
+        width: 1920,
+        height: 1080,
+        aspectRatio: '16:9',
+        category: 'hero',
+        isFeatured: true,
+        sortOrder: 0,
+      },
+    });
+  }
+
+  console.log(`Created ${heroImages.length} hero images`);
+
+  // ============================================
   // SUMMARY
   // ============================================
   console.log('\n✅ Tier 2 Expansion completed successfully!\n');
