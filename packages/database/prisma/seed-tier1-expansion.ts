@@ -1131,6 +1131,40 @@ async function main() {
   }
 
   // ============================================
+  // CREATE HERO IMAGES
+  // ============================================
+  console.log('🖼️ Adding hero images...');
+
+  const heroImages = [
+    { propertyId: shaWellness.id, url: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&h=1080&fit=crop&q=80', alt: 'SHA Wellness Clinic Mediterranean clifftop view' },
+    { propertyId: vivamayr.id, url: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&h=1080&fit=crop&q=80', alt: 'VIVAMAYR Maria Wörth Austrian lakeside' },
+    { propertyId: buchinger.id, url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&h=1080&fit=crop&q=80', alt: 'Buchinger Wilhelmi Lake Constance setting' },
+    { propertyId: chenot.id, url: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1920&h=1080&fit=crop&q=80', alt: 'Chenot Palace Weggis Swiss lakeside palace' },
+    { propertyId: palazzoFiuggi.id, url: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1920&h=1080&fit=crop&q=80', alt: 'Palazzo Fiuggi Italian hilltop palazzo' },
+    { propertyId: parkIgls.id, url: 'https://images.unsplash.com/photo-1548777123-e216912df7d8?w=1920&h=1080&fit=crop&q=80', alt: 'Park Igls Tyrolean mountain views' },
+    { propertyId: shaMexico.id, url: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=1920&h=1080&fit=crop&q=80', alt: 'SHA Mexico Riviera Maya jungle and ocean' },
+    { propertyId: canyonRanch.id, url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&h=1080&fit=crop&q=80', alt: 'Canyon Ranch Tucson Sonoran desert landscape' },
+  ];
+
+  for (const img of heroImages) {
+    await prisma.propertyImage.create({
+      data: {
+        propertyId: img.propertyId,
+        url: img.url,
+        alt: img.alt,
+        width: 1920,
+        height: 1080,
+        aspectRatio: '16:9',
+        category: 'hero',
+        isFeatured: true,
+        sortOrder: 0,
+      },
+    });
+  }
+
+  console.log(`Created ${heroImages.length} hero images`);
+
+  // ============================================
   // SUMMARY
   // ============================================
   console.log('\n✅ Tier 1 Expansion completed successfully!\n');
