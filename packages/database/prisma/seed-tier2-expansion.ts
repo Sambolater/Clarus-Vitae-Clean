@@ -548,7 +548,7 @@ async function main() {
       transferTime: '2 hours 30 minutes by car',
       tier: 'TIER_2',
       approach: 'HOLISTIC',
-      focusAreas: ['HOLISTIC_SPIRITUAL', 'STRESS_BURNOUT', 'DETOX', 'EMOTIONAL_HEALING', 'GENERAL_REJUVENATION'],
+      focusAreas: ['HOLISTIC_SPIRITUAL', 'STRESS_BURNOUT', 'DETOX', 'COGNITIVE_BRAIN', 'GENERAL_REJUVENATION'],
       priceMin: 4000,
       priceMax: 12000,
       currency: 'EUR',
