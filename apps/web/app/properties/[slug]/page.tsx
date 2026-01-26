@@ -258,7 +258,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
+    { label: 'Retreats', href: '/properties' },
     { label: property.name, href: `/properties/${slug}` },
   ];
 

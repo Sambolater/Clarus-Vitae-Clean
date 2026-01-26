@@ -34,7 +34,7 @@ export function PropertyGrid({ properties, isLoading = false }: PropertyGridProp
   if (properties.length === 0) {
     return (
       <EmptyState
-        title="No properties found"
+        title="No retreats found"
         description="Try adjusting your filters to see more results."
         icon={
           <svg

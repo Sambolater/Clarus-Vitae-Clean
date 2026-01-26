@@ -243,7 +243,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
+    { label: 'Retreats', href: '/properties' },
   ];
 
   return (
@@ -254,7 +254,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           <Breadcrumbs items={breadcrumbItems} className="mb-6" />
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="font-display text-4xl font-medium text-clarus-navy md:text-5xl">
-              Wellness Properties
+              Wellness Retreats
             </h1>
             <p className="mt-4 text-lg text-slate">
               Discover the world&apos;s finest wellness destinations, independently

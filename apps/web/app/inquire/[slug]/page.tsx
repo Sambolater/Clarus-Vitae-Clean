@@ -72,7 +72,7 @@ export default async function InquirePropertyPage({
 
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
+    { label: 'Retreats', href: '/properties' },
     { label: property.name, href: `/properties/${property.slug}` },
     { label: 'Inquire', href: `/inquire/${property.slug}` },
   ];
