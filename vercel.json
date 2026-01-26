@@ -1,7 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
+  "buildCommand": "cd apps/web && pnpm run build",
+  "devCommand": "cd apps/web && pnpm run dev",
   "installCommand": "corepack enable && pnpm install",
-  "buildCommand": "pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
+  "framework": null,
   "outputDirectory": "apps/web/.next"
 }

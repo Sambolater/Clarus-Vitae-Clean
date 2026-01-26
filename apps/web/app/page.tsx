@@ -1,148 +1,300 @@
-import { HomeSearch } from './_components/HomeSearch';
+import { db } from '@clarus-vitae/database';
+import Link from 'next/link';
 
-export default function HomePage() {
+// Type for featured property
+interface FeaturedProperty {
+  id: string;
+  slug: string;
+  name: string;
+  city: string;
+  country: string;
+  tier: string;
+  overallScore: number | null;
+  images: Array<{
+    url: string;
+    alt: string | null;
+  }>;
+}
+
+// Fetch featured properties for the homepage
+async function getFeaturedProperties(): Promise<FeaturedProperty[]> {
+  const properties = await db.property.findMany({
+    where: { published: true },
+    orderBy: { overallScore: 'desc' },
+    take: 3,
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      city: true,
+      country: true,
+      tier: true,
+      overallScore: true,
+      images: {
+        where: { isFeatured: true },
+        take: 1,
+        select: {
+          url: true,
+          alt: true,
+        },
+      },
+    },
+  });
+  return properties;
+}
+
+// Tier label mapping
+const tierLabels: Record<string, string> = {
+  TIER_1: 'Medical Longevity',
+  TIER_2: 'Integrative Wellness',
+  TIER_3: 'Luxury Destination',
+};
+
+export default async function HomePage() {
+  const featuredProperties = await getFeaturedProperties();
+
   return (
     <main className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center px-6 py-20 md:py-32 bg-gradient-to-b from-white to-stone/30">
-        <div className="max-w-4xl text-center">
-          <h1 className="font-display text-4xl font-medium tracking-tight text-clarus-navy md:text-5xl lg:text-6xl">
-            The Wellness Industry Has a Trust Problem.
+      <section className="flex flex-col items-center justify-center px-6 py-20 md:py-28 bg-clarus-white">
+        <div className="max-w-3xl text-center">
+          <h1 className="font-display text-4xl font-medium tracking-tight text-clarus-navy md:text-5xl lg:text-[56px] leading-tight">
+            Clarity for Life&apos;s Most Important Decisions
           </h1>
-          <p className="mt-6 text-lg text-slate leading-relaxed max-w-2xl mx-auto">
-            We solve it with verified intelligence, transparent methodology, and experts who put
-            their names behind every assessment.
+          <p className="mt-6 text-base md:text-lg text-slate leading-relaxed max-w-2xl mx-auto">
+            The trusted research authority for premium wellness decisions. Proprietary
+            intelligence on the world&apos;s most exceptional longevity clinics and wellness
+            destinations.
           </p>
 
-          {/* Search Component */}
+          {/* CTA Button */}
           <div className="mt-10">
-            <HomeSearch />
-          </div>
-        </div>
-      </section>
-
-      {/* Value Props Section */}
-      <section className="px-6 py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-center font-display text-2xl md:text-3xl font-medium text-clarus-navy mb-12">
-            Why Trust Clarus Vitae
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <svg className="w-6 h-6 text-clarus-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-display text-lg font-medium text-clarus-navy mb-2">
-                Verified Excellence
-              </h3>
-              <p className="text-slate text-sm leading-relaxed">
-                Every property is personally assessed by our expert team. No pay-to-play rankings.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <svg className="w-6 h-6 text-clarus-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="font-display text-lg font-medium text-clarus-navy mb-2">
-                The Clarus Index
-              </h3>
-              <p className="text-slate text-sm leading-relaxed">
-                Our proprietary scoring system evaluates clinical rigor, outcomes, and value alignment.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <svg className="w-6 h-6 text-clarus-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h3 className="font-display text-lg font-medium text-clarus-navy mb-2">
-                Privacy First
-              </h3>
-              <p className="text-slate text-sm leading-relaxed">
-                No tracking, no cookies, no footprint. Your wellness journey stays private.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Properties Teaser */}
-      <section className="px-6 py-16 md:py-24 bg-stone/30">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-medium text-clarus-navy mb-4">
-            Exceptional Wellness Destinations
-          </h2>
-          <p className="text-slate mb-8 max-w-2xl mx-auto">
-            From world-leading medical longevity clinics to transformative integrated wellness retreats,
-            discover properties that meet our rigorous standards.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="/properties?tier=TIER_1"
+            <Link
+              href="/properties"
               className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
             >
-              Tier 1: Medical Longevity
-            </a>
-            <a
-              href="/properties?tier=TIER_2"
-              className="inline-flex h-12 items-center justify-center rounded-md border border-clarus-navy px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-white"
-            >
-              Tier 2: Integrated Wellness
-            </a>
+              Explore Properties
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Treatments Teaser */}
-      <section className="px-6 py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-medium text-clarus-navy mb-4">
-            Evidence-Based Treatments
-          </h2>
-          <p className="text-slate mb-8 max-w-2xl mx-auto">
-            Navigate the world of wellness treatments with clear evidence levels, honest assessments,
-            and practical guidance on what actually works.
-          </p>
-          <a
-            href="/treatments"
-            className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
-          >
-            Explore Treatments
-          </a>
+      {/* Value Pillars Section - Navy Background */}
+      <section className="px-6 py-16 md:py-20 bg-clarus-navy">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {/* The Clarus Index */}
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full border border-white/30 flex items-center justify-center">
+                <span className="text-white text-sm font-display">94</span>
+              </div>
+              <h3 className="font-display text-base md:text-lg font-medium text-white mb-2">
+                The Clarus Index
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Proprietary scoring methodology evaluating clinical rigor, outcomes, and experience quality.
+              </p>
+            </div>
+
+            {/* Editorial Independence */}
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full border border-white/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </div>
+              <h3 className="font-display text-base md:text-lg font-medium text-white mb-2">
+                Editorial Independence
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                We never accept payment for placement. Every evaluation is objective and verified.
+              </p>
+            </div>
+
+            {/* Expert Team */}
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full border border-white/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+              </div>
+              <h3 className="font-display text-base md:text-lg font-medium text-white mb-2">
+                Expert Team
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Named advisors with clinical, hospitality, and research credentials behind every recommendation.
+              </p>
+            </div>
+
+            {/* Privacy-First */}
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full border border-white/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+              </div>
+              <h3 className="font-display text-base md:text-lg font-medium text-white mb-2">
+                Privacy-First
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Research Mode enables full access without accounts, cookies, or digital footprints.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="px-6 py-16 md:py-24 bg-clarus-navy text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-medium mb-4">
-            Ready to Begin Your Wellness Journey?
-          </h2>
-          <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Whether you&apos;re seeking cutting-edge longevity protocols or a transformative retreat experience,
-            we&apos;ll help you find the perfect destination.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
+      {/* Featured Properties Section */}
+      <section className="px-6 py-16 md:py-24 bg-clarus-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-2xl md:text-3xl font-medium text-clarus-navy">
+              Featured Properties
+            </h2>
+            <p className="mt-3 text-slate">
+              Exceptional destinations evaluated by our advisory team
+            </p>
+          </div>
+
+          {/* Property Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredProperties.map((property) => (
+              <Link
+                key={property.id}
+                href={`/properties/${property.slug}`}
+                className="group block bg-white rounded-lg border border-stone overflow-hidden transition-shadow hover:shadow-card-hover"
+              >
+                {/* Image */}
+                <div className="aspect-[3/2] bg-stone relative overflow-hidden">
+                  {property.images[0]?.url ? (
+                    <img
+                      src={property.images[0].url}
+                      alt={property.images[0].alt || property.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-slate/50 text-sm">Image coming soon</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  {/* Tier Label */}
+                  <div className="text-[11px] font-medium tracking-wide uppercase text-clarus-gold mb-1">
+                    {tierLabels[property.tier] || property.tier}
+                  </div>
+
+                  {/* Property Name */}
+                  <h3 className="font-display text-lg font-medium text-clarus-navy group-hover:text-clarus-navy/80">
+                    {property.name}
+                  </h3>
+
+                  {/* Location */}
+                  <p className="text-sm text-slate mt-1">
+                    {property.city}, {property.country}
+                  </p>
+
+                  {/* Footer with Score */}
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-stone">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-[11px] uppercase tracking-wide text-slate">Index</span>
+                      <span className="font-display text-xl text-clarus-gold">{property.overallScore}</span>
+                    </div>
+                    <span className="text-sm text-clarus-navy font-medium group-hover:underline">
+                      View Profile
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* View All Link */}
+          <div className="text-center mt-10">
+            <Link
               href="/properties"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-white px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-white/90"
+              className="inline-flex h-12 items-center justify-center rounded-md border border-clarus-navy px-8 text-sm font-medium text-clarus-navy transition-colors hover:bg-clarus-navy hover:text-white"
             >
-              Browse All Properties
-            </a>
-            <a
-              href="/about"
-              className="inline-flex h-12 items-center justify-center rounded-md border border-white px-8 text-sm font-medium text-white transition-colors hover:bg-white/10"
-            >
-              Learn About Our Process
-            </a>
+              View All Properties
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* How We're Different Section - Navy Background */}
+      <section className="px-6 py-16 md:py-24 bg-clarus-navy">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-display text-2xl md:text-3xl font-medium text-white text-center mb-12">
+            How We&apos;re Different
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* We Evaluate, Not Aggregate */}
+            <div className="bg-white/5 rounded-lg p-6 md:p-8 border border-white/10">
+              <h3 className="font-display text-lg font-medium text-white mb-3">
+                We Evaluate, Not Aggregate
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Unlike directories that list everything, we cover only ~200 exceptional
+                properties globally. Each is personally assessed by our advisory team
+                against rigorous criteria.
+              </p>
+            </div>
+
+            {/* Outcomes Over Amenities */}
+            <div className="bg-white/5 rounded-lg p-6 md:p-8 border border-white/10">
+              <h3 className="font-display text-lg font-medium text-white mb-3">
+                Outcomes Over Amenities
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                We track what matters: physician ratios, biological age reduction data,
+                return rates, post-program support. Not thread counts and spa menus.
+              </p>
+            </div>
+
+            {/* Human Expertise Behind Every Score */}
+            <div className="bg-white/5 rounded-lg p-6 md:p-8 border border-white/10">
+              <h3 className="font-display text-lg font-medium text-white mb-3">
+                Human Expertise Behind Every Score
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Every Clarus Index score reflects real evaluation by named experts—
+                physicians, researchers, and industry specialists who stake their
+                reputation on accuracy.
+              </p>
+            </div>
+
+            {/* Your Privacy Is Non-Negotiable */}
+            <div className="bg-white/5 rounded-lg p-6 md:p-8 border border-white/10">
+              <h3 className="font-display text-lg font-medium text-white mb-3">
+                Your Privacy Is Non-Negotiable
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Research Mode provides full access without accounts. We never sell
+                data, share with insurers, or retarget. Your health research remains
+                your business.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Links */}
+      <footer className="px-6 py-6 bg-clarus-white border-t border-stone">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-6 text-sm">
+            <Link href="/privacy" className="text-slate hover:text-clarus-navy">Privacy</Link>
+            <Link href="/terms" className="text-slate hover:text-clarus-navy">Terms</Link>
+            <Link href="/about/methodology" className="text-slate hover:text-clarus-navy">Methodology</Link>
+            <Link href="/inquire" className="text-slate hover:text-clarus-navy">Contact</Link>
+          </div>
+          <p className="text-sm text-slate">
+            © {new Date().getFullYear()} Clarus Vitae. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
