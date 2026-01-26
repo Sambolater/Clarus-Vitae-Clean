@@ -1,10 +1,10 @@
 'use client';
 
 import { type PropertyTier } from '@clarus-vitae/database/types';
-import { TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
+import { TierBadge, ClarusIndexBadge } from '@clarus-vitae/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { formatPriceRange, tierLabels } from '@/lib/properties';
 
@@ -53,18 +53,52 @@ export function PropertyHero({
   editorChoice,
   slug,
 }: PropertyHeroProps) {
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
 
   const heroImage = images.find((img) => img.isFeatured) || images[0];
-  const galleryImages = images.slice(0, 5);
+
+  const openGallery = (index: number) => setActiveImageIndex(index);
+  const closeGallery = () => setActiveImageIndex(null);
+
+  const goNext = useCallback(() => {
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((activeImageIndex + 1) % images.length);
+    }
+  }, [activeImageIndex, images.length]);
+
+  const goPrev = useCallback(() => {
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((activeImageIndex - 1 + images.length) % images.length);
+    }
+  }, [activeImageIndex, images.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (activeImageIndex === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') goNext();
+      else if (e.key === 'ArrowLeft') goPrev();
+      else if (e.key === 'Escape') closeGallery();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [activeImageIndex, goNext, goPrev]);
 
   return (
     <section className="bg-white">
-      {/* Image Gallery */}
+      {/* Hero Image */}
       <div className="relative">
-        {/* Main Image */}
-        <div className="relative h-[400px] md:h-[500px]">
+        <div 
+          className="relative h-[400px] md:h-[500px] cursor-pointer"
+          onClick={() => images.length > 0 && openGallery(0)}
+        >
           {heroImage ? (
             <Image
               src={heroImage.url}
@@ -94,12 +128,9 @@ export function PropertyHero({
             )}
           </div>
 
-          {/* View Gallery Button */}
+          {/* View Gallery hint */}
           {images.length > 1 && (
-            <button
-              onClick={() => setIsGalleryOpen(true)}
-              className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg bg-white/90 px-4 py-2 text-sm font-medium text-clarus-navy transition-colors hover:bg-white"
-            >
+            <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg bg-black/50 px-4 py-2 text-sm font-medium text-white">
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -113,41 +144,10 @@ export function PropertyHero({
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              View All ({images.length})
-            </button>
+              1 / {images.length}
+            </div>
           )}
         </div>
-
-        {/* Thumbnail Strip (Desktop) */}
-        {galleryImages.length > 1 && (
-          <div className="hidden gap-2 border-t border-stone bg-white p-2 md:flex">
-            {galleryImages.map((img, index) => (
-              <button
-                key={img.id}
-                onClick={() => {
-                  setActiveImageIndex(index);
-                  setIsGalleryOpen(true);
-                }}
-                className="relative h-20 w-28 overflow-hidden rounded-md"
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt || `${name} image ${index + 1}`}
-                  fill
-                  className="object-cover transition-opacity hover:opacity-80"
-                />
-              </button>
-            ))}
-            {images.length > 5 && (
-              <button
-                onClick={() => setIsGalleryOpen(true)}
-                className="flex h-20 w-28 items-center justify-center rounded-md bg-stone text-sm text-slate transition-colors hover:bg-stone/80"
-              >
-                +{images.length - 5} more
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Property Info Bar */}
@@ -206,75 +206,74 @@ export function PropertyHero({
         </div>
       </div>
 
-      {/* Full Screen Gallery Modal */}
-      <Modal
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-        title="Property Gallery"
-        size="full"
-      >
-        <div className="relative flex h-full flex-col">
-          {/* Main Image */}
-          <div className="relative flex-1">
+      {/* Fullscreen Gallery */}
+      {activeImageIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
+          onClick={closeGallery}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeGallery}
+            className="absolute top-6 right-6 z-10 p-2 text-white/70 hover:text-white transition-colors"
+            aria-label="Close gallery"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Previous button */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
+              aria-label="Previous image"
+            >
+              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+
+          {/* Next button */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
+              aria-label="Next image"
+            >
+              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
+
+          {/* Main image */}
+          <div
+            className="relative w-full h-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             {images[activeImageIndex] && (
               <Image
                 src={images[activeImageIndex].url}
                 alt={images[activeImageIndex].alt || `${name} image`}
                 fill
                 className="object-contain"
+                sizes="100vw"
+                priority
               />
             )}
-
-            {/* Navigation Arrows */}
-            <button
-              onClick={() =>
-                setActiveImageIndex((prev) =>
-                  prev === 0 ? images.length - 1 : prev - 1
-                )
-              }
-              className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clarus-navy transition-colors hover:bg-white"
-              aria-label="Previous image"
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={() =>
-                setActiveImageIndex((prev) =>
-                  prev === images.length - 1 ? 0 : prev + 1
-                )
-              }
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clarus-navy transition-colors hover:bg-white"
-              aria-label="Next image"
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
           </div>
 
-          {/* Thumbnail Strip */}
-          <div className="flex gap-2 overflow-x-auto border-t border-stone bg-white p-4">
-            {images.map((img, index) => (
-              <button
-                key={img.id}
-                onClick={() => setActiveImageIndex(index)}
-                className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-md ${
-                  index === activeImageIndex ? 'ring-2 ring-clarus-navy' : ''
-                }`}
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt || `${name} thumbnail ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </button>
-            ))}
-          </div>
+          {/* Counter */}
+          {images.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-lg font-medium">
+              {activeImageIndex + 1} / {images.length}
+            </div>
+          )}
         </div>
-      </Modal>
+      )}
     </section>
   );
 }
