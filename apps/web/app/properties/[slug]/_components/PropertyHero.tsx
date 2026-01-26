@@ -265,16 +265,18 @@ export function PropertyHero({
           )}
 
           {/* Main image */}
-          <div className="relative w-full h-full pointer-events-none">
+          <div className="absolute inset-0 z-[5] flex items-center justify-center p-16">
             {images[activeImageIndex] && (
-              <Image
-                src={images[activeImageIndex].url}
-                alt={images[activeImageIndex].alt || `${name} image`}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={images[activeImageIndex].url}
+                  alt={images[activeImageIndex].alt || `${name} image`}
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
             )}
           </div>
 
