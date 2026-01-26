@@ -22,7 +22,38 @@ import {
   PropertyCulturalFitSection,
   PropertyReviewsSection,
   SimilarPropertiesSection,
+  PropertyGallery,
 } from './_components';
+
+// Property-specific gallery images
+const propertyGalleryImages: Record<string, Array<{ url: string; alt: string }>> = {
+  'sha-wellness-clinic': [
+    {
+      url: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Mediterranean clifftop architecture',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Minimalist luxury suite',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Treatment room',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Infinity pool',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Healthy cuisine',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop',
+      alt: 'SHA Wellness Clinic - Mediterranean coastal view',
+    },
+  ],
+};
 
 interface PropertyPageProps {
   params: Promise<{ slug: string }>;
@@ -322,6 +353,11 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         editorChoice={property.editorChoice}
         slug={slug}
       />
+
+      {/* Gallery Section */}
+      {propertyGalleryImages[slug] && (
+        <PropertyGallery images={propertyGalleryImages[slug]} />
+      )}
 
       {/* Main Content */}
       <Container>

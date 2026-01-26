@@ -6,3 +6,4 @@ export { PropertyDarkDataSection } from './PropertyDarkDataSection';
 export { PropertyCulturalFitSection } from './PropertyCulturalFitSection';
 export { PropertyReviewsSection } from './PropertyReviewsSection';
 export { SimilarPropertiesSection } from './SimilarPropertiesSection';
+export { PropertyGallery } from './PropertyGallery';
