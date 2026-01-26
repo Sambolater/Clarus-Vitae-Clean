@@ -58,13 +58,25 @@ export default async function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center px-6 py-20 md:py-28 bg-clarus-white">
-        <div className="max-w-3xl text-center">
-          <h1 className="font-display text-4xl font-medium tracking-tight text-clarus-navy md:text-5xl lg:text-[56px] leading-tight">
+      {/* Hero Section with Luxury Background */}
+      <section className="relative flex flex-col items-center justify-center px-6 py-32 md:py-44 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=80)',
+          }}
+        >
+          {/* Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-clarus-navy/70 via-clarus-navy/50 to-clarus-navy/70" />
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-3xl text-center">
+          <h1 className="font-display text-4xl font-medium tracking-tight text-white md:text-5xl lg:text-[56px] leading-tight drop-shadow-lg">
             Clarity for Life&apos;s Most Important Decisions
           </h1>
-          <p className="mt-6 text-base md:text-lg text-slate leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-6 text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto drop-shadow">
             The trusted research authority for premium wellness decisions. Proprietary
             intelligence on the world&apos;s most exceptional longevity clinics and wellness
             destinations.
@@ -74,7 +86,7 @@ export default async function HomePage() {
           <div className="mt-10">
             <Link
               href="/properties"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-white px-8 text-sm font-medium text-clarus-navy transition-all hover:bg-white/90 hover:scale-105 shadow-lg"
             >
               Explore Properties
             </Link>
