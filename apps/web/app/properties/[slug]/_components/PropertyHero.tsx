@@ -95,9 +95,11 @@ export function PropertyHero({
     <section className="bg-white">
       {/* Hero Image */}
       <div className="relative">
-        <div 
-          className="relative h-[400px] md:h-[500px] cursor-pointer"
+        <button
+          type="button"
+          className="relative h-[400px] md:h-[500px] w-full cursor-pointer block"
           onClick={() => images.length > 0 && openGallery(0)}
+          aria-label={`View gallery for ${name}`}
         >
           {heroImage ? (
             <Image
@@ -147,7 +149,7 @@ export function PropertyHero({
               1 / {images.length}
             </div>
           )}
-        </div>
+        </button>
       </div>
 
       {/* Property Info Bar */}
@@ -210,10 +212,21 @@ export function PropertyHero({
       {activeImageIndex !== null && (
         <div
           className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-          onClick={closeGallery}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image gallery"
         >
+          {/* Backdrop - click to close */}
+          <button
+            type="button"
+            className="absolute inset-0 w-full h-full cursor-default"
+            onClick={closeGallery}
+            aria-label="Close gallery"
+          />
+
           {/* Close button */}
           <button
+            type="button"
             onClick={closeGallery}
             className="absolute top-6 right-6 z-10 p-2 text-white/70 hover:text-white transition-colors"
             aria-label="Close gallery"
@@ -226,7 +239,8 @@ export function PropertyHero({
           {/* Previous button */}
           {images.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              type="button"
+              onClick={goPrev}
               className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
               aria-label="Previous image"
             >
@@ -239,7 +253,8 @@ export function PropertyHero({
           {/* Next button */}
           {images.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              type="button"
+              onClick={goNext}
               className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
               aria-label="Next image"
             >
@@ -250,10 +265,7 @@ export function PropertyHero({
           )}
 
           {/* Main image */}
-          <div
-            className="relative w-full h-full"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative w-full h-full pointer-events-none">
             {images[activeImageIndex] && (
               <Image
                 src={images[activeImageIndex].url}
