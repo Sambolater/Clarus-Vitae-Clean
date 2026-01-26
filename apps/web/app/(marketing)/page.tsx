@@ -64,7 +64,7 @@ export default async function HomePage() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1569587112025-0d460e81a126?w=1920&q=80)',
+            backgroundImage: 'url(https://images.unsplash.com/photo-1619166272697-07b9aac1116a?w=1920&q=80)',
           }}
         >
           {/* Overlay for text readability */}
