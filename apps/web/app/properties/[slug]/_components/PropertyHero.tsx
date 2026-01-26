@@ -65,8 +65,6 @@ export function PropertyHero({
     return 0;
   });
 
-  const currentImage: PropertyImage | undefined = sortedImages[currentIndex] ?? sortedImages[0];
-
   const goNext = useCallback(() => {
     if (sortedImages.length <= 1 || isTransitioning) return;
     setIsTransitioning(true);
@@ -123,18 +121,24 @@ export function PropertyHero({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="relative h-[400px] md:h-[500px] w-full">
-          {currentImage ? (
-            <Image
-              key={currentImage.id}
-              src={currentImage.url}
-              alt={currentImage.alt || name}
-              fill
-              className="object-cover transition-opacity duration-400 ease-out"
-              priority={currentIndex === 0}
-            />
+        <div className="relative h-[400px] md:h-[500px] w-full bg-stone">
+          {/* Render all images stacked, only current one visible */}
+          {sortedImages.length > 0 ? (
+            sortedImages.map((img, index) => (
+              <Image
+                key={img.id}
+                src={img.url}
+                alt={img.alt || name}
+                fill
+                className={`object-cover transition-opacity duration-500 ease-in-out ${
+                  index === currentIndex ? 'opacity-100 z-[1]' : 'opacity-0 z-0'
+                }`}
+                priority={index === 0}
+                sizes="100vw"
+              />
+            ))
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-stone">
+            <div className="flex h-full w-full items-center justify-center">
               <span className="text-slate">No image available</span>
             </div>
           )}
