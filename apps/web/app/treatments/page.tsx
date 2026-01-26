@@ -142,6 +142,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
         evidenceLevel: true,
         priceRangeMin: true,
         priceRangeMax: true,
+        imageUrl: true,
         _count: {
           select: { properties: true },
         },
@@ -162,6 +163,7 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
     priceRangeMin: treatment.priceRangeMin,
     priceRangeMax: treatment.priceRangeMax,
     propertiesCount: treatment._count.properties,
+    imageUrl: treatment.imageUrl,
   }));
 
   // Sort by evidence level if needed
