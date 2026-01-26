@@ -376,6 +376,8 @@ model Treatment {
   priceRangeMin   Int?    // Typical minimum price
   priceRangeMax   Int?    // Typical maximum price
 
+  imageUrl String? // High-quality treatment image URL
+
   potentialRisks    String?  @db.Text // Known risks
   contraindications String[] // Who should not receive treatment
 

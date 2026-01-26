@@ -16,6 +16,8 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed-treatment-images": "tsx prisma/seed-treatment-images.ts",
+    "db:seed-gallery-images": "tsx prisma/seed-gallery-images.ts",
     "search:init": "tsx scripts/search-init.ts",
     "search:reindex": "tsx scripts/search-reindex.ts",
     "type-check": "tsc --noEmit",
