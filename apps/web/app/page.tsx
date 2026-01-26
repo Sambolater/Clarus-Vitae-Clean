@@ -1,6 +1,9 @@
 import { db } from '@clarus-vitae/database';
 import Link from 'next/link';
 
+// Force dynamic rendering - database access at runtime
+export const dynamic = 'force-dynamic';
+
 // Type for featured property
 interface FeaturedProperty {
   id: string;
