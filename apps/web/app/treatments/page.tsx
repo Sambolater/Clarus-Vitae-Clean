@@ -71,6 +71,8 @@ async function getTreatments(searchParams: SearchParams): Promise<TreatmentsResp
   // Build where clause
   const where: Record<string, unknown> = {
     published: true,
+    // Only show treatments that have at least one property offering them
+    properties: { some: {} },
   };
 
   if (filters.category && filters.category.length > 0) {
