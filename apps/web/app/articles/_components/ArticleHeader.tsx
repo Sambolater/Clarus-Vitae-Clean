@@ -77,10 +77,7 @@ export function ArticleHeader({
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               {/* Author */}
               {author && (
-                <Link
-                  href={`/team/${author.slug}`}
-                  className="flex items-center gap-3 hover:opacity-80"
-                >
+                <div className="flex items-center gap-3">
                   {author.imageUrl ? (
                     <img
                       src={author.imageUrl}
@@ -98,7 +95,7 @@ export function ArticleHeader({
                       <p className="text-sm text-slate">{author.title}</p>
                     )}
                   </div>
-                </Link>
+                </div>
               )}
 
               {/* Divider */}

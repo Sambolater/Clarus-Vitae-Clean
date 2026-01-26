@@ -390,7 +390,7 @@ export default function MethodologyPage() {
             <SubHeading>Data Sources</SubHeading>
             <ul className="mt-4 space-y-3">
               {[
-                'On-site evaluations by our advisory team',
+                'Comprehensive property research and verification',
                 'Verified guest outcome reports',
                 'Direct property research and verification',
                 'Medical credential verification',
@@ -500,7 +500,7 @@ export default function MethodologyPage() {
                 </h4>
               </div>
               <p className="mt-3 text-slate">
-                Properties where a member of our team has completed a full program.
+                Properties verified through comprehensive research and guest feedback.
                 This designation indicates first-hand verification of the experience
                 and outcomes claimed by the property.
               </p>
@@ -590,7 +590,7 @@ export default function MethodologyPage() {
                 </div>
                 <div>
                   <h4 className="font-medium text-clarus-navy">
-                    All assessments are signed by named experts.
+                    All assessments use transparent, verifiable criteria.
                   </h4>
                   <p className="mt-1 text-sm text-slate">
                     Every evaluation carries the name and credentials of the team member
@@ -606,16 +606,16 @@ export default function MethodologyPage() {
         <section className="mt-20 border-t border-stone pt-12">
           <div className="text-center">
             <h3 className="font-display text-2xl font-medium text-clarus-navy">
-              Meet Our Evaluators
+              Ready to Find Your Retreat?
             </h3>
             <p className="mt-4 text-slate">
-              Learn more about the experts who assess each property.
+              Explore our curated selection of wellness destinations.
             </p>
             <Link
-              href="/team"
+              href="/properties"
               className="mt-6 inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
             >
-              View Advisory Team
+              Browse Retreats
             </Link>
           </div>
         </section>
