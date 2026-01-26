@@ -4,7 +4,7 @@ import { type PropertyTier } from '@clarus-vitae/database/types';
 import { TierBadge, ClarusIndexBadge } from '@clarus-vitae/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 import { formatPriceRange, tierLabels } from '@/lib/properties';
 
@@ -53,61 +53,85 @@ export function PropertyHero({
   editorChoice,
   slug,
 }: PropertyHeroProps) {
-  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
-  const heroImage = images.find((img) => img.isFeatured) || images[0];
+  // Sort images to put featured first
+  const sortedImages = [...images].sort((a, b) => {
+    if (a.isFeatured && !b.isFeatured) return -1;
+    if (!a.isFeatured && b.isFeatured) return 1;
+    return 0;
+  });
 
-  const openGallery = (index: number) => setActiveImageIndex(index);
-  const closeGallery = () => setActiveImageIndex(null);
+  const currentImage: PropertyImage | undefined = sortedImages[currentIndex] ?? sortedImages[0];
 
   const goNext = useCallback(() => {
-    if (activeImageIndex !== null) {
-      setActiveImageIndex((activeImageIndex + 1) % images.length);
-    }
-  }, [activeImageIndex, images.length]);
+    if (sortedImages.length <= 1 || isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev + 1) % sortedImages.length);
+  }, [sortedImages.length, isTransitioning]);
 
   const goPrev = useCallback(() => {
-    if (activeImageIndex !== null) {
-      setActiveImageIndex((activeImageIndex - 1 + images.length) % images.length);
-    }
-  }, [activeImageIndex, images.length]);
+    if (sortedImages.length <= 1 || isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev - 1 + sortedImages.length) % sortedImages.length);
+  }, [sortedImages.length, isTransitioning]);
 
-  // Keyboard navigation
+  // Reset transition lock
   useEffect(() => {
-    if (activeImageIndex === null) return;
+    if (isTransitioning) {
+      const timer = setTimeout(() => setIsTransitioning(false), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') goNext();
-      else if (e.key === 'ArrowLeft') goPrev();
-      else if (e.key === 'Escape') closeGallery();
-    };
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.targetTouches[0];
+    if (touch) touchStartX.current = touch.clientX;
+  };
 
-    window.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const touch = e.targetTouches[0];
+    if (touch) touchEndX.current = touch.clientX;
+  };
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [activeImageIndex, goNext, goPrev]);
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+
+    if (diff > threshold) {
+      goNext();
+    } else if (diff < -threshold) {
+      goPrev();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   return (
     <section className="bg-white">
-      {/* Hero Image */}
-      <div className="relative">
-        <button
-          type="button"
-          className="relative h-[400px] md:h-[500px] w-full cursor-pointer block"
-          onClick={() => images.length > 0 && openGallery(0)}
-          aria-label={`View gallery for ${name}`}
-        >
-          {heroImage ? (
+      {/* Hero Gallery */}
+      <div 
+        className="relative overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="relative h-[400px] md:h-[500px] w-full">
+          {currentImage ? (
             <Image
-              src={heroImage.url}
-              alt={heroImage.alt || name}
+              key={currentImage.id}
+              src={currentImage.url}
+              alt={currentImage.alt || name}
               fill
-              className="object-cover"
-              priority
+              className="object-cover transition-opacity duration-400 ease-out"
+              priority={currentIndex === 0}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-stone">
@@ -116,7 +140,7 @@ export function PropertyHero({
           )}
 
           {/* Overlay badges */}
-          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2 z-10">
             <TierBadge tier={tier} />
             {verifiedExcellence && (
               <span className="rounded-md bg-verification-green px-3 py-1 text-xs font-medium text-white">
@@ -130,26 +154,66 @@ export function PropertyHero({
             )}
           </div>
 
-          {/* View Gallery hint */}
-          {images.length > 1 && (
-            <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg bg-black/50 px-4 py-2 text-sm font-medium text-white">
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          {/* Navigation Arrows */}
+          {sortedImages.length > 1 && (
+            <>
+              {/* Previous Arrow */}
+              <button
+                type="button"
+                onClick={goPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 text-clarus-navy shadow-lg backdrop-blur-sm transition-all duration-200 hover:bg-white hover:scale-105 active:scale-95"
+                aria-label="Previous image"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              1 / {images.length}
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Next Arrow */}
+              <button
+                type="button"
+                onClick={goNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 text-clarus-navy shadow-lg backdrop-blur-sm transition-all duration-200 hover:bg-white hover:scale-105 active:scale-95"
+                aria-label="Next image"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+
+          {/* Image Counter */}
+          {sortedImages.length > 1 && (
+            <div className="absolute bottom-4 right-4 z-10 rounded-full bg-white/85 px-4 py-2 text-sm font-medium text-clarus-navy shadow-lg backdrop-blur-sm">
+              {currentIndex + 1} / {sortedImages.length}
             </div>
           )}
-        </button>
+
+          {/* Dot Indicators */}
+          {sortedImages.length > 1 && sortedImages.length <= 8 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+              {sortedImages.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => {
+                    if (!isTransitioning) {
+                      setIsTransitioning(true);
+                      setCurrentIndex(index);
+                    }
+                  }}
+                  className={`h-2 w-2 rounded-full transition-all duration-200 ${
+                    index === currentIndex
+                      ? 'bg-white w-6'
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Property Info Bar */}
@@ -208,86 +272,6 @@ export function PropertyHero({
         </div>
       </div>
 
-      {/* Fullscreen Gallery */}
-      {activeImageIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Image gallery"
-        >
-          {/* Backdrop - click to close */}
-          <button
-            type="button"
-            className="absolute inset-0 w-full h-full cursor-default"
-            onClick={closeGallery}
-            aria-label="Close gallery"
-          />
-
-          {/* Close button */}
-          <button
-            type="button"
-            onClick={closeGallery}
-            className="absolute top-6 right-6 z-10 p-2 text-white/70 hover:text-white transition-colors"
-            aria-label="Close gallery"
-          >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          {/* Previous button */}
-          {images.length > 1 && (
-            <button
-              type="button"
-              onClick={goPrev}
-              className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
-              aria-label="Previous image"
-            >
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-
-          {/* Next button */}
-          {images.length > 1 && (
-            <button
-              type="button"
-              onClick={goNext}
-              className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-4 text-white/70 hover:text-white transition-colors"
-              aria-label="Next image"
-            >
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
-
-          {/* Main image */}
-          <div className="absolute inset-0 z-[5] flex items-center justify-center p-16">
-            {images[activeImageIndex] && (
-              <div className="relative w-full h-full">
-                <Image
-                  src={images[activeImageIndex].url}
-                  alt={images[activeImageIndex].alt || `${name} image`}
-                  fill
-                  className="object-contain"
-                  sizes="100vw"
-                  priority
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Counter */}
-          {images.length > 1 && (
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-lg font-medium">
-              {activeImageIndex + 1} / {images.length}
-            </div>
-          )}
-        </div>
-      )}
     </section>
   );
 }
