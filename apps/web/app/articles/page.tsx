@@ -30,9 +30,18 @@ const categoryDescriptions: Record<string, string> = {
 export default async function ArticlesPage({ searchParams }: ArticlesPageProps) {
   const category = searchParams.category;
 
-  const articles = category
-    ? await getArticlesByCategory(category)
-    : await getArticles();
+  let articles: Awaited<ReturnType<typeof getArticles>> = [];
+  let sanityConfigured = true;
+  
+  try {
+    articles = category
+      ? await getArticlesByCategory(category)
+      : await getArticles();
+  } catch (error) {
+    // Sanity CMS not configured - show coming soon state
+    sanityConfigured = false;
+    console.warn('Sanity CMS not configured:', error);
+  }
 
   const description = category
     ? categoryDescriptions[category]
@@ -64,7 +73,26 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
       {/* Articles Grid */}
       <section className="py-12 md:py-16">
         <Container>
-          {articles.length > 0 ? (
+          {!sanityConfigured ? (
+            <div className="py-16 text-center">
+              <div className="mx-auto max-w-md">
+                <div className="mb-6 text-5xl">📝</div>
+                <h2 className="text-2xl font-serif font-medium text-clarus-navy mb-4">
+                  Editorial Coming Soon
+                </h2>
+                <p className="text-slate mb-6">
+                  Our editorial team is preparing in-depth articles on longevity science, 
+                  treatment deep dives, and destination guides. Check back soon.
+                </p>
+                <Link
+                  href="/properties"
+                  className="inline-flex h-10 items-center justify-center rounded-md bg-clarus-navy px-6 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
+                >
+                  Explore Retreats
+                </Link>
+              </div>
+            </div>
+          ) : articles.length > 0 ? (
             <ArticleGrid articles={articles} />
           ) : (
             <div className="py-16 text-center">
