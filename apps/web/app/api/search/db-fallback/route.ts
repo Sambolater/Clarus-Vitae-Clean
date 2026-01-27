@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
         take: limit,
       });
 
-      results.properties = properties.map((p) => ({
+      results.properties = properties.map((p: typeof properties[number]) => ({
         id: p.id,
         slug: p.slug,
         name: p.name,
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
         take: limit,
       });
 
-      results.treatments = treatments.map((t) => ({
+      results.treatments = treatments.map((t: typeof treatments[number]) => ({
         id: t.id,
         slug: t.slug,
         name: t.name,

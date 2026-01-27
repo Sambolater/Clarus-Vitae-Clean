@@ -70,7 +70,7 @@ async function databaseSearch(query: string, limit: number = 20) {
   ]);
 
   return {
-    properties: properties.map((p) => ({
+    properties: properties.map((p: typeof properties[number]) => ({
       id: p.id,
       slug: p.slug,
       name: p.name,
@@ -81,7 +81,7 @@ async function databaseSearch(query: string, limit: number = 20) {
       image: p.images[0] || null,
       url: `/properties/${p.slug}`,
     })),
-    treatments: treatments.map((t) => ({
+    treatments: treatments.map((t: typeof treatments[number]) => ({
       id: t.id,
       slug: t.slug,
       name: t.name,
