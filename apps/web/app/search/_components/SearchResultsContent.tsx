@@ -2,9 +2,10 @@
  * SearchResultsContent Component
  *
  * Server-side rendered search results with tabs and filtering.
+ * Falls back to database search when Meilisearch is unavailable.
  */
 
-import { searchAll } from '@clarus-vitae/database';
+import { db } from '@clarus-vitae/database';
 import { EmptyState, Alert } from '@clarus-vitae/ui';
 import Link from 'next/link';
 
@@ -12,6 +13,96 @@ import { SearchResultsList } from './SearchResultsList';
 
 interface SearchResultsContentProps {
   searchParams: { [key: string]: string | string[] | undefined };
+}
+
+// Database fallback search
+async function databaseSearch(query: string, limit: number = 20) {
+  const [properties, treatments] = await Promise.all([
+    db.property.findMany({
+      where: {
+        published: true,
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } },
+          { description: { contains: query, mode: 'insensitive' } },
+          { city: { contains: query, mode: 'insensitive' } },
+          { country: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        description: true,
+        city: true,
+        country: true,
+        tier: true,
+        overallScore: true,
+        images: {
+          where: { isFeatured: true },
+          take: 1,
+          select: { url: true, alt: true },
+        },
+      },
+      orderBy: { overallScore: 'desc' },
+      take: limit,
+    }),
+    db.treatment.findMany({
+      where: {
+        published: true,
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } },
+          { description: { contains: query, mode: 'insensitive' } },
+          { category: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        description: true,
+        category: true,
+        evidenceLevel: true,
+        _count: { select: { properties: true } },
+      },
+      orderBy: { name: 'asc' },
+      take: limit,
+    }),
+  ]);
+
+  return {
+    properties: properties.map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      description: p.description ? p.description.substring(0, 200) + (p.description.length > 200 ? '...' : '') : '',
+      location: { city: p.city, country: p.country },
+      tier: p.tier,
+      score: p.overallScore,
+      image: p.images[0] || null,
+      url: `/properties/${p.slug}`,
+    })),
+    treatments: treatments.map((t) => ({
+      id: t.id,
+      slug: t.slug,
+      name: t.name,
+      description: t.description ? t.description.substring(0, 200) + (t.description.length > 200 ? '...' : '') : '',
+      category: t.category,
+      evidenceLevel: t.evidenceLevel,
+      propertyCount: t._count.properties,
+      url: `/treatments/${t.slug}`,
+    })),
+    articles: [] as Array<{
+      id: string;
+      slug: string;
+      title: string;
+      excerpt: string | null;
+      category: string;
+      authorName: string | null;
+      image: string | null;
+      publishedAt: string | null;
+      url: string;
+    }>,
+  };
 }
 
 export async function SearchResultsContent({ searchParams }: SearchResultsContentProps) {
@@ -23,12 +114,13 @@ export async function SearchResultsContent({ searchParams }: SearchResultsConten
   }
 
   try {
-    const results = await searchAll(query, { limit: 20 });
+    // Use database search directly (Meilisearch not configured on Vercel)
+    const results = await databaseSearch(query, 20);
 
     const totalCount =
-      results.properties.totalHits +
-      results.treatments.totalHits +
-      results.articles.totalHits;
+      results.properties.length +
+      results.treatments.length +
+      results.articles.length;
 
     if (totalCount === 0) {
       return (
@@ -48,65 +140,21 @@ export async function SearchResultsContent({ searchParams }: SearchResultsConten
       );
     }
 
-    // Transform results for the client component
-    const transformedResults = {
-      properties: results.properties.hits.map((hit) => ({
-        id: hit.id,
-        slug: hit.slug,
-        name: hit.name,
-        description: hit.description.substring(0, 200) + (hit.description.length > 200 ? '...' : ''),
-        location: {
-          city: hit.city,
-          country: hit.country,
-        },
-        tier: hit.tier,
-        score: hit.overallScore,
-        image: hit.featuredImageUrl
-          ? {
-              url: hit.featuredImageUrl,
-              alt: hit.featuredImageAlt,
-            }
-          : null,
-        url: `/properties/${hit.slug}`,
-      })),
-      treatments: results.treatments.hits.map((hit) => ({
-        id: hit.id,
-        slug: hit.slug,
-        name: hit.name,
-        description: hit.description.substring(0, 200) + (hit.description.length > 200 ? '...' : ''),
-        category: hit.category,
-        evidenceLevel: hit.evidenceLevel,
-        propertyCount: hit.propertyCount,
-        url: `/treatments/${hit.slug}`,
-      })),
-      articles: results.articles.hits.map((hit) => ({
-        id: hit.id,
-        slug: hit.slug,
-        title: hit.title,
-        excerpt: hit.excerpt,
-        category: hit.category,
-        authorName: hit.authorName,
-        image: hit.featuredImage,
-        publishedAt: hit.publishedAt ? new Date(hit.publishedAt).toISOString() : null,
-        url: `/articles/${hit.slug}`,
-      })),
-    };
-
     const counts = {
       all: totalCount,
-      properties: results.properties.totalHits,
-      treatments: results.treatments.totalHits,
-      articles: results.articles.totalHits,
+      properties: results.properties.length,
+      treatments: results.treatments.length,
+      articles: results.articles.length,
     };
 
     return (
       <div>
         <p className="mb-6 text-sm text-slate">
-          Found {totalCount} results for &ldquo;{query}&rdquo; in {results.totalProcessingTimeMs}ms
+          Found {totalCount} results for &ldquo;{query}&rdquo;
         </p>
 
         <SearchResultsList
-          results={transformedResults}
+          results={results}
           counts={counts}
           initialType={type}
         />
@@ -115,19 +163,14 @@ export async function SearchResultsContent({ searchParams }: SearchResultsConten
   } catch (error) {
     console.error('Search error:', error);
 
-    // Check if Meilisearch is unavailable
-    const isMeilisearchError =
-      error instanceof Error && error.message.includes('ECONNREFUSED');
-
     return (
       <Alert
         variant="error"
-        title={isMeilisearchError ? 'Search service unavailable' : 'Search failed'}
+        title="Search failed"
         className="my-8"
       >
-        {isMeilisearchError
-          ? 'The search service is temporarily unavailable. Please try again later or browse our properties directly.'
-          : 'An error occurred while searching. Please try again.'}
+        An error occurred while searching. Please try again or{' '}
+        <Link href="/properties" className="underline">browse properties directly</Link>.
       </Alert>
     );
   }
