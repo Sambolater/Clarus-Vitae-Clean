@@ -1,6 +1,8 @@
 import { db } from '@clarus-vitae/database';
 import Link from 'next/link';
 
+import { HomeSearch } from '../_components/HomeSearch';
+
 // Force dynamic rendering - database access at runtime
 export const dynamic = 'force-dynamic';
 
@@ -82,14 +84,9 @@ export default async function HomePage() {
             destinations.
           </p>
 
-          {/* CTA Button */}
-          <div className="mt-10">
-            <Link
-              href="/properties"
-              className="inline-flex h-12 items-center justify-center rounded-md bg-white px-8 text-sm font-medium text-clarus-navy transition-all hover:bg-white/90 hover:scale-105 shadow-lg"
-            >
-              Explore Properties
-            </Link>
+          {/* Search */}
+          <div className="mt-10 w-full">
+            <HomeSearch />
           </div>
         </div>
       </section>
