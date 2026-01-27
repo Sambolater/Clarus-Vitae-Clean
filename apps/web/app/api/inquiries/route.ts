@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
               <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Phone:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.phone || 'N/A'}</td></tr>
               <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Goals:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.primaryGoals?.join(', ') || 'N/A'}</td></tr>
               <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Budget:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.budgetRange || 'N/A'}</td></tr>
-              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Timeline:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.preferredTimeline || 'N/A'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Preferred Dates:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.preferredDates || 'N/A'}</td></tr>
               <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Message:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.message || 'N/A'}</td></tr>
             </table>
           `,
