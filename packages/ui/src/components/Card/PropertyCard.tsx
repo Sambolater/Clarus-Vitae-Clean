@@ -74,13 +74,14 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
     const scoreTier = getScoreTier(score);
 
     return (
-      <div
-        ref={ref}
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={href}
         className={cn(
-          'group relative overflow-hidden rounded-lg bg-white shadow-card transition-shadow hover:shadow-card-hover',
+          'group relative block overflow-hidden rounded-lg bg-white shadow-card transition-shadow hover:shadow-card-hover',
           className
         )}
-        {...props}
+        {...(props as HTMLAttributes<HTMLAnchorElement>)}
       >
         {/* Image Container */}
         <div className="relative aspect-[3/2] overflow-hidden bg-stone">
@@ -168,17 +169,12 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
               <span className="text-xs uppercase tracking-wide text-slate">Index</span>
               <span className={cn('font-display text-2xl', scoreTier.color)}>{score}</span>
             </div>
-            {href && (
-              <a
-                href={href}
-                className="text-sm font-medium text-clarus-navy hover:underline"
-              >
-                View Profile
-              </a>
-            )}
+            <span className="text-sm font-medium text-clarus-navy group-hover:underline">
+              View Profile →
+            </span>
           </div>
         </div>
-      </div>
+      </a>
     );
   }
 );
