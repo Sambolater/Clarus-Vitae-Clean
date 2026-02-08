@@ -382,8 +382,9 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
           />
         </div>
 
-        {/* Treatments & Diagnostics (Tier 1 & 2) */}
-        {(property.tier === 'TIER_1' || property.tier === 'TIER_2') && (
+        {/* Treatments & Diagnostics (Tier 1 & 2, only when data exists) */}
+        {(property.tier === 'TIER_1' || property.tier === 'TIER_2') &&
+          (property.treatments.length > 0 || property.diagnostics.length > 0 || property.equipment.length > 0) && (
           <div className="border-t border-stone">
             <PropertyTreatmentsSection
               treatments={property.treatments.map((pt: any) => ({

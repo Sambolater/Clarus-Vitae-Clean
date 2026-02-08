@@ -140,9 +140,10 @@ const nextConfig = {
     ];
   },
 
-  // Redirect www to non-www (SEO best practice)
+  // Redirects
   redirects: async () => {
     return [
+      // www to non-www (SEO best practice)
       {
         source: '/:path*',
         has: [
@@ -152,6 +153,32 @@ const nextConfig = {
           },
         ],
         destination: 'https://clarusvitae.com/:path*',
+        permanent: true,
+      },
+      // Route consolidation
+      {
+        source: '/contact',
+        destination: '/inquire',
+        permanent: true,
+      },
+      {
+        source: '/retreats',
+        destination: '/properties',
+        permanent: true,
+      },
+      {
+        source: '/longevity',
+        destination: '/properties',
+        permanent: true,
+      },
+      {
+        source: '/about',
+        destination: '/about/methodology',
+        permanent: true,
+      },
+      {
+        source: '/methodology',
+        destination: '/about/methodology',
         permanent: true,
       },
     ];
