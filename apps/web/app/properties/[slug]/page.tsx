@@ -5,14 +5,15 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-import { SiteHeader } from '../../_components/SiteHeader';
-import { SiteFooter } from '../../_components/SiteFooter';
 import { JsonLd } from '@/components/JsonLd';
 import { tierLabels, focusAreaLabels } from '@/lib/properties';
 import {
   generatePropertyStructuredData,
   generateBreadcrumbStructuredData,
 } from '@/lib/structured-data';
+
+import { SiteFooter } from '../../_components/SiteFooter';
+import { SiteHeader } from '../../_components/SiteHeader';
 
 import {
   PropertyHero,

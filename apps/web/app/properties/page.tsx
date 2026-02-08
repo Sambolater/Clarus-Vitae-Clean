@@ -6,8 +6,9 @@ import { Suspense } from 'react';
 export const dynamic = 'force-dynamic';
 
 import { type PropertyListItem, type PropertiesResponse } from '@/lib/properties';
-import { SiteHeader } from '../_components/SiteHeader';
+
 import { SiteFooter } from '../_components/SiteFooter';
+import { SiteHeader } from '../_components/SiteHeader';
 
 import { MobileFilterDrawer } from './_components/MobileFilterDrawer';
 import { PropertyFilters } from './_components/PropertyFilters';
@@ -255,7 +256,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate">
             Explore our curated selection of the world&apos;s most exceptional wellness and longevity
-            destinations, each evaluated by our expert advisory team.
+            destinations, each independently evaluated.
           </p>
         </Container>
       </section>

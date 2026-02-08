@@ -14,9 +14,6 @@ export function SiteFooter() {
             <Link href="/terms" className="text-slate hover:text-clarus-navy transition-colors">
               Terms
             </Link>
-            <Link href="/about/methodology" className="text-slate hover:text-clarus-navy transition-colors">
-              Methodology
-            </Link>
             <Link href="/inquire" className="text-slate hover:text-clarus-navy transition-colors">
               Contact
             </Link>

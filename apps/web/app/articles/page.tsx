@@ -11,7 +11,7 @@ import { ArticleGrid } from './_components/ArticleGrid';
 export const metadata: Metadata = {
   title: 'Articles | Clarus Vitae',
   description:
-    'Expert insights on longevity, wellness trends, treatment deep dives, and destination guides from the Clarus Vitae editorial team.',
+    'Insights on longevity, wellness trends, treatment deep dives, and destination guides from Clarus Vitae.',
 };
 
 interface ArticlesPageProps {
@@ -36,7 +36,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
 
   const description = category
     ? categoryDescriptions[category]
-    : 'Expert insights and analysis from the Clarus Vitae editorial team.';
+    : 'Insights and analysis from Clarus Vitae.';
 
   return (
     <main className="min-h-screen bg-clarus-white">

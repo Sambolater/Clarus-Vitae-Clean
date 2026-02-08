@@ -2,9 +2,9 @@ import { db } from '@clarus-vitae/database';
 import { Container } from '@clarus-vitae/ui';
 import Link from 'next/link';
 
-import { SiteHeader } from './_components/SiteHeader';
-import { SiteFooter } from './_components/SiteFooter';
 import { HomeSearch } from './_components/HomeSearch';
+import { SiteFooter } from './_components/SiteFooter';
+import { SiteHeader } from './_components/SiteHeader';
 
 interface FeaturedProperty {
   id: string;
@@ -152,7 +152,7 @@ export default async function HomePage() {
               Featured Properties
             </h2>
             <p className="mt-3 text-slate">
-              Exceptional destinations evaluated by our advisory team
+              Exceptional destinations, independently evaluated
             </p>
           </div>
 
@@ -241,7 +241,7 @@ export default async function HomePage() {
               <h3 className="font-display text-xl text-white">We Evaluate, Not Aggregate</h3>
               <p className="mt-3 text-sm text-white/70 leading-relaxed">
                 Unlike directories that list everything, we cover only ~200 exceptional
-                properties globally. Each is personally assessed by our advisory team
+                properties globally. Each is independently assessed
                 against rigorous criteria.
               </p>
             </div>
@@ -257,11 +257,11 @@ export default async function HomePage() {
 
             {/* Card 3 */}
             <div className="rounded-lg bg-white/5 p-6 md:p-8">
-              <h3 className="font-display text-xl text-white">Human Expertise Behind Every Score</h3>
+              <h3 className="font-display text-xl text-white">Research-Backed Scoring</h3>
               <p className="mt-3 text-sm text-white/70 leading-relaxed">
-                Every Clarus Index score reflects real evaluation by named experts—
-                physicians, researchers, and industry specialists who stake their
-                reputation on accuracy.
+                Every Clarus Index score reflects thorough research and evaluation—
+                drawing on medical credentials, published outcomes, and verified
+                guest experiences.
               </p>
             </div>
 

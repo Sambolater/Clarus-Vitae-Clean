@@ -224,7 +224,7 @@ export async function GET(request: NextRequest) {
       },
       reviewer: {
         name: review.isTeamReview
-          ? review.teamMember?.name || 'Clarus Team'
+          ? review.teamMember?.name || 'Clarus Vitae'
           : review.reviewerName || 'Verified Guest',
         isTeamReview: review.isTeamReview,
       },

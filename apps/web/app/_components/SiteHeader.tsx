@@ -8,8 +8,7 @@ import { useState } from 'react';
 const navLinks = [
   { label: 'Properties', href: '/properties' },
   { label: 'Treatments', href: '/treatments' },
-  { label: 'The Index', href: '/about/methodology' },
-  { label: 'About', href: '/team' },
+  { label: 'Compare', href: '/compare' },
 ];
 
 export function SiteHeader() {

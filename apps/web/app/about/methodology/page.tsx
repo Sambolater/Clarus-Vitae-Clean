@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'The Clarus Index Methodology',
   description:
-    'Our proprietary framework for evaluating the world\'s finest wellness destinations. Transparent scoring across five dimensions with tier-specific criteria.',
+    'A transparent framework for evaluating the world\'s finest wellness destinations. Scoring across five dimensions with tier-specific criteria.',
 };
 
 function SectionHeading({
@@ -92,9 +92,9 @@ export default function MethodologyPage() {
             The Clarus Index
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate leading-relaxed">
-            Our proprietary framework for evaluating the world&apos;s finest wellness
-            destinations. Unlike star ratings or crowd-sourced reviews, our scoring is
-            based on expert assessment across dimensions that matter for transformative
+            A transparent framework for evaluating the world&apos;s finest wellness
+            destinations. Unlike star ratings or crowd-sourced reviews, scoring is
+            based on comprehensive research across dimensions that matter for transformative
             health outcomes.
           </p>
         </div>
@@ -390,7 +390,7 @@ export default function MethodologyPage() {
             <SubHeading>Data Sources</SubHeading>
             <ul className="mt-4 space-y-3">
               {[
-                'On-site evaluations by our advisory team',
+                'On-site evaluations and property visits',
                 'Verified guest outcome reports',
                 'Direct property research and verification',
                 'Medical credential verification',
@@ -477,7 +477,7 @@ export default function MethodologyPage() {
               <p className="mt-3 text-slate">
                 Properties that excel in specific categories, such as &quot;Best for Executive
                 Burnout,&quot; &quot;Best for Longevity,&quot; or &quot;Best for Post-Surgery
-                Recovery.&quot; Selected by our editorial team based on deep expertise.
+                Recovery.&quot; Selected based on comprehensive research and evaluation.
               </p>
             </div>
 
@@ -500,7 +500,7 @@ export default function MethodologyPage() {
                 </h4>
               </div>
               <p className="mt-3 text-slate">
-                Properties where a member of our team has completed a full program.
+                Properties where a full program has been completed and independently verified.
                 This designation indicates first-hand verification of the experience
                 and outcomes claimed by the property.
               </p>
@@ -559,10 +559,10 @@ export default function MethodologyPage() {
                 </div>
                 <div>
                   <h4 className="font-medium text-clarus-navy">
-                    Editorial and partnerships teams operate independently.
+                    Scoring and partnerships operate independently.
                   </h4>
                   <p className="mt-1 text-sm text-slate">
-                    Our scoring team has no knowledge of commercial relationships.
+                    Scoring has no knowledge of commercial relationships.
                     Partnership discussions never influence assessment processes.
                   </p>
                 </div>
@@ -590,11 +590,11 @@ export default function MethodologyPage() {
                 </div>
                 <div>
                   <h4 className="font-medium text-clarus-navy">
-                    All assessments are signed by named experts.
+                    All assessments are transparent and documented.
                   </h4>
                   <p className="mt-1 text-sm text-slate">
-                    Every evaluation carries the name and credentials of the team member
-                    who conducted it. Anonymous claims have no place in our methodology.
+                    Every evaluation is based on documented research and verifiable criteria.
+                    Anonymous claims have no place in this methodology.
                   </p>
                 </div>
               </div>
@@ -606,16 +606,16 @@ export default function MethodologyPage() {
         <section className="mt-20 border-t border-stone pt-12">
           <div className="text-center">
             <h3 className="font-display text-2xl font-medium text-clarus-navy">
-              Meet Our Evaluators
+              Explore Properties
             </h3>
             <p className="mt-4 text-slate">
-              Learn more about the experts who assess each property.
+              Browse our curated selection of wellness destinations evaluated with this methodology.
             </p>
             <Link
-              href="/team"
+              href="/properties"
               className="mt-6 inline-flex h-12 items-center justify-center rounded-md bg-clarus-navy px-8 text-sm font-medium text-white transition-colors hover:bg-clarus-navy/90"
             >
-              View Advisory Team
+              View Properties
             </Link>
           </div>
         </section>

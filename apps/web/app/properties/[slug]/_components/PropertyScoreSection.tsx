@@ -88,7 +88,7 @@ export function PropertyScoreSection({ tier, scores }: PropertyScoreSectionProps
           Clarus Index Score
         </h2>
         <p className="mt-2 text-slate">
-          Our proprietary evaluation across key dimensions, with transparent methodology.
+          Independent evaluation across key dimensions, with transparent methodology.
         </p>
 
         <div className="mt-8">
@@ -108,8 +108,7 @@ export function PropertyScoreSection({ tier, scores }: PropertyScoreSectionProps
               month: 'long',
               year: 'numeric',
             })}{' '}
-            by {scores.latestAssessment.assessedBy} (Methodology v
-            {scores.latestAssessment.methodology})
+            (Methodology {scores.latestAssessment.methodology})
           </p>
         )}
       </div>

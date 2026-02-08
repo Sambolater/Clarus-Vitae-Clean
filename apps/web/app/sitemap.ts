@@ -47,22 +47,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${BASE_URL}/about/team`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
       url: `${BASE_URL}/about/methodology`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.5,
     },
     {
       url: `${BASE_URL}/privacy`,
@@ -190,28 +178,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Database not available
   }
 
-  // Fetch team members
-  let teamPages: MetadataRoute.Sitemap = [];
-  try {
-    if (!db) throw new Error('Database not available');
-    const teamMembers = await db.teamMember.findMany({
-      where: { published: true },
-      select: {
-        slug: true,
-        updatedAt: true,
-      },
-    });
-
-    teamPages = teamMembers.map((member: { slug: string; updatedAt: Date }) => ({
-      url: `${BASE_URL}/team/${member.slug}`,
-      lastModified: member.updatedAt,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }));
-  } catch {
-    // Database not available
-  }
-
   // Fetch unique countries for destination pages
   let destinationPages: MetadataRoute.Sitemap = [];
   try {
@@ -287,7 +253,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...diagnosticPages,
     ...equipmentPages,
     ...articlePages,
-    ...teamPages,
     ...destinationPages,
     ...focusPages,
     ...tierPages,

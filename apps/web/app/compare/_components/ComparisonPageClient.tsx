@@ -273,8 +273,8 @@ export function ComparisonPageClient({
             },
             {
               title: 'Best of Switzerland',
-              properties: ['clinique-la-prairie', 'grand-resort-bad-ragaz'],
-              url: '/compare?properties=clinique-la-prairie,grand-resort-bad-ragaz',
+              properties: ['clinique-la-prairie', 'chenot-palace-weggis'],
+              url: '/compare?properties=clinique-la-prairie,chenot-palace-weggis',
             },
           ]}
         />
@@ -366,7 +366,7 @@ export function ComparisonPageClient({
               />
               <ComparisonRow
                 label="Programs Available"
-                values={properties.map((p) => `${p.programsCount} programs`)}
+                values={properties.map((p) => `${p.programsCount} ${p.programsCount === 1 ? 'program' : 'programs'}`)}
                 highlight="highest"
               />
             </ComparisonSection>
