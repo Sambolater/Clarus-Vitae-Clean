@@ -92,7 +92,7 @@ export function TreatmentHero({
             </svg>
             <span>
               Available at <strong className="text-clarus-navy">{propertiesCount}</strong>{' '}
-              {propertiesCount === 1 ? 'property' : 'properties'}
+              {propertiesCount === 1 ? 'retreat' : 'retreats'}
             </span>
           </div>
 

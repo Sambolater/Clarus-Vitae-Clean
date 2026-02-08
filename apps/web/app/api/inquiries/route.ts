@@ -89,6 +89,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Send lead notification via Brevo (fire and forget)
+    try {
+      await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': process.env.BREVO_API_KEY!,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          sender: { name: 'Clarus Vitae', email: 'noreply@agenticsadvisory.ai' },
+          to: [{ email: 'sam@agenticsadvisory.ai', name: 'Sam McKay' }],
+          subject: `New Inquiry from Clarus Vitae - ${property.name}`,
+          htmlContent: `
+            <h2>New Inquiry from Clarus Vitae</h2>
+            <table style="border-collapse: collapse; width: 100%;">
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Property:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${property.name}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Name:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.name}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Email:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.email}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Phone:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.phone || 'N/A'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Goals:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.primaryGoals?.join(', ') || 'N/A'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Budget:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.budgetRange || 'N/A'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Preferred Dates:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.preferredDates || 'N/A'}</td></tr>
+              <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Message:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${body.message || 'N/A'}</td></tr>
+            </table>
+          `,
+        }),
+      });
+    } catch (emailError) {
+      // Don't fail the inquiry if email notification fails
+      console.error('Failed to send Brevo notification:', emailError);
+    }
+
     return NextResponse.json({
       success: true,
       inquiryId: result.inquiryId,

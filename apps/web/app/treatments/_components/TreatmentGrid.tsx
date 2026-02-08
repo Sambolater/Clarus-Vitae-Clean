@@ -63,6 +63,7 @@ export function TreatmentGrid({ treatments, isLoading = false }: TreatmentGridPr
               treatment.priceRangeMin,
               treatment.priceRangeMax
             )}
+            imageUrl={treatment.imageUrl ?? undefined}
             href={`/treatments/${treatment.slug}`}
           />
         </Link>

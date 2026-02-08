@@ -1458,6 +1458,37 @@ async function main() {
   });
 
   // ============================================
+  // CREATE HERO IMAGES
+  // ============================================
+  console.log('🖼️ Adding hero images...');
+
+  const heroImages = [
+    { propertyId: cliniqueLP.id, url: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&h=1080&fit=crop&q=80', alt: 'Clinique La Prairie Swiss lakeside medical clinic' },
+    { propertyId: lanserhof.id, url: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop&q=80', alt: 'Lanserhof Tegernsee Alpine medical spa' },
+    { propertyId: chivaSom.id, url: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1920&h=1080&fit=crop&q=80', alt: 'Chiva-Som Thailand beachfront wellness resort' },
+    { propertyId: kamalaya.id, url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920&h=1080&fit=crop&q=80', alt: 'Kamalaya Koh Samui hillside wellness sanctuary' },
+    { propertyId: amanpuri.id, url: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&h=1080&fit=crop&q=80', alt: 'Amanpuri Phuket oceanfront luxury resort' },
+  ];
+
+  for (const img of heroImages) {
+    await prisma.propertyImage.create({
+      data: {
+        propertyId: img.propertyId,
+        url: img.url,
+        alt: img.alt,
+        width: 1920,
+        height: 1080,
+        aspectRatio: '16:9',
+        category: 'hero',
+        isFeatured: true,
+        sortOrder: 0,
+      },
+    });
+  }
+
+  console.log(`Created ${heroImages.length} hero images`);
+
+  // ============================================
   // ADDITIONAL SEED DATA
   // ============================================
   console.log('📦 Adding extended seed data...');

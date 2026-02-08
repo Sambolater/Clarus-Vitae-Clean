@@ -1,3 +1,5 @@
+import { SiteHeader } from '@/components/SiteHeader';
+
 export default function MarketingLayout({
   children,
 }: {
@@ -5,7 +7,7 @@ export default function MarketingLayout({
 }) {
   return (
     <>
-      {/* Header will be added in UI component library task */}
+      <SiteHeader />
       {children}
       {/* Footer will be added in UI component library task */}
     </>

@@ -167,6 +167,7 @@ export interface TreatmentListItem {
   priceRangeMin: number | null;
   priceRangeMax: number | null;
   propertiesCount: number;
+  imageUrl: string | null;
 }
 
 export interface TreatmentsResponse {

@@ -1,7 +1,0 @@
-{
-  "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "sanity build",
-  "outputDirectory": "dist",
-  "framework": null,
-  "ignoreCommand": "exit 0"
-}

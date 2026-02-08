@@ -20,14 +20,22 @@ export const metadata: Metadata = {
   description:
     'Outcomes intelligence for high-stakes wellness decisions. Verified, independent analysis for premium wellness investments.',
   keywords: [
-    'wellness',
-    'longevity',
+    'wellness retreat',
+    'longevity clinic',
     'luxury spa',
     'medical wellness',
     'health optimization',
-    'wellness retreat',
+    'wellness travel',
     'clarus index',
+    'biohacking retreat',
+    'executive health',
+    'wellness investment',
+    'anti-aging retreat',
+    'detox retreat',
+    'holistic wellness',
+    'premium wellness',
   ],
+  alternates: { canonical: '/' },
   authors: [{ name: 'Clarus Vitae' }],
   creator: 'Clarus Vitae',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://clarusvitae.com'),
@@ -49,7 +57,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
+  category: 'health',
 };
 
 /**

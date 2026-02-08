@@ -24,7 +24,7 @@ interface ResultTabsProps {
 
 const tabs: { id: SearchType; label: string }[] = [
   { id: 'all', label: 'All' },
-  { id: 'properties', label: 'Properties' },
+  { id: 'properties', label: 'Retreats' },
   { id: 'treatments', label: 'Treatments' },
   { id: 'articles', label: 'Articles' },
 ];

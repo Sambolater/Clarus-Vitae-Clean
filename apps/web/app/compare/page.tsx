@@ -107,7 +107,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Properties', href: '/properties' },
+    { label: 'Retreats', href: '/properties' },
     { label: 'Compare', href: '/compare' },
   ];
 

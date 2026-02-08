@@ -390,9 +390,8 @@ export default function MethodologyPage() {
             <SubHeading>Data Sources</SubHeading>
             <ul className="mt-4 space-y-3">
               {[
-                'On-site evaluations and property visits',
+                'Comprehensive property research and verification',
                 'Verified guest outcome reports',
-                'Direct property research and verification',
                 'Medical credential verification',
                 'Published clinical outcomes (where available)',
                 'Proprietary dark data collection',
@@ -500,7 +499,7 @@ export default function MethodologyPage() {
                 </h4>
               </div>
               <p className="mt-3 text-slate">
-                Properties where a full program has been completed and independently verified.
+                Properties verified through comprehensive research and guest feedback.
                 This designation indicates first-hand verification of the experience
                 and outcomes claimed by the property.
               </p>

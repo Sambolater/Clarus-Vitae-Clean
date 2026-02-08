@@ -1,7 +1,8 @@
 import { db } from '@clarus-vitae/database';
-import { Container, Heading, Button } from '@clarus-vitae/ui';
+import { Container, Heading } from '@clarus-vitae/ui';
 import type { Metadata } from 'next';
-import Link from 'next/link';
+
+import { GeneralInquiryForm } from './_components/GeneralInquiryForm';
 
 export const metadata: Metadata = {
   title: 'Make an Inquiry | Clarus Vitae',
@@ -12,27 +13,20 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 /**
- * Inquiry hub page - shows featured properties to inquire about
- * Users typically come here from a property page with a specific property in mind
+ * Inquiry hub page - general inquiry form with property selection
  */
 export default async function InquirePage() {
-  // Get featured properties for general inquiry
-  const featuredProperties = await db.property.findMany({
-    where: {
-      published: true,
-      featured: true,
-    },
+  // Get all published properties for the dropdown
+  const allProperties = await db.property.findMany({
+    where: { published: true },
     select: {
       id: true,
       name: true,
       slug: true,
-      tier: true,
       city: true,
       country: true,
-      overallScore: true,
     },
-    orderBy: { overallScore: 'desc' },
-    take: 6,
+    orderBy: { name: 'asc' },
   });
 
   return (
@@ -77,81 +71,8 @@ export default async function InquirePage() {
           </div>
         </div>
 
-        {/* How to Inquire */}
-        <div className="max-w-2xl mx-auto mb-12">
-          <h2 className="font-display text-xl font-medium text-clarus-navy mb-4 text-center">
-            How to Make an Inquiry
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <span className="font-medium text-clarus-navy">1</span>
-              </div>
-              <h3 className="font-medium text-clarus-navy mb-1">Browse Properties</h3>
-              <p className="text-sm text-slate">
-                Explore our curated collection of wellness destinations
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <span className="font-medium text-clarus-navy">2</span>
-              </div>
-              <h3 className="font-medium text-clarus-navy mb-1">Submit Inquiry</h3>
-              <p className="text-sm text-slate">
-                Fill out our secure form with your goals and preferences
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-clarus-navy/10 flex items-center justify-center">
-                <span className="font-medium text-clarus-navy">3</span>
-              </div>
-              <h3 className="font-medium text-clarus-navy mb-1">Get Response</h3>
-              <p className="text-sm text-slate">
-                The property will contact you directly within 2-3 business days
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Featured Properties */}
-        {featuredProperties.length > 0 && (
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-display text-xl font-medium text-clarus-navy mb-6 text-center">
-              Featured Properties
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {featuredProperties.map((property: typeof featuredProperties[number]) => (
-                <Link
-                  key={property.id}
-                  href={`/inquire/${property.slug}`}
-                  className="block p-4 rounded-lg border border-stone hover:border-clarus-navy transition-colors"
-                >
-                  <h3 className="font-medium text-clarus-navy">{property.name}</h3>
-                  <p className="text-sm text-slate mt-1">
-                    {property.city}, {property.country}
-                  </p>
-                  {property.overallScore && (
-                    <p className="text-sm text-clarus-gold mt-2">
-                      Clarus Index: {property.overallScore}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* CTA */}
-        <div className="max-w-2xl mx-auto mt-12 text-center">
-          <p className="text-slate mb-4">
-            Not sure which property is right for you?
-          </p>
-          <Link href="/properties">
-            <Button variant="primary" size="lg">
-              Browse All Properties
-            </Button>
-          </Link>
-        </div>
+        {/* Inquiry Form */}
+        <GeneralInquiryForm properties={allProperties} className="mb-12" />
       </Container>
     </main>
   );

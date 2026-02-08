@@ -1,10 +1,10 @@
 'use client';
 
 import { type PropertyTier } from '@clarus-vitae/database/types';
-import { TierBadge, ClarusIndexBadge, Modal } from '@clarus-vitae/ui';
+import { TierBadge, ClarusIndexBadge } from '@clarus-vitae/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 import { formatPriceRange, tierLabels } from '@/lib/properties';
 
@@ -53,34 +53,98 @@ export function PropertyHero({
   editorChoice,
   slug,
 }: PropertyHeroProps) {
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
-  const heroImage = images.find((img) => img.isFeatured) || images[0];
-  const galleryImages = images.slice(0, 5);
+  // Sort images to put featured first
+  const sortedImages = [...images].sort((a, b) => {
+    if (a.isFeatured && !b.isFeatured) return -1;
+    if (!a.isFeatured && b.isFeatured) return 1;
+    return 0;
+  });
+
+  const goNext = useCallback(() => {
+    if (sortedImages.length <= 1 || isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev + 1) % sortedImages.length);
+  }, [sortedImages.length, isTransitioning]);
+
+  const goPrev = useCallback(() => {
+    if (sortedImages.length <= 1 || isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev - 1 + sortedImages.length) % sortedImages.length);
+  }, [sortedImages.length, isTransitioning]);
+
+  // Reset transition lock
+  useEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => setIsTransitioning(false), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.targetTouches[0];
+    if (touch) touchStartX.current = touch.clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const touch = e.targetTouches[0];
+    if (touch) touchEndX.current = touch.clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+
+    if (diff > threshold) {
+      goNext();
+    } else if (diff < -threshold) {
+      goPrev();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   return (
     <section className="bg-white">
-      {/* Image Gallery */}
-      <div className="relative">
-        {/* Main Image */}
-        <div className="relative h-[400px] md:h-[500px]">
-          {heroImage ? (
-            <Image
-              src={heroImage.url}
-              alt={heroImage.alt || name}
-              fill
-              className="object-cover"
-              priority
-            />
+      {/* Hero Gallery */}
+      <div 
+        className="relative overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="relative h-[400px] md:h-[500px] w-full bg-stone">
+          {/* Render all images stacked, only current one visible */}
+          {sortedImages.length > 0 ? (
+            sortedImages.map((img, index) => (
+              <Image
+                key={img.id}
+                src={img.url}
+                alt={img.alt || name}
+                fill
+                className={`object-cover transition-opacity duration-500 ease-in-out ${
+                  index === currentIndex ? 'opacity-100 z-[1]' : 'opacity-0 z-0'
+                }`}
+                priority={index === 0}
+                sizes="100vw"
+              />
+            ))
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-stone">
+            <div className="flex h-full w-full items-center justify-center">
               <span className="text-slate">No image available</span>
             </div>
           )}
 
           {/* Overlay badges */}
-          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2 z-10">
             <TierBadge tier={tier} />
             {verifiedExcellence && (
               <span className="rounded-md bg-verification-green px-3 py-1 text-xs font-medium text-white">
@@ -94,60 +158,66 @@ export function PropertyHero({
             )}
           </div>
 
-          {/* View Gallery Button */}
-          {images.length > 1 && (
-            <button
-              onClick={() => setIsGalleryOpen(true)}
-              className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg bg-white/90 px-4 py-2 text-sm font-medium text-clarus-navy transition-colors hover:bg-white"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          {/* Navigation Arrows */}
+          {sortedImages.length > 1 && (
+            <>
+              {/* Previous Arrow */}
+              <button
+                type="button"
+                onClick={goPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 text-clarus-navy shadow-lg backdrop-blur-sm transition-all duration-200 hover:bg-white hover:scale-105 active:scale-95"
+                aria-label="Previous image"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Next Arrow */}
+              <button
+                type="button"
+                onClick={goNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/85 text-clarus-navy shadow-lg backdrop-blur-sm transition-all duration-200 hover:bg-white hover:scale-105 active:scale-95"
+                aria-label="Next image"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+
+          {/* Image Counter */}
+          {sortedImages.length > 1 && (
+            <div className="absolute bottom-4 right-4 z-10 rounded-full bg-white/85 px-4 py-2 text-sm font-medium text-clarus-navy shadow-lg backdrop-blur-sm">
+              {currentIndex + 1} / {sortedImages.length}
+            </div>
+          )}
+
+          {/* Dot Indicators */}
+          {sortedImages.length > 1 && sortedImages.length <= 8 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+              {sortedImages.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => {
+                    if (!isTransitioning) {
+                      setIsTransitioning(true);
+                      setCurrentIndex(index);
+                    }
+                  }}
+                  className={`h-2 w-2 rounded-full transition-all duration-200 ${
+                    index === currentIndex
+                      ? 'bg-white w-6'
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
                 />
-              </svg>
-              View All ({images.length})
-            </button>
+              ))}
+            </div>
           )}
         </div>
-
-        {/* Thumbnail Strip (Desktop) */}
-        {galleryImages.length > 1 && (
-          <div className="hidden gap-2 border-t border-stone bg-white p-2 md:flex">
-            {galleryImages.map((img, index) => (
-              <button
-                key={img.id}
-                onClick={() => {
-                  setActiveImageIndex(index);
-                  setIsGalleryOpen(true);
-                }}
-                className="relative h-20 w-28 overflow-hidden rounded-md"
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt || `${name} image ${index + 1}`}
-                  fill
-                  className="object-cover transition-opacity hover:opacity-80"
-                />
-              </button>
-            ))}
-            {images.length > 5 && (
-              <button
-                onClick={() => setIsGalleryOpen(true)}
-                className="flex h-20 w-28 items-center justify-center rounded-md bg-stone text-sm text-slate transition-colors hover:bg-stone/80"
-              >
-                +{images.length - 5} more
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Property Info Bar */}
@@ -206,75 +276,6 @@ export function PropertyHero({
         </div>
       </div>
 
-      {/* Full Screen Gallery Modal */}
-      <Modal
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-        title="Property Gallery"
-        size="full"
-      >
-        <div className="relative flex h-full flex-col">
-          {/* Main Image */}
-          <div className="relative flex-1">
-            {images[activeImageIndex] && (
-              <Image
-                src={images[activeImageIndex].url}
-                alt={images[activeImageIndex].alt || `${name} image`}
-                fill
-                className="object-contain"
-              />
-            )}
-
-            {/* Navigation Arrows */}
-            <button
-              onClick={() =>
-                setActiveImageIndex((prev) =>
-                  prev === 0 ? images.length - 1 : prev - 1
-                )
-              }
-              className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clarus-navy transition-colors hover:bg-white"
-              aria-label="Previous image"
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={() =>
-                setActiveImageIndex((prev) =>
-                  prev === images.length - 1 ? 0 : prev + 1
-                )
-              }
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clarus-navy transition-colors hover:bg-white"
-              aria-label="Next image"
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Thumbnail Strip */}
-          <div className="flex gap-2 overflow-x-auto border-t border-stone bg-white p-4">
-            {images.map((img, index) => (
-              <button
-                key={img.id}
-                onClick={() => setActiveImageIndex(index)}
-                className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-md ${
-                  index === activeImageIndex ? 'ring-2 ring-clarus-navy' : ''
-                }`}
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt || `${name} thumbnail ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      </Modal>
     </section>
   );
 }

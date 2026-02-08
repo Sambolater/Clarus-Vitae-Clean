@@ -1,16 +1,40 @@
 /**
- * Clarus Vitae - Additional Treatments Expansion
+ * Clarus Vitae - Treatments Expansion Seed
  *
- * This seed file adds 20 additional treatments commonly found at wellness destinations.
- * Run AFTER the main seed.ts to preserve existing data.
+ * This seed file adds 18 additional treatments to expand the treatment catalog.
+ * Run AFTER the main seed.ts and seed-treatments.ts to preserve existing data.
  *
- * Categories covered:
- * - BODY_MANUAL: Thai massage, Shiatsu, Reflexology, Watsu, Hot stone
- * - TRADITIONAL: TCM consultation, Ayurvedic consultation, Moxibustion
- * - MIND_NEURO: EMDR, Sound healing, Meditation instruction
- * - AESTHETIC: Microneedling, LED therapy, Body contouring
- * - DETOXIFICATION: Juice fasting protocols, Liver flush
- * - REGENERATIVE: PRP therapy, Stem cell therapy
+ * Treatments added:
+ *
+ * Body Manual (5):
+ * 1. Thai Massage
+ * 2. Shiatsu
+ * 3. Reflexology
+ * 4. Watsu (Water Shiatsu)
+ * 5. Hot Stone Massage
+ *
+ * Traditional (3):
+ * 6. TCM Consultation
+ * 7. Ayurvedic Consultation
+ * 8. Moxibustion
+ *
+ * Mind/Neuro (3):
+ * 9. EMDR Therapy
+ * 10. Sound Healing
+ * 11. Meditation Instruction
+ *
+ * Aesthetic (3):
+ * 12. Microneedling
+ * 13. LED Light Therapy (Face)
+ * 14. Body Contouring
+ *
+ * Detox (2):
+ * 15. Juice Fasting Protocol
+ * 16. Liver Flush Program
+ *
+ * Regenerative (2):
+ * 17. Stem Cell Therapy (if not exists)
+ * 18. Growth Factor Therapy
  *
  * Usage:
  *   cd packages/database
@@ -22,423 +46,723 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('💊 Starting Additional Treatments Expansion...\n');
+  console.log('💊 Starting Treatments Expansion...\n');
 
-  const treatments = [
-    // ============================================
-    // BODY_MANUAL TREATMENTS
-    // ============================================
-    {
+  // Check for existing treatments to avoid duplicates
+  const existingTreatments = await prisma.treatment.findMany({
+    select: { slug: true },
+  });
+  const existingSlugs = new Set(existingTreatments.map((t) => t.slug));
+
+  const treatmentsToCreate = [];
+
+  // ============================================
+  // BODY MANUAL TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('thai-massage')) {
+    treatmentsToCreate.push({
       slug: 'thai-massage',
-      name: 'Thai Massage',
-      aliases: ['Traditional Thai massage', 'Thai yoga massage', 'Nuad Thai'],
+      name: 'Traditional Thai Massage',
+      aliases: ['Nuad Thai', 'Thai yoga massage', 'Ancient massage'],
       category: 'BODY_MANUAL',
       description:
-        'An ancient healing system combining acupressure, Indian Ayurvedic principles, and assisted yoga postures. Performed on a floor mat with the recipient fully clothed.',
+        'Traditional Thai massage is an ancient healing practice combining acupressure, Indian Ayurvedic principles, and assisted yoga postures. Performed on a floor mat with the client fully clothed, it involves rhythmic pressing and stretching of the entire body.',
       howItWorks:
-        'The practitioner uses thumbs, palms, forearms, elbows, knees, and feet to apply rhythmic pressure along energy lines (Sen) while guiding the body through passive yoga-like stretches.',
-      whatItAddresses: ['Muscle tension', 'Flexibility', 'Energy flow', 'Stress relief', 'Joint mobility'],
+        'The practitioner uses hands, thumbs, elbows, knees, and feet to apply pressure along energy lines (sen) while moving the body into yoga-like stretches. This combination releases muscle tension, improves flexibility, and balances energy flow.',
+      whatItAddresses: [
+        'Muscle tension',
+        'Joint stiffness',
+        'Poor flexibility',
+        'Energy blockages',
+        'Stress',
+        'Back pain',
+      ],
       evidenceLevel: 'MODERATE',
       evidenceSummary:
-        'Research supports benefits for back pain, flexibility, and stress reduction. Studies show improvements in range of motion and pain reduction comparable to other massage modalities.',
-      typicalProtocol: '60-120 minute sessions. Can be done as standalone or series.',
+        'Research supports benefits for reducing muscle tension, improving flexibility, and decreasing stress. Some studies show benefits for chronic low back pain. Considered generally safe when performed by trained practitioners.',
+      typicalProtocol:
+        'Sessions typically last 60-120 minutes. Client remains clothed in comfortable attire. Performed on a floor mat. Frequency depends on goals: weekly for therapeutic benefits, monthly for maintenance.',
       priceRangeMin: 80,
-      priceRangeMax: 250,
-      potentialRisks: 'Joint strain if overstretched. Not suitable for acute injuries, recent surgery, or certain cardiovascular conditions.',
-      contraindications: ['Acute injuries', 'Recent surgery', 'Severe osteoporosis', 'Pregnancy (modified only)', 'Blood clots'],
-    },
-    {
-      slug: 'shiatsu-massage',
-      name: 'Shiatsu',
-      aliases: ['Shiatsu massage', 'Japanese pressure therapy', 'Finger pressure massage'],
+      priceRangeMax: 200,
+      potentialRisks:
+        'May cause temporary soreness. Avoid with recent injuries, osteoporosis, cardiovascular conditions, or during pregnancy.',
+      contraindications: [
+        'Recent injuries or surgeries',
+        'Osteoporosis',
+        'Cardiovascular disease',
+        'Pregnancy',
+        'Blood clots',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('shiatsu')) {
+    treatmentsToCreate.push({
+      slug: 'shiatsu',
+      name: 'Shiatsu Massage',
+      aliases: ['Japanese finger pressure', 'Shiatsu therapy'],
       category: 'BODY_MANUAL',
       description:
-        'A Japanese form of bodywork based on Traditional Chinese Medicine concepts. Uses finger and palm pressure on specific points along meridians to balance energy flow.',
+        'Shiatsu is a Japanese bodywork therapy that uses finger and palm pressure along meridians to correct energy imbalances and promote healing. It incorporates elements of traditional Chinese medicine with modern anatomical knowledge.',
       howItWorks:
-        'Practitioners apply pressure to specific points (tsubos) along meridian pathways to release blockages and restore the flow of Qi (vital energy). Includes stretching and joint mobilization.',
-      whatItAddresses: ['Energy imbalances', 'Stress', 'Digestive issues', 'Headaches', 'Muscle tension'],
-      evidenceLevel: 'MODERATE',
+        'Practitioners apply rhythmic pressure using fingers, thumbs, and palms to specific points along the body\'s meridians. This stimulates the body\'s self-healing abilities, releases tension, and restores energy balance.',
+      whatItAddresses: [
+        'Stress and anxiety',
+        'Headaches',
+        'Muscle tension',
+        'Digestive issues',
+        'Fatigue',
+        'Sleep problems',
+      ],
+      evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Studies indicate effectiveness for stress, anxiety, and certain pain conditions. Some evidence for benefits in fatigue and sleep quality.',
-      typicalProtocol: '60-90 minute sessions. Often recommended as weekly series.',
+        'Limited but growing research suggests benefits for stress reduction, anxiety, and some musculoskeletal conditions. Traditional practice with centuries of use in Japan.',
+      typicalProtocol:
+        'Sessions last 60-90 minutes. Client remains clothed on a floor mat or massage table. Gentle to firm pressure applied. Weekly sessions initially, then as needed.',
       priceRangeMin: 90,
-      priceRangeMax: 200,
-      potentialRisks: 'Temporary soreness. Pressure should be avoided on inflamed areas.',
-      contraindications: ['Acute inflammation', 'Fever', 'Skin conditions at treatment site', 'Recent fractures'],
-    },
-    {
+      priceRangeMax: 180,
+      potentialRisks:
+        'Generally very safe. Temporary soreness possible. Communicate pressure preferences to practitioner.',
+      contraindications: [
+        'Open wounds',
+        'Recent fractures',
+        'Severe osteoporosis',
+        'Infectious skin conditions',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('reflexology')) {
+    treatmentsToCreate.push({
       slug: 'reflexology',
       name: 'Reflexology',
-      aliases: ['Foot reflexology', 'Zone therapy', 'Reflex zone therapy'],
+      aliases: ['Foot reflexology', 'Zone therapy', 'Reflex zone massage'],
       category: 'BODY_MANUAL',
       description:
-        'A therapeutic method applying pressure to specific points on the feet, hands, or ears that correspond to different body organs and systems.',
+        'Reflexology is a therapeutic method based on the principle that points on the feet, hands, and ears correspond to different organs and systems in the body. Applying pressure to these reflex points promotes healing and relaxation.',
       howItWorks:
-        'Based on the theory that reflex points in the feet and hands correspond to specific organs and body parts. Pressure applied to these points is believed to promote healing in the corresponding area.',
-      whatItAddresses: ['Stress relief', 'Pain management', 'Circulation', 'Relaxation', 'Energy balance'],
+        'Pressure applied to specific reflex points sends signals through the nervous system to corresponding body areas, promoting relaxation, improving circulation, and supporting the body\'s natural healing processes.',
+      whatItAddresses: [
+        'Stress and anxiety',
+        'Headaches',
+        'Digestive issues',
+        'Sleep problems',
+        'General relaxation',
+        'Circulation',
+      ],
       evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Limited clinical evidence for specific therapeutic claims. Studies show benefits for relaxation, stress reduction, and quality of life improvements in some populations.',
-      typicalProtocol: '45-60 minute sessions. Often combined with other bodywork.',
+        'Some studies suggest benefits for anxiety, stress reduction, and quality of life. Evidence for specific organ effects is limited. Generally considered a relaxing, low-risk therapy.',
+      typicalProtocol:
+        'Sessions typically last 30-60 minutes. Focus is usually on the feet but may include hands or ears. Weekly sessions for specific issues, less frequently for maintenance.',
       priceRangeMin: 60,
-      priceRangeMax: 150,
-      potentialRisks: 'Generally safe. Avoid on injured or infected feet.',
-      contraindications: ['Foot injuries', 'Blood clots in legs', 'Pregnancy (first trimester)', 'Diabetic foot conditions'],
-    },
-    {
+      priceRangeMax: 120,
+      potentialRisks:
+        'Very safe. Avoid with foot injuries, gout, or thrombosis. Some experience temporary fatigue after sessions.',
+      contraindications: [
+        'Foot injuries or infections',
+        'Gout',
+        'Thrombosis or blood clots',
+        'Pregnancy (first trimester)',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('watsu')) {
+    treatmentsToCreate.push({
       slug: 'watsu',
-      name: 'Watsu',
-      aliases: ['Water shiatsu', 'Aquatic bodywork', 'Warm water therapy'],
+      name: 'Watsu (Water Shiatsu)',
+      aliases: ['Aquatic bodywork', 'Water massage', 'Aquatic shiatsu'],
       category: 'BODY_MANUAL',
       description:
-        'A form of aquatic bodywork performed in warm water (35°C), combining elements of shiatsu massage with gentle stretching and flotation.',
+        'Watsu combines elements of shiatsu, stretching, and joint mobilization performed in warm water (around 35°C). The buoyancy of water allows for deep relaxation and gentle movements not possible on land, creating a profoundly relaxing experience.',
       howItWorks:
-        'The practitioner supports and moves the recipient through warm water while applying shiatsu pressure points and gentle stretches. The buoyancy allows for movements impossible on land.',
-      whatItAddresses: ['Deep relaxation', 'Muscle tension', 'Emotional release', 'Joint mobility', 'Trauma recovery'],
+        'In chest-deep warm water, the practitioner supports and moves the client through a series of flowing movements, stretches, and pressure point work. Water\'s buoyancy supports the body, allowing deeper relaxation and freer movement.',
+      whatItAddresses: [
+        'Deep relaxation',
+        'Muscle tension',
+        'Joint stiffness',
+        'Chronic pain',
+        'Stress and anxiety',
+        'PTSD and trauma',
+      ],
       evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Studies suggest benefits for chronic pain, fibromyalgia, PTSD, and anxiety. The combination of warm water and bodywork shows unique relaxation responses.',
-      typicalProtocol: '50-60 minute sessions in 35°C water.',
+        'Limited research but consistently positive reports for relaxation, pain reduction, and emotional release. The unique aquatic environment enables movements and relaxation not achievable on land.',
+      typicalProtocol:
+        'Sessions last 45-90 minutes in a warm pool. One-on-one with practitioner. Client wears swimsuit. Deeply relaxing - allow rest time afterward.',
       priceRangeMin: 120,
-      priceRangeMax: 300,
-      potentialRisks: 'Dizziness from warm water. Not suitable for those uncomfortable in water.',
-      contraindications: ['Open wounds', 'Skin infections', 'Incontinence', 'Severe cardiovascular conditions', 'Chlorine sensitivity'],
-    },
-    {
+      priceRangeMax: 250,
+      potentialRisks:
+        'Safe when performed by trained practitioners. Ensure pool water quality. Not suitable for those afraid of water.',
+      contraindications: [
+        'Fear of water',
+        'Open wounds',
+        'Active infections',
+        'Uncontrolled epilepsy',
+        'Severe cardiovascular disease',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('hot-stone-massage')) {
+    treatmentsToCreate.push({
       slug: 'hot-stone-massage',
       name: 'Hot Stone Massage',
-      aliases: ['Stone therapy', 'LaStone therapy', 'Heated stone massage'],
+      aliases: ['Stone therapy', 'Heated stone massage', 'LaStone therapy'],
       category: 'BODY_MANUAL',
       description:
-        'A massage technique using smooth, heated basalt stones placed on key points of the body and used as massage tools to deliver deeper muscle relaxation.',
+        'Hot stone massage uses smooth, heated basalt stones placed on key points of the body and used as massage tools. The heat penetrates muscles deeply, enhancing relaxation and enabling the therapist to work more effectively on tense areas.',
       howItWorks:
-        'Heated stones (typically 50-60°C) are placed on specific points and used by the therapist to massage muscles. The heat penetrates tissues, allowing deeper work with less pressure.',
-      whatItAddresses: ['Muscle tension', 'Poor circulation', 'Stress', 'Pain relief', 'Mental tension'],
-      evidenceLevel: 'MODERATE',
+        'Stones heated to 50-54°C (122-130°F) are placed on specific body points and used to massage muscles. The heat increases blood flow, relaxes muscles, and allows deeper pressure without discomfort.',
+      whatItAddresses: [
+        'Muscle tension',
+        'Stress',
+        'Poor circulation',
+        'Chronic pain',
+        'Insomnia',
+        'Joint stiffness',
+      ],
+      evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Research supports effectiveness for relaxation and pain reduction. The heat element enhances blood flow and muscle relaxation compared to standard massage.',
-      typicalProtocol: '75-90 minute sessions.',
+        'Limited formal research but widely used and valued for relaxation. Heat therapy benefits are well-established; combination with massage enhances muscle relaxation.',
+      typicalProtocol:
+        'Sessions last 60-90 minutes. Stones are heated and placed on back, hands, feet, and other areas. Some therapists use cold stones for contrast. Monthly sessions for relaxation.',
       priceRangeMin: 100,
-      priceRangeMax: 250,
-      potentialRisks: 'Burns if stones too hot. Skin sensitivity.',
-      contraindications: ['Diabetes (reduced sensation)', 'High blood pressure', 'Heart conditions', 'Skin conditions', 'Pregnancy'],
-    },
+      priceRangeMax: 200,
+      potentialRisks:
+        'Risk of burns if stones too hot. Communicate temperature preferences. Avoid with heat-sensitive conditions.',
+      contraindications: [
+        'Pregnancy',
+        'High blood pressure (severe)',
+        'Diabetes with neuropathy',
+        'Skin conditions',
+        'Recent surgery',
+      ],
+      published: true,
+    });
+  }
 
-    // ============================================
-    // TRADITIONAL TREATMENTS
-    // ============================================
-    {
+  // ============================================
+  // TRADITIONAL TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('tcm-consultation')) {
+    treatmentsToCreate.push({
       slug: 'tcm-consultation',
       name: 'Traditional Chinese Medicine Consultation',
       aliases: ['TCM diagnosis', 'Chinese medicine assessment', 'TCM evaluation'],
       category: 'TRADITIONAL',
       description:
-        'A comprehensive assessment using Traditional Chinese Medicine diagnostic methods including pulse reading, tongue diagnosis, and detailed health history to identify patterns of imbalance.',
+        'A comprehensive TCM consultation involves assessment through the four pillars: observation (looking), auscultation/olfaction (listening/smelling), inquiry (asking), and palpation (pulse and tongue diagnosis). This creates a complete picture of health according to TCM principles.',
       howItWorks:
-        'The practitioner assesses health through observation (face, tongue, body), listening, questioning (detailed history), and palpation (pulse diagnosis) to identify patterns and recommend treatment.',
-      whatItAddresses: ['Health assessment', 'Pattern identification', 'Treatment planning', 'Preventive health', 'Chronic conditions'],
+        'The practitioner evaluates tongue appearance, pulse qualities at both wrists, complexion, voice, and detailed health history to identify patterns of imbalance. Treatment recommendations may include acupuncture, herbs, dietary changes, and lifestyle modifications.',
+      whatItAddresses: [
+        'Chronic conditions',
+        'Digestive issues',
+        'Hormonal imbalances',
+        'Sleep problems',
+        'Stress and anxiety',
+        'General wellness optimization',
+      ],
       evidenceLevel: 'TRADITIONAL',
       evidenceSummary:
-        'TCM diagnostic methods have been used for thousands of years. Modern research validates some diagnostic approaches, particularly pulse diagnosis reliability.',
-      typicalProtocol: '60-90 minute initial consultation. Follow-ups 30-45 minutes.',
+        'TCM diagnosis methods have been used for thousands of years. While diagnostic categories differ from Western medicine, they guide effective treatments within the TCM framework.',
+      typicalProtocol:
+        'Initial consultation lasts 60-90 minutes. Follow-up visits 30-45 minutes. May lead to ongoing treatment plan with herbs, acupuncture, and lifestyle recommendations.',
       priceRangeMin: 100,
-      priceRangeMax: 300,
-      potentialRisks: 'None from consultation itself.',
+      priceRangeMax: 250,
+      potentialRisks:
+        'Consultation itself has no risks. Important to disclose all medications due to potential herb-drug interactions.',
       contraindications: [],
-    },
-    {
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('ayurvedic-consultation')) {
+    treatmentsToCreate.push({
       slug: 'ayurvedic-consultation',
       name: 'Ayurvedic Consultation',
-      aliases: ['Prakriti assessment', 'Dosha analysis', 'Ayurvedic evaluation'],
+      aliases: ['Ayurveda assessment', 'Dosha diagnosis', 'Prakriti analysis'],
       category: 'TRADITIONAL',
       description:
-        'A comprehensive health assessment based on Ayurvedic principles, determining individual constitution (Prakriti), current imbalances (Vikriti), and personalized treatment recommendations.',
+        'An Ayurvedic consultation determines your unique constitution (prakriti) and current state of balance (vikriti) through pulse diagnosis, observation, and detailed health history. This guides personalized recommendations for diet, lifestyle, herbs, and treatments.',
       howItWorks:
-        'The Vaidya (Ayurvedic physician) assesses constitution through pulse diagnosis (Nadi Pariksha), observation of physical characteristics, detailed questioning about health history, lifestyle, and digestion.',
-      whatItAddresses: ['Constitutional assessment', 'Digestive health', 'Lifestyle optimization', 'Preventive care', 'Chronic conditions'],
+        'The practitioner assesses your doshic constitution (Vata, Pitta, Kapha) through pulse diagnosis (nadi pariksha), physical examination, and comprehensive questioning. Imbalances are identified and addressed through tailored Ayurvedic interventions.',
+      whatItAddresses: [
+        'Digestive health',
+        'Sleep issues',
+        'Skin conditions',
+        'Stress management',
+        'Weight management',
+        'Chronic conditions',
+      ],
       evidenceLevel: 'TRADITIONAL',
       evidenceSummary:
-        'Ayurveda has been practiced for over 5,000 years. Modern research increasingly validates individual approaches based on constitutional types.',
-      typicalProtocol: '60-90 minute initial consultation. Treatment plans typically 2-4 weeks.',
+        'Ayurveda has 5,000 years of documented use. Constitutional typing guides personalized medicine. Some Ayurvedic treatments have modern research support.',
+      typicalProtocol:
+        'Initial consultation 60-90 minutes. Detailed lifestyle and health history. Pulse and tongue diagnosis. Results in personalized diet, lifestyle, herb, and treatment recommendations.',
       priceRangeMin: 80,
-      priceRangeMax: 250,
-      potentialRisks: 'None from consultation itself.',
+      priceRangeMax: 200,
+      potentialRisks:
+        'Consultation itself is safe. Herbal recommendations should be disclosed to conventional physicians.',
       contraindications: [],
-    },
-    {
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('moxibustion')) {
+    treatmentsToCreate.push({
       slug: 'moxibustion',
       name: 'Moxibustion',
-      aliases: ['Moxa therapy', 'Mugwort heat therapy'],
+      aliases: ['Moxa therapy', 'Mugwort therapy', 'Heat therapy'],
       category: 'TRADITIONAL',
       description:
-        'A traditional Chinese medicine therapy involving the burning of dried mugwort (Artemisia vulgaris) near or on acupuncture points to stimulate circulation and promote healing.',
+        'Moxibustion involves burning dried mugwort (Artemisia vulgaris) near acupuncture points to warm and stimulate them. Used in Traditional Chinese Medicine for thousands of years, it is often combined with acupuncture to enhance therapeutic effects.',
       howItWorks:
-        'Dried mugwort is burned either directly on the skin, on acupuncture needles, or held close to acupuncture points. The heat stimulates Qi and blood circulation.',
-      whatItAddresses: ['Cold conditions', 'Poor circulation', 'Digestive issues', 'Pain relief', 'Immune support'],
-      evidenceLevel: 'MODERATE',
+        'Heat from burning moxa stimulates acupuncture points, promoting circulation, warming the meridians, and strengthening the body\'s yang energy. Can be applied directly, indirectly, or using a moxa stick held near the skin.',
+      whatItAddresses: [
+        'Cold conditions',
+        'Digestive weakness',
+        'Fatigue',
+        'Joint pain',
+        'Menstrual issues',
+        'Breech presentation in pregnancy',
+      ],
+      evidenceLevel: 'TRADITIONAL',
       evidenceSummary:
-        'Research shows effectiveness for breech presentation in pregnancy, chronic fatigue, and certain pain conditions. Studies support immune-modulating effects.',
-      typicalProtocol: '20-40 minutes, often combined with acupuncture.',
-      priceRangeMin: 40,
-      priceRangeMax: 120,
-      potentialRisks: 'Burns if applied incorrectly. Smoke may irritate some people.',
-      contraindications: ['Fever', 'Heat conditions in TCM terms', 'Near face/sensitive areas', 'Respiratory sensitivity to smoke'],
-    },
+        'Long history in TCM. Some research supports use for breech presentation and certain pain conditions. Generally used as complementary treatment with acupuncture.',
+      typicalProtocol:
+        'Sessions last 15-30 minutes, often combined with acupuncture. Moxa is burned near skin until warmth is felt. Smoke-free moxa options available. Weekly sessions typical.',
+      priceRangeMin: 50,
+      priceRangeMax: 100,
+      potentialRisks:
+        'Risk of burns if not performed carefully. Smoke may irritate respiratory conditions. Smokeless options available.',
+      contraindications: [
+        'Heat conditions in TCM',
+        'Fever',
+        'Skin infections',
+        'Respiratory sensitivity to smoke',
+      ],
+      published: true,
+    });
+  }
 
-    // ============================================
-    // MIND_NEURO TREATMENTS
-    // ============================================
-    {
+  // ============================================
+  // MIND/NEURO TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('emdr-therapy')) {
+    treatmentsToCreate.push({
       slug: 'emdr-therapy',
       name: 'EMDR Therapy',
-      aliases: ['Eye Movement Desensitization and Reprocessing', 'Trauma processing therapy'],
+      aliases: ['Eye Movement Desensitization and Reprocessing', 'Trauma therapy'],
       category: 'MIND_NEURO',
       description:
-        'A psychotherapy approach designed to alleviate distress associated with traumatic memories through bilateral stimulation, typically eye movements, while processing difficult experiences.',
+        'EMDR is an evidence-based psychotherapy that helps process traumatic memories and reduce their emotional impact. Through bilateral stimulation (typically eye movements) while recalling distressing events, the brain can reprocess memories and reduce their emotional charge.',
       howItWorks:
-        'The therapist guides the client through traumatic memories while performing bilateral stimulation (eye movements, taps, or tones). This is believed to help the brain reprocess traumatic memories.',
-      whatItAddresses: ['PTSD', 'Trauma', 'Anxiety', 'Phobias', 'Disturbing memories'],
+        'While focusing on a traumatic memory, the client follows the therapist\'s fingers or other bilateral stimulation. This appears to engage the brain\'s natural healing processes, allowing traumatic memories to be reprocessed and integrated.',
+      whatItAddresses: [
+        'PTSD',
+        'Trauma',
+        'Anxiety',
+        'Phobias',
+        'Panic disorders',
+        'Disturbing memories',
+      ],
       evidenceLevel: 'STRONG',
       evidenceSummary:
-        'Extensive research supports EMDR for PTSD, with efficacy comparable to trauma-focused CBT. Recognized by WHO and major psychiatric organizations.',
-      typicalProtocol: '60-90 minute sessions. Treatment typically 6-12 sessions.',
+        'Extensive research supports EMDR for PTSD. Recognized by WHO, APA, and other organizations as effective trauma treatment. Growing evidence for anxiety and other conditions.',
+      typicalProtocol:
+        'Sessions last 60-90 minutes. Treatment length varies: single traumas may resolve in 3-6 sessions; complex trauma requires longer. Must be performed by trained EMDR therapist.',
       priceRangeMin: 150,
-      priceRangeMax: 350,
-      potentialRisks: 'Temporary increase in distress during processing. Should only be done by trained practitioners.',
-      contraindications: ['Active psychosis', 'Certain dissociative disorders', 'Uncontrolled seizure disorders'],
-    },
-    {
+      priceRangeMax: 300,
+      potentialRisks:
+        'Processing may bring up intense emotions temporarily. Should only be performed by trained professionals. Not suitable during acute crisis.',
+      contraindications: [
+        'Active psychosis',
+        'Severe dissociative disorders (without preparation)',
+        'Active substance abuse',
+        'Certain eye conditions',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('sound-healing')) {
+    treatmentsToCreate.push({
       slug: 'sound-healing',
-      name: 'Sound Healing',
-      aliases: ['Sound therapy', 'Sound bath', 'Vibrational therapy', 'Singing bowl therapy'],
+      name: 'Sound Healing Therapy',
+      aliases: ['Sound bath', 'Vibrational therapy', 'Sonic therapy', 'Singing bowl therapy'],
       category: 'MIND_NEURO',
       description:
-        'Therapeutic use of sound frequencies produced by instruments like singing bowls, gongs, tuning forks, or voice to promote relaxation, reduce stress, and facilitate healing.',
+        'Sound healing uses instruments like singing bowls, gongs, tuning forks, and voice to create vibrations that promote relaxation and healing. Participants lie down while immersed in sound, often entering meditative states.',
       howItWorks:
-        'Sound vibrations are believed to affect brainwave activity, promoting relaxation states. The body is literally bathed in sound waves that may affect cellular activity.',
-      whatItAddresses: ['Stress', 'Anxiety', 'Sleep issues', 'Emotional release', 'Meditation enhancement'],
+        'Sound vibrations affect brainwaves, potentially inducing alpha and theta states associated with relaxation and meditation. The physical vibrations may also affect cellular processes, though mechanisms are not fully understood.',
+      whatItAddresses: [
+        'Stress reduction',
+        'Anxiety',
+        'Sleep issues',
+        'Meditation enhancement',
+        'Emotional release',
+        'General relaxation',
+      ],
       evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Limited but growing research base. Studies show effects on mood, tension, and physiological markers of relaxation. More rigorous research needed.',
-      typicalProtocol: '45-60 minute sessions, individual or group.',
-      priceRangeMin: 50,
+        'Growing research shows benefits for stress reduction and relaxation. Mechanisms are being studied. Safe and increasingly popular as wellness practice.',
+      typicalProtocol:
+        'Sessions (sound baths) last 45-90 minutes. Participants lie comfortably while practitioner plays instruments. Can be individual or group setting. Weekly or as desired.',
+      priceRangeMin: 40,
       priceRangeMax: 150,
-      potentialRisks: 'Emotional release. Some people find certain sounds uncomfortable.',
-      contraindications: ['Sound-triggered epilepsy', 'Severe tinnitus', 'Recent ear surgery'],
-    },
-    {
+      potentialRisks:
+        'Generally very safe. Some may experience emotional release. Those with sound sensitivity should use caution.',
+      contraindications: [
+        'Severe tinnitus',
+        'Sound-triggered epilepsy',
+        'Metal implants near instruments (for some modalities)',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('meditation-instruction')) {
+    treatmentsToCreate.push({
       slug: 'meditation-instruction',
       name: 'Meditation Instruction',
-      aliases: ['Meditation coaching', 'Mindfulness training', 'Meditation guidance'],
+      aliases: ['Mindfulness training', 'Meditation coaching', 'Contemplative practice instruction'],
       category: 'MIND_NEURO',
       description:
-        'Personalized instruction in various meditation techniques including mindfulness, concentration, loving-kindness, and transcendental approaches, tailored to individual needs and goals.',
+        'One-on-one or small group instruction in various meditation techniques including mindfulness, concentration, loving-kindness, and transcendental practices. Personalized guidance helps establish or deepen a sustainable meditation practice.',
       howItWorks:
-        'A trained instructor assesses the individual\'s experience and goals, then teaches appropriate techniques with guidance on posture, breath, and mental focus.',
-      whatItAddresses: ['Stress reduction', 'Anxiety', 'Focus and concentration', 'Emotional regulation', 'Self-awareness'],
+        'An experienced teacher assesses your goals and experience level, then introduces appropriate techniques with hands-on guidance. Regular practice trains attention, reduces reactivity, and promotes neuroplasticity changes.',
+      whatItAddresses: [
+        'Stress and anxiety',
+        'Focus and concentration',
+        'Emotional regulation',
+        'Sleep quality',
+        'Self-awareness',
+        'Overall wellbeing',
+      ],
       evidenceLevel: 'STRONG',
       evidenceSummary:
-        'Extensive research supports meditation benefits for mental health, stress, anxiety, and some physical conditions. MBSR and similar programs have strong evidence base.',
-      typicalProtocol: '30-60 minute individual sessions. Often part of longer programs.',
-      priceRangeMin: 50,
+        'Extensive research supports meditation benefits for stress, anxiety, attention, and wellbeing. Mindfulness-based interventions are evidence-based treatments for several conditions.',
+      typicalProtocol:
+        'Private sessions 60-90 minutes. May include assessment, technique instruction, practice, and Q&A. Series of sessions recommended to establish practice. Daily home practice encouraged.',
+      priceRangeMin: 80,
       priceRangeMax: 200,
-      potentialRisks: 'Rare: may surface difficult emotions. Generally very safe.',
-      contraindications: ['Active psychosis', 'Severe PTSD (may need trauma-informed approach)'],
-    },
+      potentialRisks:
+        'Very safe. Some may experience temporary discomfort when beginning (restlessness, surfacing emotions). Guidance helps navigate challenges.',
+      contraindications: [
+        'Active psychosis (some techniques)',
+        'Severe dissociation (some techniques)',
+      ],
+      published: true,
+    });
+  }
 
-    // ============================================
-    // AESTHETIC TREATMENTS
-    // ============================================
-    {
+  // ============================================
+  // AESTHETIC TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('microneedling')) {
+    treatmentsToCreate.push({
       slug: 'microneedling',
       name: 'Microneedling',
       aliases: ['Collagen induction therapy', 'Dermarolling', 'Skin needling'],
       category: 'AESTHETIC',
       description:
-        'A minimally invasive cosmetic procedure using fine needles to create controlled micro-injuries in the skin, stimulating collagen and elastin production for skin rejuvenation.',
+        'Microneedling uses tiny needles to create controlled micro-injuries in the skin, triggering the body\'s wound healing response and stimulating collagen and elastin production. This improves skin texture, reduces scars, and promotes overall skin rejuvenation.',
       howItWorks:
-        'A device with fine needles creates tiny punctures in the skin, triggering the body\'s wound healing response and stimulating new collagen and elastin production.',
-      whatItAddresses: ['Fine lines and wrinkles', 'Acne scars', 'Skin texture', 'Pore size', 'Skin firmness'],
-      evidenceLevel: 'STRONG',
+        'A device with fine needles creates thousands of micro-channels in the skin. This triggers the healing cascade, stimulating fibroblasts to produce new collagen and elastin. Serums applied during treatment penetrate more effectively.',
+      whatItAddresses: [
+        'Fine lines and wrinkles',
+        'Acne scars',
+        'Enlarged pores',
+        'Uneven skin texture',
+        'Stretch marks',
+        'Hyperpigmentation',
+      ],
+      evidenceLevel: 'MODERATE',
       evidenceSummary:
-        'Well-established evidence for acne scarring, skin rejuvenation, and collagen stimulation. Multiple controlled studies support efficacy.',
-      typicalProtocol: '3-6 sessions spaced 4-6 weeks apart.',
+        'Good evidence for acne scars, fine lines, and skin rejuvenation. Multiple studies support effectiveness. Results improve with series of treatments.',
+      typicalProtocol:
+        'Sessions last 30-60 minutes. Numbing cream applied first. Series of 3-6 treatments spaced 4-6 weeks apart. Mild redness for 24-48 hours post-treatment.',
       priceRangeMin: 200,
       priceRangeMax: 700,
-      potentialRisks: 'Redness, swelling, possible infection if not performed properly.',
-      contraindications: ['Active acne', 'Skin infections', 'Blood thinners', 'Keloid tendency', 'Active skin diseases'],
-    },
-    {
-      slug: 'led-light-therapy',
-      name: 'LED Light Therapy',
-      aliases: ['Phototherapy', 'Light therapy', 'LED facial', 'Photobiomodulation'],
+      potentialRisks:
+        'Temporary redness, swelling, mild discomfort. Risk of infection if not performed properly. Avoid sun exposure after treatment.',
+      contraindications: [
+        'Active acne or skin infections',
+        'Eczema or psoriasis (active)',
+        'Blood clotting disorders',
+        'Keloid scarring tendency',
+        'Pregnancy',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('led-facial-therapy')) {
+    treatmentsToCreate.push({
+      slug: 'led-facial-therapy',
+      name: 'LED Facial Light Therapy',
+      aliases: ['LED mask', 'Light therapy facial', 'Photofacial'],
       category: 'AESTHETIC',
       description:
-        'Non-invasive treatment using specific wavelengths of light (red, blue, near-infrared) to address various skin concerns and promote cellular healing.',
+        'LED facial therapy uses specific wavelengths of light to address various skin concerns. Red light stimulates collagen, blue light kills acne bacteria, and near-infrared penetrates deeper for healing. Non-invasive and painless.',
       howItWorks:
-        'Different light wavelengths penetrate skin at different depths. Red light stimulates collagen, blue kills acne bacteria, and near-infrared reduces inflammation.',
-      whatItAddresses: ['Acne', 'Anti-aging', 'Wound healing', 'Inflammation', 'Skin tone'],
+        'Different light wavelengths penetrate to different skin depths. Red (630-660nm) stimulates fibroblasts and collagen. Blue (415-445nm) kills P. acnes bacteria. Near-infrared (830nm) promotes deeper healing.',
+      whatItAddresses: [
+        'Acne',
+        'Anti-aging',
+        'Redness and inflammation',
+        'Wound healing',
+        'Sun damage',
+        'Skin texture',
+      ],
       evidenceLevel: 'MODERATE',
       evidenceSummary:
-        'Good evidence for acne treatment (blue light) and wound healing. Growing evidence for anti-aging benefits. Low-risk treatment.',
-      typicalProtocol: '20-30 minute sessions, 2-3 times per week for 4-8 weeks.',
-      priceRangeMin: 75,
-      priceRangeMax: 250,
-      potentialRisks: 'Very low risk. Temporary redness possible.',
-      contraindications: ['Photosensitizing medications', 'Certain skin conditions', 'Eye conditions (without protection)'],
-    },
-    {
+        'Good evidence for blue light treating acne. Growing evidence for red light and anti-aging. Safe, non-invasive treatment with minimal side effects.',
+      typicalProtocol:
+        'Sessions last 20-30 minutes. No downtime. Series of 8-12 treatments for best results. Can be done 2-3 times per week. Often combined with other facials.',
+      priceRangeMin: 50,
+      priceRangeMax: 150,
+      potentialRisks:
+        'Very safe. Eye protection needed during treatment. Avoid if taking photosensitizing medications.',
+      contraindications: [
+        'Photosensitivity disorders',
+        'Photosensitizing medications',
+        'Epilepsy (some devices)',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('body-contouring')) {
+    treatmentsToCreate.push({
       slug: 'body-contouring',
       name: 'Non-Invasive Body Contouring',
-      aliases: ['Body sculpting', 'Fat reduction', 'Cryolipolysis', 'RF body treatments'],
+      aliases: ['Body sculpting', 'Fat freezing', 'Cryolipolysis', 'RF body treatment'],
       category: 'AESTHETIC',
       description:
-        'Various non-surgical technologies (cryolipolysis, radiofrequency, ultrasound) used to reduce localized fat deposits and improve body shape.',
+        'Non-invasive body contouring uses various technologies (cryolipolysis, radiofrequency, ultrasound, or laser) to reduce localized fat deposits and tighten skin without surgery. Results develop gradually as the body eliminates treated fat cells.',
       howItWorks:
-        'Technologies target and destroy fat cells through controlled cooling (cryolipolysis), heat (RF), or ultrasound energy. Dead cells are naturally eliminated by the body.',
-      whatItAddresses: ['Stubborn fat deposits', 'Body shape', 'Skin laxity', 'Cellulite'],
+        'Different technologies work differently: Cryolipolysis freezes fat cells causing them to die; RF heats tissue to stimulate collagen; Ultrasound disrupts fat cell membranes. Body naturally eliminates destroyed cells over weeks.',
+      whatItAddresses: [
+        'Localized fat deposits',
+        'Body shaping',
+        'Skin laxity',
+        'Cellulite',
+        'Post-weight loss refinement',
+      ],
       evidenceLevel: 'MODERATE',
       evidenceSummary:
-        'Cryolipolysis has good evidence for fat reduction. RF technologies show benefits for skin tightening. Results vary and are modest compared to surgery.',
-      typicalProtocol: '1-4 sessions depending on area and technology. Results visible in 2-3 months.',
-      priceRangeMin: 500,
-      priceRangeMax: 3000,
-      potentialRisks: 'Temporary numbness, bruising, swelling. Rare: paradoxical fat hyperplasia with cryolipolysis.',
-      contraindications: ['Cryoglobulinemia', 'Cold urticaria', 'Hernia at treatment site', 'Pregnancy'],
-    },
+        'FDA-cleared technologies with clinical evidence for fat reduction. Results vary by technology and individual. Not a weight loss solution but body refinement.',
+      typicalProtocol:
+        'Sessions 35-60 minutes per area. Results appear over 2-3 months. May need 1-3 treatments per area. Best combined with healthy lifestyle.',
+      priceRangeMin: 400,
+      priceRangeMax: 1500,
+      potentialRisks:
+        'Temporary redness, swelling, bruising, or numbness at treatment site. Rare: paradoxical fat hyperplasia with cryolipolysis.',
+      contraindications: [
+        'Pregnancy',
+        'Cryoglobulinemia (for cryolipolysis)',
+        'Hernias in treatment area',
+        'Metal implants in area (for some technologies)',
+      ],
+      published: true,
+    });
+  }
 
-    // ============================================
-    // DETOXIFICATION TREATMENTS
-    // ============================================
-    {
+  // ============================================
+  // DETOX TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('juice-fasting')) {
+    treatmentsToCreate.push({
       slug: 'juice-fasting',
-      name: 'Supervised Juice Fasting',
-      aliases: ['Juice cleanse', 'Juice detox', 'Liquid fast'],
+      name: 'Juice Fasting Protocol',
+      aliases: ['Juice cleanse', 'Liquid fast', 'Juice detox'],
       category: 'DETOXIFICATION',
       description:
-        'A structured fasting protocol consuming only fresh vegetable and fruit juices under professional supervision, designed to rest the digestive system and support detoxification.',
+        'A structured juice fasting program replaces solid food with fresh vegetable and fruit juices for a set period. Under proper supervision, this gives the digestive system a rest while providing nutrients, potentially supporting detoxification processes.',
       howItWorks:
-        'By consuming only fresh juices, the digestive system rests while nutrients are easily absorbed. The body shifts to using stored resources and may enhance cellular cleanup processes.',
-      whatItAddresses: ['Digestive rest', 'Weight management', 'Mental clarity', 'Energy reset', 'Inflammation'],
+        'Eliminating solid food reduces digestive workload. Fresh juices provide vitamins, minerals, and phytonutrients while significantly reducing caloric intake. The body may shift to using stored glycogen and fat for energy.',
+      whatItAddresses: [
+        'Digestive rest',
+        'Weight loss initiation',
+        'Mental clarity',
+        'Breaking unhealthy eating patterns',
+        'Reducing inflammation',
+      ],
       evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'Limited clinical research specifically on juice fasting. General fasting research shows benefits for metabolic health. Supervision important for safety.',
-      typicalProtocol: '3-7 days typically. Includes preparation and breaking fast phases.',
-      priceRangeMin: 300,
-      priceRangeMax: 1500,
-      potentialRisks: 'Hypoglycemia, electrolyte imbalances, fatigue. Should be supervised.',
-      contraindications: ['Diabetes', 'Eating disorders', 'Pregnancy', 'Kidney disease', 'Severe conditions'],
-    },
-    {
-      slug: 'liver-flush',
-      name: 'Liver & Gallbladder Flush',
-      aliases: ['Liver cleanse', 'Gallbladder flush', 'Liver detox'],
+        'Limited scientific evidence for specific detox claims. Caloric restriction benefits are documented. Should be supervised, especially for extended fasts. Not suitable for everyone.',
+      typicalProtocol:
+        'Programs range from 3-14 days. Gradual preparation phase recommended. 4-6 juices per day plus water and herbal teas. Medical supervision for fasts over 3 days. Careful refeeding afterward.',
+      priceRangeMin: 100,
+      priceRangeMax: 300,
+      potentialRisks:
+        'Hunger, fatigue, headaches (especially initially). Blood sugar fluctuations. Not suitable for diabetics, eating disorder history, or certain medical conditions.',
+      contraindications: [
+        'Diabetes',
+        'Eating disorders',
+        'Pregnancy or breastfeeding',
+        'Kidney disease',
+        'Certain medications',
+      ],
+      published: true,
+    });
+  }
+
+  if (!existingSlugs.has('liver-support-protocol')) {
+    treatmentsToCreate.push({
+      slug: 'liver-support-protocol',
+      name: 'Liver Support Protocol',
+      aliases: ['Liver detox', 'Hepatic support', 'Liver cleanse'],
       category: 'DETOXIFICATION',
       description:
-        'A protocol using specific combinations of olive oil, citrus juice, and sometimes herbs intended to flush the liver and gallbladder of accumulated waste.',
+        'A comprehensive liver support protocol combines dietary modifications, targeted supplements, and lifestyle practices to support the liver\'s natural detoxification pathways. Administered under medical supervision with monitoring.',
       howItWorks:
-        'The protocol typically involves a preparation period, then consumption of olive oil and citrus to stimulate bile release. Claimed to expel gallstones and liver debris.',
-      whatItAddresses: ['Liver function', 'Bile flow', 'Digestion', 'Energy'],
-      evidenceLevel: 'EXPERIMENTAL',
+        'Supports the liver\'s Phase I and Phase II detoxification pathways through specific nutrients (B vitamins, glutathione precursors, methylation support) while reducing toxin exposure and supporting elimination.',
+      whatItAddresses: [
+        'Supporting liver function',
+        'Environmental toxin exposure',
+        'Sluggish digestion',
+        'Skin issues',
+        'Fatigue',
+        'Hormone metabolism',
+      ],
+      evidenceLevel: 'EMERGING',
       evidenceSummary:
-        'No clinical evidence supports gallstone removal claims. "Stones" passed are likely saponified oil. May have mild digestive benefits. Medical caution advised.',
-      typicalProtocol: '1-2 day protocol with preparation. Should only be done under supervision.',
-      priceRangeMin: 150,
-      priceRangeMax: 500,
-      potentialRisks: 'Nausea, vomiting, diarrhea. Risk of gallbladder attack if stones present.',
-      contraindications: ['Known gallstones', 'Liver disease', 'Pregnancy', 'Acute illness'],
-    },
+        'Liver detoxification pathways are well-documented. Nutritional support for these pathways has scientific basis. "Cleanse" claims often overstated; medical supervision recommended.',
+      typicalProtocol:
+        'Programs typically 2-4 weeks. Includes dietary changes (eliminating alcohol, processed foods), targeted supplements, and possibly supportive treatments. Medical assessment before and after.',
+      priceRangeMin: 200,
+      priceRangeMax: 600,
+      potentialRisks:
+        'Detox symptoms (headache, fatigue) possible. Supplement interactions with medications. Medical supervision essential.',
+      contraindications: [
+        'Liver disease (without medical supervision)',
+        'Gallstones',
+        'Pregnancy',
+        'Certain medications',
+      ],
+      published: true,
+    });
+  }
 
-    // ============================================
-    // REGENERATIVE TREATMENTS
-    // ============================================
-    {
-      slug: 'prp-therapy',
-      name: 'Platelet-Rich Plasma (PRP) Therapy',
-      aliases: ['Vampire facial', 'PRP injections', 'Autologous platelet therapy'],
-      category: 'REGENERATIVE',
-      description:
-        'A regenerative treatment using concentrated platelets from the patient\'s own blood to promote tissue healing and collagen production when injected or applied to target areas.',
-      howItWorks:
-        'Blood is drawn and centrifuged to concentrate platelets. This platelet-rich plasma containing growth factors is then injected into target tissue to stimulate healing and regeneration.',
-      whatItAddresses: ['Joint pain', 'Skin rejuvenation', 'Hair loss', 'Tendon injuries', 'Wound healing'],
-      evidenceLevel: 'MODERATE',
-      evidenceSummary:
-        'Evidence strongest for certain orthopedic conditions (knee osteoarthritis, tennis elbow). Growing evidence for hair loss. Skin rejuvenation evidence is emerging.',
-      typicalProtocol: '1-3 treatments spaced 4-6 weeks apart depending on application.',
-      priceRangeMin: 500,
-      priceRangeMax: 2000,
-      potentialRisks: 'Injection site pain, bruising, infection risk. Autologous so low rejection risk.',
-      contraindications: ['Blood disorders', 'Active infection', 'Cancer', 'Blood thinners'],
-    },
-    {
+  // ============================================
+  // REGENERATIVE TREATMENTS
+  // ============================================
+
+  if (!existingSlugs.has('stem-cell-therapy')) {
+    treatmentsToCreate.push({
       slug: 'stem-cell-therapy',
       name: 'Stem Cell Therapy',
-      aliases: ['Regenerative cell therapy', 'Cellular medicine'],
+      aliases: ['Regenerative cell therapy', 'MSC therapy', 'Cellular therapy'],
       category: 'REGENERATIVE',
       description:
-        'Advanced regenerative treatment using stem cells (typically adipose-derived or bone marrow) to potentially regenerate damaged tissue and support healing.',
+        'Stem cell therapy uses undifferentiated cells capable of becoming various tissue types to support healing and regeneration. Sources include bone marrow, adipose tissue, or umbilical cord. Used for joint repair, anti-aging, and various conditions.',
       howItWorks:
-        'Stem cells are harvested from the patient\'s fat tissue or bone marrow, processed, and reinjected into damaged areas where they may differentiate into needed tissue types.',
-      whatItAddresses: ['Joint degeneration', 'Soft tissue injuries', 'Anti-aging', 'Autoimmune conditions'],
+        'Stem cells are harvested, processed, and reintroduced to target areas. These cells can differentiate into needed tissue types and secrete growth factors that promote healing and reduce inflammation.',
+      whatItAddresses: [
+        'Joint degeneration',
+        'Tissue repair',
+        'Anti-aging',
+        'Autoimmune conditions',
+        'Neurological conditions',
+        'Cardiovascular repair',
+      ],
       evidenceLevel: 'EXPERIMENTAL',
       evidenceSummary:
-        'Promising early research for certain orthopedic applications. Most applications still experimental. Regulatory status varies by country. Caution advised.',
-      typicalProtocol: 'Single treatment with possible follow-ups. Protocol varies significantly.',
+        'Rapidly evolving field. Some applications (certain blood cancers, skin grafts) are established. Many applications remain experimental. Regulation varies by country. Requires careful provider selection.',
+      typicalProtocol:
+        'Varies significantly by application. May involve harvesting (liposuction or bone marrow aspiration), processing, and injection. Often combined with other regenerative treatments.',
       priceRangeMin: 5000,
-      priceRangeMax: 30000,
-      potentialRisks: 'Infection, procedure risks, uncertain long-term effects. Should only be done at reputable clinics.',
-      contraindications: ['Active cancer', 'Active infections', 'Blood disorders', 'Immunocompromised states'],
-    },
-  ];
+      priceRangeMax: 50000,
+      potentialRisks:
+        'Infection, tumor formation (rare), immune reactions. Unregulated clinics pose risks. Choose reputable providers with proper credentials.',
+      contraindications: [
+        'Active cancer',
+        'Active infections',
+        'Blood clotting disorders',
+        'Certain immune conditions',
+      ],
+      published: true,
+    });
+  }
 
-  console.log(`Creating ${treatments.length} treatments...\n`);
+  if (!existingSlugs.has('growth-factor-therapy')) {
+    treatmentsToCreate.push({
+      slug: 'growth-factor-therapy',
+      name: 'Growth Factor Therapy',
+      aliases: ['GF therapy', 'Regenerative growth factors', 'PDGF therapy'],
+      category: 'REGENERATIVE',
+      description:
+        'Growth factor therapy uses concentrated proteins that signal cellular growth, repair, and regeneration. May be derived from the patient\'s own blood (similar to PRP) or from other sources. Applied for tissue healing, skin rejuvenation, and hair restoration.',
+      howItWorks:
+        'Growth factors bind to cell receptors, triggering biological cascades that promote cell proliferation, tissue repair, collagen synthesis, and angiogenesis. Delivered via injection, topically after microneedling, or other methods.',
+      whatItAddresses: [
+        'Skin rejuvenation',
+        'Hair restoration',
+        'Wound healing',
+        'Joint repair',
+        'Tissue regeneration',
+      ],
+      evidenceLevel: 'EMERGING',
+      evidenceSummary:
+        'Growing body of research supports various applications. Overlaps with PRP therapy. Efficacy depends on source, concentration, and delivery method.',
+      typicalProtocol:
+        'Varies by application. Skin: often combined with microneedling. Hair: injected into scalp. Joints: injected directly. Series of treatments typically needed.',
+      priceRangeMin: 300,
+      priceRangeMax: 2000,
+      potentialRisks:
+        'Injection site reactions, rare allergic responses. Source quality important. Choose experienced providers.',
+      contraindications: [
+        'Active cancer',
+        'Active skin infections',
+        'Blood disorders',
+        'Pregnancy',
+      ],
+      published: true,
+    });
+  }
 
-  for (const treatment of treatments) {
-    try {
+  // ============================================
+  // CREATE TREATMENTS
+  // ============================================
+
+  if (treatmentsToCreate.length > 0) {
+    console.log(`Creating ${treatmentsToCreate.length} new treatments...\n`);
+
+    for (const treatment of treatmentsToCreate) {
       await prisma.treatment.create({
-        data: treatment,
+        data: treatment as Parameters<typeof prisma.treatment.create>[0]['data'],
       });
       console.log(`  ✓ Created: ${treatment.name}`);
-    } catch (error: any) {
-      if (error.code === 'P2002') {
-        console.log(`  - Skipped (exists): ${treatment.name}`);
-      } else {
-        throw error;
-      }
     }
+  } else {
+    console.log('All treatments already exist - no new treatments created.\n');
   }
 
   // ============================================
   // SUMMARY
   // ============================================
   console.log('\n✅ Treatments Expansion completed successfully!\n');
-  console.log('Summary of treatments added:');
-  console.log('\nBODY_MANUAL:');
-  console.log('  - Thai Massage');
-  console.log('  - Shiatsu');
-  console.log('  - Reflexology');
-  console.log('  - Watsu');
-  console.log('  - Hot Stone Massage');
-  console.log('\nTRADITIONAL:');
-  console.log('  - TCM Consultation');
-  console.log('  - Ayurvedic Consultation');
-  console.log('  - Moxibustion');
-  console.log('\nMIND_NEURO:');
-  console.log('  - EMDR Therapy');
-  console.log('  - Sound Healing');
-  console.log('  - Meditation Instruction');
-  console.log('\nAESTHETIC:');
-  console.log('  - Microneedling');
-  console.log('  - LED Light Therapy');
-  console.log('  - Non-Invasive Body Contouring');
-  console.log('\nDETOXIFICATION:');
-  console.log('  - Supervised Juice Fasting');
-  console.log('  - Liver & Gallbladder Flush');
-  console.log('\nREGENERATIVE:');
-  console.log('  - PRP Therapy');
-  console.log('  - Stem Cell Therapy');
-  console.log('\nTotal treatments added: ' + treatments.length);
+  console.log(`Summary: ${treatmentsToCreate.length} new treatments added`);
+  console.log('\nCategories covered:');
+  console.log('  - Body Manual: Thai Massage, Shiatsu, Reflexology, Watsu, Hot Stone');
+  console.log('  - Traditional: TCM Consultation, Ayurvedic Consultation, Moxibustion');
+  console.log('  - Mind/Neuro: EMDR, Sound Healing, Meditation Instruction');
+  console.log('  - Aesthetic: Microneedling, LED Facial, Body Contouring');
+  console.log('  - Detox: Juice Fasting, Liver Support Protocol');
+  console.log('  - Regenerative: Stem Cell Therapy, Growth Factor Therapy');
 }
 
 main()

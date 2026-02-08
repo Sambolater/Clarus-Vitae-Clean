@@ -1,7 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd apps/web && pnpm run build",
+  "devCommand": "cd apps/web && pnpm run dev",
   "installCommand": "corepack enable && pnpm install",
-  "buildCommand": "export POSTGRES_PRISMA_URL=\"postgresql://postgres.vrxuenztipcybiwadtrj:jyrZhKNARrs3EDPg@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true\" && export POSTGRES_URL_NON_POOLING=\"postgresql://postgres.vrxuenztipcybiwadtrj:jyrZhKNARrs3EDPg@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres\" && pnpm --filter @clarus-vitae/database db:generate && pnpm build --filter=@clarus-vitae/web",
-  "outputDirectory": "apps/web/.next",
-  "framework": null
+  "framework": null,
+  "outputDirectory": "apps/web/.next"
 }

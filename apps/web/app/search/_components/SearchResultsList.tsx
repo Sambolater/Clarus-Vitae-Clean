@@ -68,7 +68,7 @@ export function SearchResultsList({ results, counts, initialType }: SearchResult
               <PropertyResultCard key={property.id} result={property} />
             ))}
             {results.properties.length === 0 && (
-              <p className="py-8 text-center text-slate">No properties found.</p>
+              <p className="py-8 text-center text-slate">No retreats found.</p>
             )}
           </div>
         );

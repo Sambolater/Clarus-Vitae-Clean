@@ -90,7 +90,7 @@ export const TreatmentCard = forwardRef<HTMLDivElement, TreatmentCardProps>(
             {propertiesCount !== undefined && (
               <span className="text-xs text-slate">
                 <span className="font-medium text-clarus-navy">{propertiesCount}</span>{' '}
-                {propertiesCount === 1 ? 'property' : 'properties'}
+                {propertiesCount === 1 ? 'retreat' : 'retreats'}
               </span>
             )}
             {priceRange && (
