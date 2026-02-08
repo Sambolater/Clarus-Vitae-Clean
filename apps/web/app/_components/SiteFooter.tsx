@@ -20,6 +20,9 @@ export function SiteFooter() {
             <Link href="/inquire" className="text-slate hover:text-clarus-navy transition-colors">
               Contact
             </Link>
+            <a href="mailto:partnerships@clarusvitae.com" className="text-slate hover:text-clarus-navy transition-colors">
+              Partnerships
+            </a>
           </nav>
 
           {/* Copyright */}

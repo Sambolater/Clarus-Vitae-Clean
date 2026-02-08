@@ -18,9 +18,9 @@ export async function generateMetadata({ searchParams }: ComparePageProps): Prom
 
   if (slugs.length === 0) {
     return {
-      title: 'Compare Properties | Clarus Vitae',
+      title: 'Compare Wellness Retreats',
       description:
-        'Compare wellness properties side-by-side with Clarus Index scores, pricing, treatments, and detailed assessments.',
+        'Compare wellness retreats side-by-side with Clarus Index scores, pricing, treatments, and detailed assessments.',
     };
   }
 
@@ -36,7 +36,7 @@ export async function generateMetadata({ searchParams }: ComparePageProps): Prom
   const names = properties.map((p: { name: string }) => p.name).join(' vs ');
 
   return {
-    title: `${names} - Compare | Clarus Vitae`,
+    title: `${names} — Compare`,
     description: `Side-by-side comparison of ${names}. Compare Clarus Index scores, pricing, treatments, and cultural fit.`,
   };
 }
