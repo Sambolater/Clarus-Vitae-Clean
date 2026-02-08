@@ -26,7 +26,7 @@ const tierLabels: Record<PropertyTier, string> = {
   TIER_3: 'Luxury Destination',
 };
 
-const tierColors: Record<PropertyTier, string> = {
+const _tierColors: Record<PropertyTier, string> = {
   TIER_1: 'bg-tier-1',
   TIER_2: 'bg-tier-2',
   TIER_3: 'bg-tier-3',
@@ -58,8 +58,8 @@ export const PropertyCard = forwardRef<HTMLDivElement, PropertyCardProps>(
       tier,
       score,
       imageUrl,
-      priceRange,
-      focusAreas = [],
+      priceRange: _priceRange,
+      focusAreas: _focusAreas = [],
       href,
       onCompare,
       onSave,
